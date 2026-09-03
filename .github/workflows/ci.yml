@@ -64,12 +64,11 @@ jobs:
           toolchain: stable
       - uses: taiki-e/install-action@37f7c5781271959fb65b6b35224e28652ff2b63d # v2.87.0
         with:
-          tool: cargo-machete@0.9.2
-      # Advisories are audit.yml's job; here it is licenses/bans/sources.
-      - uses: EmbarkStudios/cargo-deny-action@3c6349835b2b7b196a839186cb8b78e02f7b5f25 # v2.1.1
-        with:
-          manifest-path: gputools-replay/Cargo.toml
-          command: check licenses bans sources
+          tool: cargo-machete@0.9.2,cargo-deny@0.20.2
+      # Advisories are audit.yml's job; here it is licenses/bans/sources. The
+      # cargo-deny-action is a Linux-only container, so run the CLI (in the
+      # working-directory gputools-replay, where the manifest is).
+      - run: cargo deny check licenses bans sources
       - run: cargo machete
 
   workflows:
@@ -86,11 +85,11 @@ jobs:
           persist-credentials: false
       - name: actionlint
         env:
-          # go is preinstalled on the hosted runner; pin actionlint by tag.
           SHELLCHECK_OPTS: -e SC2016
+        # go is not on the macOS runner; install actionlint via Homebrew.
         run: |
-          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
-          "$(go env GOPATH)/bin/actionlint"
+          brew install actionlint
+          actionlint
       # Uploads findings to code scanning (non-blocking).
       - uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
         with:
