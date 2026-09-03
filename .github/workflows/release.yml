@@ -7,11 +7,12 @@ run-name: release ${{ inputs.version }}${{ inputs.dry_run && ' (dry run)' || '' 
 # release would burn a version on any downstream failure. A failed preflight
 # costs nothing.
 #
-# Publishing REQUIRES a self-hosted macOS 27 runner: `cargo publish`'s verify
-# build links the private framework, which no hosted runner can do. hl also
-# depends on gputrace-bundle, so that crate must be published from its own repo
-# FIRST (see RELEASING.md). This workflow is dormant until that runner and the
-# crates.io trusted-publisher entries exist.
+# Publishing REQUIRES a macOS 27 runner: `cargo publish`'s verify build links
+# the private framework, which no macOS runner below 27 can do, and no
+# GitHub-hosted runner is that new yet. hl also depends on gputrace-bundle, so
+# that crate must be published from its own repo FIRST (see RELEASING.md). This
+# workflow is dormant until a macOS 27 hosted runner and the crates.io
+# trusted-publisher entries exist.
 on:
   workflow_dispatch:
     inputs:
@@ -88,8 +89,10 @@ jobs:
     # required-reviewer gate is the one human approval before an irreversible
     # upload. Restrict the environment to main in repo settings.
     environment: release
-    # Self-hosted macOS 27: cargo publish's verify build links the framework.
-    runs-on: [self-hosted, macOS, ARM64]
+    # macOS 27: cargo publish's verify build links the framework. Pin to a
+    # macOS 27 runner label once GitHub provides one (macos-latest here upgrades
+    # automatically when its image reaches 27).
+    runs-on: macos-latest
     timeout-minutes: 60
     permissions:
       contents: write

@@ -1,12 +1,12 @@
 name: CI
 
 # This crate links Apple's private GPUToolsReplay framework and refuses to build
-# below macOS 27 (gputools-replay-sys/build.rs), and no hosted macOS runner is
-# that new. Jobs that COMPILE the framework crates therefore run on a
-# self-hosted macOS 27 runner (allow-fail until one is registered); everything
-# that does not compile them (lint, supply-chain, workflow lint, and - via
-# `cargo metadata`, which does not run build scripts - deny/machete) runs on
-# cheap, fast Ubuntu.
+# below macOS 27 (gputools-replay-sys/build.rs), and no GitHub-hosted macOS
+# runner is that new yet. Jobs that COMPILE the framework crates therefore run
+# on a hosted macos-latest runner but are gated off (MACOS27_RUNNER) and
+# allow-fail until that image reaches macOS 27; everything that does not compile
+# them (lint, supply-chain, workflow lint, and - via `cargo metadata`, which
+# does not run build scripts - deny/machete) runs on cheap, fast Ubuntu.
 on:
   push:
   pull_request:
@@ -27,12 +27,24 @@ concurrency:
 
 jobs:
   lint:
-    # Pure-text checks (no compilation).
+    # fmt / ascii / typos. `cargo fmt --all` runs `cargo metadata`, which
+    # resolves hl's ../gputrace-bundle path dependency, so the sibling repo is
+    # checked out next to this one. Metadata does not run build scripts, so
+    # nothing compiles here.
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: gputools-replay
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          path: gputools-replay
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: northbymidwest/gputrace-bundle
+          path: gputrace-bundle
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # v1
         with:
@@ -41,6 +53,8 @@ jobs:
       - run: cargo fmt --all -- --check
       - run: ./scripts/check-ascii.sh
       - uses: crate-ci/typos@a8168dc2984a9e2352f183ffe788f0f23a300389 # v1.49.1
+        with:
+          files: gputools-replay
 
   supply-chain:
     # cargo-deny and cargo-machete resolve metadata but do not compile the
@@ -108,14 +122,15 @@ jobs:
           zizmor --no-progress .github
 
   macos:
-    # Everything that COMPILES the framework crates: runs only on a self-hosted
-    # macOS 27 (arm64) runner. Gated on the SELF_HOSTED_MACOS repo variable so
-    # the job is SKIPPED (not left queued for a runner that does not exist)
-    # until one is registered - set the variable to 'true' then.
+    # Everything that COMPILES the framework crates. This needs a macOS 27
+    # runner: gputools-replay-sys/build.rs refuses to build below it, and no
+    # GitHub-hosted macOS runner is that new yet. The job is SKIPPED until one
+    # exists - set the MACOS27_RUNNER repo variable to 'true' once macos-latest
+    # is macOS 27 (or pin runs-on to a macos-27 label when GitHub ships it).
     # continue-on-error keeps it non-blocking even after that. Checks out
     # gputrace-bundle as a sibling so hl's ../gputrace-bundle path dep resolves.
-    if: ${{ vars.SELF_HOSTED_MACOS == 'true' }}
-    runs-on: [self-hosted, macOS, ARM64]
+    if: ${{ vars.MACOS27_RUNNER == 'true' }}
+    runs-on: macos-latest
     continue-on-error: true
     timeout-minutes: 45
     defaults:
@@ -150,10 +165,10 @@ jobs:
         run: cargo doc --workspace --no-deps
 
   msrv:
-    # Verifies the declared MSRV floor still builds. Compiles, so self-hosted,
-    # var-gated (SELF_HOSTED_MACOS), and allow-fail like the macos job.
-    if: ${{ vars.SELF_HOSTED_MACOS == 'true' }}
-    runs-on: [self-hosted, macOS, ARM64]
+    # Verifies the declared MSRV floor still builds. Compiles the framework
+    # crates, so macOS-27-gated (MACOS27_RUNNER) and allow-fail like macos.
+    if: ${{ vars.MACOS27_RUNNER == 'true' }}
+    runs-on: macos-latest
     continue-on-error: true
     timeout-minutes: 30
     defaults:
