@@ -283,13 +283,13 @@ mod tests {
         assert_eq!(established, 30);
     }
 
-    /// Classes present on macOS 27 but not macOS 26. Under the `macos-26`
-    /// feature the live-runtime probe tests below tolerate their absence
-    /// (shape-checked when present, skipped when not); on the default macOS-27
-    /// floor the list is empty, so every class is required.
-    #[cfg(feature = "macos-26")]
+    /// Classes present on macOS 27 but not macOS 26. With the default `macos27`
+    /// feature the list is empty, so every class is required; without it (a
+    /// macOS 26 build) the live-runtime probe tests below tolerate their absence
+    /// (shape-checked when present, skipped when not).
+    #[cfg(not(feature = "macos27"))]
     const MACOS_27_ONLY_CLASSES: &[&str] = &["GTReplayFetchAccelerationStructure"];
-    #[cfg(not(feature = "macos-26"))]
+    #[cfg(feature = "macos27")]
     const MACOS_27_ONLY_CLASSES: &[&str] = &[];
 
     /// Every class the inventory lists must be registered with the live

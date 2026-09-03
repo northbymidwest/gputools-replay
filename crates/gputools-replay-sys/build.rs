@@ -1,14 +1,15 @@
 //! Links the private framework from the RUNTIME path (HANDOFF section 1): no
 //! dlopen, no libc. The linker resolves GPUToolsReplay from the running
 //! system's dyld shared cache, so this path inherently matches the OS the
-//! crate will run on. The ABI was reverse-engineered on macOS 27, which is the
-//! default floor. The opt-in `macos-26` feature lowers it to macOS 26, which
-//! ships the same framework minus the `GTReplayFetchAccelerationStructure`
-//! class (so acceleration-structure fetch returns a `Setup` error there - it is
-//! a runtime class lookup, not a link dependency, so nothing else is affected).
-//! Systems older than the floor are untested (we have no data; they may or may
-//! not be compatible) and are refused conservatively, not because they are
-//! known to differ.
+//! crate will run on. The ABI was reverse-engineered on macOS 27, so the
+//! default `macos27` feature floors the build there. Disabling it
+//! (`--no-default-features`) lowers the floor to macOS 26, which ships the same
+//! framework minus the `GTReplayFetchAccelerationStructure` class (so
+//! acceleration-structure fetch returns a `Setup` error there - it is a runtime
+//! class lookup, not a link dependency, so nothing else is affected). Systems
+//! older than the floor are untested (we have no data; they may or may not be
+//! compatible) and are refused conservatively, not because they are known to
+//! differ.
 
 use std::process::Command;
 
@@ -36,20 +37,20 @@ fn main() {
         );
     }
 
-    // Default floor is macOS 27 (where the ABI was established); the `macos-26`
-    // feature lowers it to 26. Build scripts see enabled features as
-    // CARGO_FEATURE_<NAME> env vars.
-    let min_major = if std::env::var_os("CARGO_FEATURE_MACOS_26").is_some() {
-        26
-    } else {
+    // The default `macos27` feature floors the build at macOS 27 (where the ABI
+    // was established); disabling it lowers the floor to 26. Build scripts see
+    // enabled features as CARGO_FEATURE_<NAME> env vars.
+    let min_major = if std::env::var_os("CARGO_FEATURE_MACOS27").is_some() {
         27
+    } else {
+        26
     };
     let major = host_macos_major();
     assert!(
         major >= min_major,
         "gputools-replay-sys requires macOS {min_major} or newer (found major version \
-         {major}). The ABI was established on macOS 27; enable the `macos-26` feature to \
-         also build on macOS 26. Older systems are untested (we have no data), so they \
+         {major}). The ABI was established on macOS 27; build with --no-default-features \
+         to also build on macOS 26. Older systems are untested (we have no data), so they \
          are refused conservatively rather than assumed compatible."
     );
 

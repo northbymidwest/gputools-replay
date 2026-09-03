@@ -21,7 +21,10 @@ block2 = "0.6"
 bytemuck = { version = "1", features = ["derive"] }
 plist = "1"
 thiserror = "2"
-gputools-replay-sys = { path = "crates/gputools-replay-sys", version = "0.1.0" }
+# default-features = false so the workspace's --no-default-features actually
+# reaches -sys through the inter-crate deps (each crate re-enables `macos27` via
+# its own default feature). See gputools-replay-sys's [features].
+gputools-replay-sys = { path = "crates/gputools-replay-sys", version = "0.1.0", default-features = false }
 # gputrace-bundle lives in its own repo (../gputrace-bundle). Consumed by
 # gputools-replay-hl via a path+version dep; becomes a plain version dep once
 # gputrace-bundle is published to crates.io.

@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "Raw bindings to Apple's private GPUToolsReplay framework (macOS 27, or 26 via the macos-26 feature)"
+description = "Raw bindings to Apple's private GPUToolsReplay framework (macOS 27, or 26 with --no-default-features)"
 readme = "../../README.md"
 keywords = ["macos", "metal", "gpu", "ffi", "gputrace"]
 categories = ["external-ffi-bindings", "os::macos-apis"]
@@ -17,11 +17,13 @@ publish = false
 objc2 = { workspace = true }
 
 [features]
-# Also build on macOS 26. The default floor is macOS 27 (where the ABI was
-# established); macOS 26 ships the same framework minus the
-# GTReplayFetchAccelerationStructure class, so acceleration-structure fetch
-# returns a Setup error there and nothing else changes. See build.rs.
-macos-26 = []
+default = ["macos27"]
+# Require macOS 27, where the ABI was reverse-engineered: build.rs floors the
+# build at 27 and the class-inventory tests are strict. Disable it
+# (--no-default-features) to also build on macOS 26, which ships the same
+# framework minus the GTReplayFetchAccelerationStructure class (acceleration-
+# structure fetch returns a Setup error there; nothing else changes). See build.rs.
+macos27 = []
 
 # docs.rs cannot host the private framework and builds on Linux; target the
 # Apple platform and let build.rs's DOCS_RS branch skip linking (see build.rs).

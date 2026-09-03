@@ -13,7 +13,7 @@ categories = ["os::macos-apis", "rendering::data-formats"]
 publish = false
 
 [dependencies]
-gputools-replay = { path = "../gputools-replay", version = "0.1.0" }
+gputools-replay = { path = "../gputools-replay", version = "0.1.0", default-features = false }
 gputrace-bundle = { workspace = true }
 objc2-metal = { workspace = true }
 bytemuck = { workspace = true }
@@ -21,8 +21,10 @@ plist = { workspace = true }
 thiserror = { workspace = true }
 
 [features]
-# Forward macOS 26 support down the stack (default floor is macOS 27).
-macos-26 = ["gputools-replay/macos-26"]
+default = ["macos27"]
+# Require macOS 27 (forwarded down the stack). Disable with --no-default-features
+# to also build on macOS 26.
+macos27 = ["gputools-replay/macos27"]
 
 # docs.rs builds on Linux; the framework stack targets Apple only (build.rs's
 # DOCS_RS branch skips linking the private framework).

@@ -1,12 +1,12 @@
 name: CI
 
-# This crate links Apple's private GPUToolsReplay framework: macOS 27 by
-# default, or macOS 26 via the `macos-26` feature (see gputools-replay-sys/
-# build.rs). Jobs that COMPILE the framework crates run on macos-latest, which
-# GitHub currently provisions as macOS 26, so they pass --features macos-26;
-# allow-fail while that path is validated. Everything that does not compile them
-# (lint, supply-chain, workflow lint, and - via `cargo metadata`, which does not
-# run build scripts - deny/machete) runs on cheap, fast Ubuntu.
+# This crate links Apple's private GPUToolsReplay framework: macOS 27 by default
+# (the `macos27` feature), or macOS 26 with --no-default-features (see
+# gputools-replay-sys/build.rs). Jobs that COMPILE the framework crates run on
+# macos-latest, which GitHub currently provisions as macOS 26, so they build
+# --no-default-features. Everything that does not compile them (lint,
+# supply-chain, workflow lint, and - via `cargo metadata`, which does not run
+# build scripts - deny/machete) runs on cheap, fast Ubuntu.
 on:
   push:
   pull_request:
@@ -123,13 +123,12 @@ jobs:
 
   macos:
     # Everything that COMPILES the framework crates. Runs on macos-latest (macOS
-    # 26) with --features macos-26 (the default floor is 27). continue-on-error
-    # while the macOS-26 path is validated; flip to blocking once reliably green.
+    # 26) with --no-default-features (the default macos27 floors at 27). Blocking:
+    # the build and non-live tests are deterministic (no GPU/live-session dep).
     # Checks out gputrace-bundle as a sibling so hl's ../gputrace-bundle path
     # dependency resolves. The live (--ignored) tests need capture fixtures that
     # are not committed, so they run locally, not here.
     runs-on: macos-latest
-    continue-on-error: true
     timeout-minutes: 30
     defaults:
       run:
@@ -148,22 +147,22 @@ jobs:
         with:
           toolchain: stable
           components: clippy
-      # --features macos-26: the runner is macOS 26, one below the default floor.
-      - run: cargo build --workspace --features macos-26
-      - run: cargo clippy --workspace --all-targets --features macos-26 -- -D warnings
-      - run: cargo test --workspace --features macos-26
+      # --no-default-features drops the default macos27 feature: this runner is
+      # macOS 26, one below the default floor.
+      - run: cargo build --workspace --no-default-features
+      - run: cargo clippy --workspace --all-targets --no-default-features -- -D warnings
+      - run: cargo test --workspace --no-default-features
       - name: docs
         env:
           RUSTDOCFLAGS: -D warnings
         # Exclude the internal probes harness: its CLI-usage docs use <...>
         # placeholders that rustdoc reads as HTML, and it is never published.
-        run: cargo doc --workspace --exclude replay-probes --no-deps --features macos-26
+        run: cargo doc --workspace --exclude replay-probes --no-deps --no-default-features
 
   msrv:
     # Verifies the declared MSRV floor still builds. Compiles the framework
-    # crates on macos-latest (macOS 26+), allow-fail like the macos job.
+    # crates on macos-latest (macOS 26+), blocking like the macos job.
     runs-on: macos-latest
-    continue-on-error: true
     timeout-minutes: 30
     defaults:
       run:
@@ -187,5 +186,5 @@ jobs:
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # v1
         with:
           toolchain: ${{ steps.msrv.outputs.version }}
-      # --features macos-26: the runner is macOS 26 (see the macos job).
-      - run: cargo build --workspace --features macos-26
+      # --no-default-features: this runner is macOS 26 (see the macos job).
+      - run: cargo build --workspace --no-default-features
