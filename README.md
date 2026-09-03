@@ -6,6 +6,25 @@ CLI, and it lets a `.gputrace` capture be driven programmatically: loaded,
 replayed, and queried for the textures, pipelines, and other resources it
 contains.
 
+> [!WARNING]
+> **This links a private, undocumented Apple framework. It can break at any
+> time.**
+>
+> `GPUToolsReplay` ships no headers, no documentation, and no stability
+> guarantee. Everything here is reverse-engineered from disassembly and the
+> live runtime, so two things can break it, both silently:
+>
+> - **Errors in the reverse engineering.** A struct layout, field offset, or
+>   method signature that was read wrong is undefined behavior against a
+>   private framework - wrong results or a crash, not a compile error.
+> - **Apple changing it out from under us.** Apple can alter or remove the
+>   framework, or change its ABI or the `.gputrace` format, in any macOS
+>   update, with no notice and no deprecation window.
+>
+> Treat it as experimental: pin an exact version, expect it to need
+> re-validation on every macOS update, and do not put anything load-bearing on
+> it without checks of your own.
+
 There are no headers and no documentation for this framework. Everything
 this workspace knows about it was read from disassembly and the live
 Objective-C runtime, then checked by running real probes against a real
