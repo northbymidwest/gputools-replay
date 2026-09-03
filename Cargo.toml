@@ -1,0 +1,28 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/gputools-replay-sys",
+    "crates/gputools-replay",
+    "crates/gputools-replay-hl",
+    "probes",
+]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.88"
+license = "0BSD"
+repository = "https://github.com/northbymidwest/gputools-replay"
+
+[workspace.dependencies]
+objc2 = "0.6"
+objc2-foundation = "0.3"
+objc2-metal = "0.3"
+block2 = "0.6"
+bytemuck = { version = "1", features = ["derive"] }
+plist = "1"
+thiserror = "2"
+gputools-replay-sys = { path = "crates/gputools-replay-sys", version = "0.1.0" }
+# gputrace-bundle lives in its own repo (../gputrace-bundle). Consumed by
+# gputools-replay-hl via a path+version dep; becomes a plain version dep once
+# gputrace-bundle is published to crates.io.
+gputrace-bundle = { path = "../gputrace-bundle", version = "0.1" }

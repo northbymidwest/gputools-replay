@@ -1,0 +1,62 @@
+name: Bug report
+description: Report a bug in the gputools-replay crates.
+labels: ["bug"]
+assignees: ["northbymidwest"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. These crates wrap Apple's private
+        `GPUToolsReplay.framework` and decode reverse-engineered capture data,
+        so a self-contained repro plus your exact `rustc` and macOS versions is
+        what makes a bug actionable. If the issue is a suspected memory-safety
+        or soundness problem, please report it privately instead: see
+        `.github/SECURITY.md`.
+  - type: dropdown
+    id: crate
+    attributes:
+      label: Crate
+      description: Which crate does this concern?
+      options:
+        - gputools-replay-sys
+        - gputools-replay
+        - gputools-replay-hl
+        - unsure
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you observe, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: The smallest code that reproduces it.
+      render: rust
+    validations:
+      required: true
+  - type: input
+    id: rustc
+    attributes:
+      label: rustc version
+      description: Output of `rustc -Vv`.
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      description: Output of `sw_vers -productVersion`.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Crate version
+      description: The crate version or git SHA you are on.
+    validations:
+      required: true

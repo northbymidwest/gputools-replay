@@ -1,0 +1,27 @@
+[package]
+name = "gputools-replay-hl"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Ergonomic domain layer over gputools-replay: format-aware textures, typed buffers, and decoded GPU capture data."
+readme = "../../README.md"
+keywords = ["macos", "metal", "gpu", "texture", "gputrace"]
+categories = ["os::macos-apis", "rendering::data-formats"]
+# Not published yet: flip by removing this line when cutting the first release.
+publish = false
+
+[dependencies]
+gputools-replay = { path = "../gputools-replay", version = "0.1.0" }
+gputrace-bundle = { workspace = true }
+objc2-metal = { workspace = true }
+bytemuck = { workspace = true }
+plist = { workspace = true }
+thiserror = { workspace = true }
+
+# docs.rs builds on Linux; the framework stack targets Apple only (build.rs's
+# DOCS_RS branch skips linking the private framework).
+[package.metadata.docs.rs]
+default-target = "aarch64-apple-darwin"
+targets = ["aarch64-apple-darwin"]

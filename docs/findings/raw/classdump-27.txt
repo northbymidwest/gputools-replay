@@ -1,0 +1,4421 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/classdump`
+gputools-replay-sys coverage: 5/31 symbols established
+
+=== GTAccelerationStructureServerSession (instanceSize 128) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setSessionID:  v24@0:8Q16
+  -sessionID  Q16@0:8
+  -.cxx_destruct  v16@0:8
+  -dealloc  v16@0:8
+  -receiveData:  v24@0:8@16
+  -nextSample:  v24@0:8Q16
+
+=== GTBaseSocketTransport_replayer (instanceSize 264) ===
+  -connected  B16@0:8
+  -init  @16@0:8
+  -_invalidate  v16@0:8
+  -_destroySharedMemoryTransport  v16@0:8
+  -_nextMessageSerial  I16@0:8
+  -_read:size:  q32@0:8^v16Q24
+  -_readAndAccumulateLoop  v16@0:8
+  -_waitEAGAIN  v16@0:8
+  -_write:size:  q32@0:8r^v16Q24
+  -closeSocketDescriptor  v16@0:8
+  -createNewSharedMemoryTransport  @16@0:8
+  -createNewSharedMemoryTransportWithURL:  @24@0:8@16
+  -destroySharedMemoryTransport  v16@0:8
+  -relayMessageOverSharedMemoryTransport:error:  B32@0:8@16^@24
+  -runWithSocket:  v20@0:8i16
+  -scheduleReadOnWritableSocket  v16@0:8
+  -setPrioritizeOutgoingMessages:  v20@0:8B16
+  -smTransport  @16@0:8
+
+=== GTBaseStreamTransport_replayer (instanceSize 232) ===
+  -init  @16@0:8
+  -dealloc  v16@0:8
+  -_invalidate  v16@0:8
+  -_sendMessage:error:  q32@0:8@16^@24
+  -_allocateMessageBuffer  v16@0:8
+  -_clearBuffers  v16@0:8
+  -_packMessage:error:  B32@0:8@16^@24
+  -_performRead:size:  q32@0:8^v16Q24
+  -_read:size:  q32@0:8^v16Q24
+  -_readAndAccumulate  q16@0:8
+  -_relayBuffer:size:  q32@0:8r^v16Q24
+  -_relayBufferInner:size:  q32@0:8r^v16Q24
+  -_scheduleInvalidation:  v24@0:8@16
+  -_syncTmuToHeader:ioBlock:  q32@0:8^{dy_transport_message_unpack_s={dy_transport_message_header=IIIIII}IIQQB}16@?24
+  -_unpackAndDispatchMessage  v16@0:8
+  -_waitEAGAIN  v16@0:8
+  -_write:size:  q32@0:8r^v16Q24
+  -_writeBuffers:  q24@0:8^@16
+
+=== GTBatchRawCounterAccumulator (instanceSize 168) ===
+  -.cxx_construct  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithStreamData:  @24@0:8@16
+  -_buildDrawIndexMap  v16@0:8
+  -_initializeFromParsedResult:batchDict:  v32@0:8r^v16@24
+  -finalizeAndArchive  @16@0:8
+  -processBatchDict:  B24@0:8@16
+
+=== GTBatchedCounterManager (instanceSize 128) ===
+  -cleanup  v16@0:8
+  -pause  v16@0:8
+  -.cxx_construct  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -resume  v16@0:8
+  -_addBatchAtEncoderIndex:inEncoderArray:  B28@0:8I16@20
+  -_clearData  v16@0:8
+  -_initializeData:  v24@0:8@16
+  -initWithEncoderBatchPriorityList:  @24@0:8@16
+  -nextPerEncoderBatchList:  @24@0:8@16
+  -nextPerEncoderBatchListForHighPriorityBatches:withHighPriorityInfo:  B32@0:8@16@24
+
+=== GTBufferedSendOperation_replayer (instanceSize 48) ===
+  -setReplyTo:  v24@0:8@16
+  -setTimeout:  v24@0:8Q16
+  -replyTo  @16@0:8
+  -message  @16@0:8
+  -queue  @16@0:8
+  -dealloc  v16@0:8
+  -setMessage:  v24@0:8@16
+  -timeout  Q16@0:8
+  -setQueue:  v24@0:8@16
+  -replyBlock  @?16@0:8
+  -setReplyBlock:  v24@0:8@?16
+
+=== GTBulkDataReplyStream (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithCallback:  @24@0:8@?16
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -dispatcherId  Q16@0:8
+  -setDispatcherId:  v24@0:8Q16
+
+=== GTBulkDataService (instanceSize 104) ===
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -downloadData:usingTransferOptions:chunkHandler:  v40@0:8Q16@24@?32
+  -handoverDataForDownload:  Q24@0:8@16
+  -initWithDownloadHighWaterMark:  @24@0:8Q16
+  -newUploadWithDescriptor:error:  Q32@0:8@16^@24
+  -takeDownloadDataForHandle:  @24@0:8Q16
+  -takeUploadedDataForHandle:  @24@0:8Q16
+  -uploadChunk:forHandle:isFinalChunk:error:  B44@0:8@16Q24B32^@36
+  -waitUntilDownloadCapacity  v16@0:8
+
+=== GTBulkDataServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -downloadData_usingTransferOptions_chunkHandler_:replyConnection:  v32@0:8@16@24
+  -newUploadWithDescriptor_error_:replyConnection:  v32@0:8@16@24
+  -uploadChunk_forHandle_isFinalChunk_error_:replyConnection:  v32@0:8@16@24
+
+=== GTBulkDataServiceXPCProxy (instanceSize 40) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -downloadData:completionHandler:  v32@0:8Q16@?24
+  -transferOptions  @16@0:8
+  -downloadData:error:  @32@0:8Q16^@24
+  -downloadData:usingTransferOptions:chunkHandler:  v40@0:8Q16@24@?32
+  -downloadData:usingTransferOptions:completionHandler:  v40@0:8Q16@24@?32
+  -downloadData:usingTransferOptions:error:  @40@0:8Q16@24^@32
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -newUploadWithDescriptor:error:  Q32@0:8@16^@24
+  -uploadChunk:forHandle:isFinalChunk:error:  B44@0:8@16Q24B32^@36
+  -uploadData:completionHandler:  v32@0:8@16@?24
+  -uploadData:error:  Q32@0:8@16^@24
+  -uploadData:usingTransferOptions:completionHandler:  v40@0:8@16@24@?32
+  -uploadData:usingTransferOptions:error:  Q40@0:8@16@24^@32
+
+=== GTBulkDataTransferOptions (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -chunkSize  Q16@0:8
+  -setChunkSize:  v24@0:8Q16
+  -compressionAlgorithm  q16@0:8
+  -setCompressionAlgorithm:  v24@0:8q16
+
+=== GTBulkDataUploadDescriptor (instanceSize 24) ===
+  -setSizeHint:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -sizeHint  Q16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -compressionAlgorithm  q16@0:8
+  -setCompressionAlgorithm:  v24@0:8q16
+
+=== GTCallstackFrame (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -file  @16@0:8
+  -functionName  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setFunctionName:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -column  I16@0:8
+  -setColumn:  v20@0:8I16
+  -setFile:  v24@0:8@16
+  -line  I16@0:8
+  -setLine:  v20@0:8I16
+
+=== GTCaptureArchiveFilenameOverride (instanceSize 32) ===
+  -originalFilename  @16@0:8
+  -setOriginalFilename:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -debugDescription  @16@0:8
+  -overrideFilename  @16@0:8
+  -exportToolVersion  Q16@0:8
+  -setExportToolVersion:  v24@0:8Q16
+  -setOverrideFilename:  v24@0:8@16
+
+=== GTCaptureArchiveHeapRestoreTextureSliceOverride (instanceSize 56) ===
+  -filename  @16@0:8
+  -setBytesPerRow:  v24@0:8Q16
+  -fileSize  Q16@0:8
+  -setWidth:  v24@0:8Q16
+  -setFileSize:  v24@0:8Q16
+  -setFilename:  v24@0:8@16
+  -hash  Q16@0:8
+  -bytesPerImage  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -height  Q16@0:8
+  -width  Q16@0:8
+  -setHeight:  v24@0:8Q16
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -setBytesPerImage:  v24@0:8Q16
+  -encodeWithCoder:  v24@0:8@16
+  -bytesPerRow  Q16@0:8
+  -initWithFilename:fileSize:width:height:bytesPerRow:bytesPerImage:  @64@0:8@16Q24Q32Q40Q48Q56
+
+=== GTCaptureArchiveHeapRestoreTextureSliceOverrideKey (instanceSize 40) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -slice  Q16@0:8
+  -depthPlane  Q16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -setSlice:  v24@0:8Q16
+  -setDepthPlane:  v24@0:8Q16
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -debugDescription  @16@0:8
+  -plane  @16@0:8
+  -setPlane:  v24@0:8@16
+  -mipLevel  Q16@0:8
+  -setMipLevel:  v24@0:8Q16
+  -initWithSlice:mipLevel:depthPlane:plane:  @48@0:8q16q24q32@40
+
+=== GTCaptureArchiveOverrideKey (instanceSize 24) ===
+  -setPlatform:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -platform  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -debugDescription  @16@0:8
+  -riaGeneration  @16@0:8
+  -setRiaGeneration:  v24@0:8@16
+
+=== GTCaptureArchiveOverrides (instanceSize 48) ===
+  -initWithCoder:  @24@0:8@16
+  -isEmpty  B16@0:8
+  -jsonDictionary  @16@0:8
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -reverseAliasMap  @16@0:8
+  -setHeapTextureRestoreOverrides:  v24@0:8@16
+  -filenameOverrides  @16@0:8
+  -heapAccelerationStructures  @16@0:8
+  -heapExtractedTextures  @16@0:8
+  -heapTextureRestoreOverrides  @16@0:8
+  -setFilenameOverrides:  v24@0:8@16
+  -setHeapAccelerationStructures:  v24@0:8@16
+  -setHeapExtractedTextures:  v24@0:8@16
+  -setReverseAliasMap:  v24@0:8@16
+
+=== GTCaptureCompletionState (instanceSize 24) ===
+  -setError:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -error  @16@0:8
+  -archiveURL  @16@0:8
+  -setArchiveURL:  v24@0:8@16
+
+=== GTCaptureConfiguration (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -enableLogErrors  B16@0:8
+  -disableHashResources  B16@0:8
+  -enablePresentDownload  B16@0:8
+  -maxDownloadCommandBuffers  I16@0:8
+  -memWatchMode  I16@0:8
+  -presentDownloadSize  I16@0:8
+  -setDisableHashResources:  v20@0:8B16
+  -setEnableLogErrors:  v20@0:8B16
+  -setEnablePresentDownload:  v20@0:8B16
+  -setMaxDownloadCommandBuffers:  v20@0:8I16
+  -setMemWatchMode:  v20@0:8I16
+  -setPresentDownloadSize:  v20@0:8I16
+  -setWaitEventTimeout:  v20@0:8I16
+  -waitEventTimeout  I16@0:8
+
+=== GTCaptureDescriptor (instanceSize 72) ===
+  -setSessionID:  v24@0:8Q16
+  -setOutputURL:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -sessionID  Q16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -outputURL  @16@0:8
+  -initWithRequestID:  @24@0:8Q16
+  -countMetalFXHistory  Q16@0:8
+  -ignoreUnusedResources  B16@0:8
+  -includeBacktrace  B16@0:8
+  -isToolsCapture  B16@0:8
+  -setCountMetalFXHistory:  v24@0:8Q16
+  -setIgnoreUnusedResources:  v20@0:8B16
+  -setIncludeBacktrace:  v20@0:8B16
+  -setIsToolsCapture:  v20@0:8B16
+  -setStreamRef:  v24@0:8Q16
+  -setSuspendAfterCapture:  v20@0:8B16
+  -setTriggerHitsToEnd:  v24@0:8Q16
+  -setTriggerHitsToStart:  v24@0:8Q16
+  -streamRef  Q16@0:8
+  -suspendAfterCapture  B16@0:8
+  -triggerHitsToEnd  Q16@0:8
+  -triggerHitsToStart  Q16@0:8
+
+=== GTCaptureObjects (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -devices  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDevices:  v24@0:8@16
+  -setMetalLayers:  v24@0:8@16
+  -captureScopes  @16@0:8
+  -commandQueues  @16@0:8
+  -metalLayers  @16@0:8
+  -setCaptureScopes:  v24@0:8@16
+  -setCommandQueues:  v24@0:8@16
+
+=== GTCaptureProgress (instanceSize 48) ===
+  -descriptor  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -stats  @16@0:8
+  -captureState  Q16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setDescriptor:  v24@0:8@16
+  -setStats:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -completionState  @16@0:8
+  -setCompletionState:  v24@0:8@16
+  -setCaptureState:  v24@0:8Q16
+  -capturedCommandsBuffers  Q16@0:8
+  -setCapturedCommandsBuffers:  v24@0:8Q16
+
+=== GTCaptureProgressStatistics (instanceSize 72) ===
+  -frameCount  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setFrameCount:  v24@0:8Q16
+  -encodeWithCoder:  v24@0:8@16
+  -resourceCount  Q16@0:8
+  -setResourceCount:  v24@0:8Q16
+  -setCommitCount:  v24@0:8Q16
+  -commitCount  Q16@0:8
+  -GPUDataDownloaded  Q16@0:8
+  -setCommitOther:  v24@0:8Q16
+  -setGPUDataSize:  v24@0:8Q16
+  -GPUDataSize  Q16@0:8
+  -commitOther  Q16@0:8
+  -frameOther  Q16@0:8
+  -resourceDownloaded  Q16@0:8
+  -setFrameOther:  v24@0:8Q16
+  -setGPUDataDownloaded:  v24@0:8Q16
+  -setResourceDownloaded:  v24@0:8Q16
+
+=== GTCaptureQueryCapturables (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTCaptureQueryConfiguration (instanceSize 24) ===
+  -requestID  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTCaptureRequest (instanceSize 16) ===
+  -requestID  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initWithRequestID:  @24@0:8Q16
+
+=== GTCaptureRequestBatch (instanceSize 32) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setCompletionHandler:  v24@0:8@?16
+  -requests  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initWithRequestID:  @24@0:8Q16
+  -setRequests:  v24@0:8@16
+
+=== GTCaptureRequestToken (instanceSize 32) ===
+  -completed  v16@0:8
+  -waitUntilCompleted  v16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -tokenId  Q16@0:8
+  -initWithCaptureService:andTokenId:  @32@0:8@16Q24
+
+=== GTCaptureRequestUnknown (instanceSize 16) ===
+
+=== GTCaptureResponse (instanceSize 40) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setVersion:  v24@0:8(GTDataVersion={?=II}Q)16
+  -setData:  v24@0:8@16
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -version  (GTDataVersion={?=II}Q)16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+
+=== GTCaptureUpdateConfiguration (instanceSize 24) ===
+  -configuration  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setConfiguration:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTCaptureUpdateHighlight (instanceSize 32) ===
+  -enable  B16@0:8
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setEnable:  v20@0:8B16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTCommandBufferIssue (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -metalLogMessage  @16@0:8
+  -commandBufferCommitCallstackData  @16@0:8
+  -commandBufferCommitCallstackFramesNum  I16@0:8
+  -faultingEncoders  @16@0:8
+  -setCommandBufferCommitCallstackData:  v24@0:8@16
+  -setCommandBufferCommitCallstackFramesNum:  v20@0:8I16
+  -setFaultingEncoders:  v24@0:8@16
+  -setMetalLogMessage:  v24@0:8@16
+
+=== GTContinuation_replayer (instanceSize 32) ===
+  -initWithQueue:block:  @32@0:8@16@?24
+  -init  @16@0:8
+  -dealloc  v16@0:8
+  -dispatch  v16@0:8
+
+=== GTCoreAICaptureDescriptor (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -inferenceWindowSize  Q16@0:8
+  -setInferenceWindowSize:  v24@0:8Q16
+
+=== GTCoreAICaptureInference (instanceSize 24) ===
+  -sessionId  Q16@0:8
+  -setSessionId:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setInferenceId:  v24@0:8Q16
+  -inferenceId  Q16@0:8
+  -toStashItem  @16@0:8
+
+=== GTCoreAICaptureInferenceEvent (instanceSize 56) ===
+  -setEventType:  v24@0:8q16
+  -timestamp  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -eventType  q16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setTimestamp:  v24@0:8Q16
+  -inference  @16@0:8
+  -setInference:  v24@0:8@16
+  -setMlAssetLabel:  v24@0:8@16
+  -setWallclock:  v32@0:8{timespec=qq}16
+  -mlAssetLabel  @16@0:8
+  -wallclock  {timespec=qq}16@0:8
+
+=== GTCoreAICaptureReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyError_:replyConnection:  v32@0:8@16@24
+  -notifyInference_:replyConnection:  v32@0:8@16@24
+
+=== GTCoreAICaptureServiceObserver (instanceSize 32) ===
+  -notifyError:  v24@0:8@16
+  -notifyInference:  v24@0:8@16
+
+=== GTCoreAICaptureServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -startCaptureWithDescriptor_error_:replyConnection:  v32@0:8@16@24
+  -stopCapture:replyConnection:  v32@0:8@16@24
+
+=== GTCoreAICaptureServiceXPCProxy (instanceSize 48) ===
+  -stopCapture  v16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -startCaptureWithDescriptor:error:  Q32@0:8@16^@24
+  -initWithConnection:serviceInfo:  @32@0:8@16@24
+  -deregisterObserver:  v24@0:8Q16
+
+=== GTDebugColumn (instanceSize 24) ===
+  -setName:  v24@0:8@16
+  -hash  Q16@0:8
+  -setSearchable:  v20@0:8B16
+  -initWithCoder:  @24@0:8@16
+  -setMaxWidth:  v20@0:8I16
+  -name  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -maxWidth  I16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -searchable  B16@0:8
+
+=== GTDebugFetchBufferRequest (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugFetchBufferResponse (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugFetchRequest (instanceSize 16) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -target  @16@0:8
+  -setTarget:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugFetchResponse (instanceSize 40) ===
+  -setEntries:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -entries  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugFetchResponseEntry (instanceSize 24) ===
+  -setData:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+  -suggestedFilename  @16@0:8
+  -setSuggestedFilename:  v24@0:8@16
+
+=== GTDebugFetchSourceResponse (instanceSize 48) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -functionName  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -setFunctionName:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugFetchTextureRequest (instanceSize 32) ===
+  -setLevel:  v20@0:8I16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -level  I16@0:8
+  -slice  I16@0:8
+  -isEqual:  B24@0:8@16
+  -setSlice:  v20@0:8I16
+  -encodeWithCoder:  v24@0:8@16
+  -setTextureFormat:  v24@0:8q16
+  -textureFormat  q16@0:8
+
+=== GTDebugFetchTextureResponse (instanceSize 72) ===
+  -setBytesPerRow:  v24@0:8Q16
+  -setWidth:  v24@0:8Q16
+  -setPixelFormat:  v24@0:8Q16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -height  Q16@0:8
+  -pixelFormat  Q16@0:8
+  -width  Q16@0:8
+  -setHeight:  v24@0:8Q16
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -bytesPerRow  Q16@0:8
+
+=== GTDebugFindRequest (instanceSize 24) ===
+  -setLimit:  v24@0:8Q16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -limit  Q16@0:8
+  -query  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -setQuery:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugFindResponse (instanceSize 48) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -matches  @16@0:8
+  -setMatches:  v24@0:8@16
+  -setTotalMatches:  v24@0:8Q16
+  -totalMatches  Q16@0:8
+
+=== GTDebugGoRequest (instanceSize 32) ===
+  -setKind:  v24@0:8q16
+  -kind  q16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -url  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setLinkType:  v20@0:8i16
+  -isEqual:  B24@0:8@16
+  -setUrl:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -linkType  i16@0:8
+
+=== GTDebugInfoBlock (instanceSize 24) ===
+  -text  @16@0:8
+  -label  @16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setLabel:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -setText:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugInfoEntry (instanceSize 8) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugInfoRequest (instanceSize 24) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -target  @16@0:8
+  -setTarget:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -showAll  B16@0:8
+  -setShowAll:  v20@0:8B16
+
+=== GTDebugInfoResponse (instanceSize 48) ===
+  -setEntries:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -entries  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -hasMore  B16@0:8
+  -setHasMore:  v20@0:8B16
+
+=== GTDebugInfoSection (instanceSize 16) ===
+  -setTitle:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -title  @16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugInfoSource (instanceSize 24) ===
+  -filename  @16@0:8
+  -setFilename:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setSource:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -source  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugInfoTable (instanceSize 24) ===
+  -setHeaders:  v24@0:8@16
+  -rows  @16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -headers  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setRows:  v24@0:8@16
+
+=== GTDebugInfoText (instanceSize 16) ===
+  -text  @16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -setText:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugListRequest (instanceSize 24) ===
+  -setLimit:  v24@0:8Q16
+  -setOffset:  v24@0:8Q16
+  -offset  Q16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -limit  Q16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDebugListResponse (instanceSize 72) ===
+  -children  @16@0:8
+  -columns  @16@0:8
+  -setColumns:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -links  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -totalCount  Q16@0:8
+  -setTotalCount:  v24@0:8Q16
+  -setChildren:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setLinks:  v24@0:8@16
+  -parentActions  I16@0:8
+  -setParentActions:  v20@0:8I16
+
+=== GTDebugNavigationResponse (instanceSize 40) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -current  @16@0:8
+  -setCurrent:  v24@0:8@16
+
+=== GTDebugNode (instanceSize 48) ===
+  -setValues:  v24@0:8@16
+  -setName:  v24@0:8@16
+  -setActions:  v20@0:8I16
+  -hash  Q16@0:8
+  -actions  I16@0:8
+  -initWithCoder:  @24@0:8@16
+  -name  @16@0:8
+  -url  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -setUrl:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -values  @16@0:8
+  -childCount  Q16@0:8
+  -setChildCount:  v24@0:8Q16
+
+=== GTDebugProfileRunRequest (instanceSize 32) ===
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -embed  B16@0:8
+  -execMode  q16@0:8
+  -gpuState  q16@0:8
+  -setEmbed:  v20@0:8B16
+  -setExecMode:  v24@0:8q16
+  -setGpuState:  v24@0:8q16
+
+=== GTDebugProfilingSessionInfo (instanceSize 40) ===
+  -timestamp  d16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setTimestamp:  v24@0:8d16
+  -sessionDescription  @16@0:8
+  -setSessionDescription:  v24@0:8@16
+  -execMode  q16@0:8
+  -gpuState  q16@0:8
+  -setExecMode:  v24@0:8q16
+  -setGpuState:  v24@0:8q16
+
+=== GTDebugReplayerStatus (instanceSize 40) ===
+  -deviceModel  @16@0:8
+  -state  q16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -deviceName  @16@0:8
+  -message  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setMessage:  v24@0:8@16
+  -isEqual:  B24@0:8@16
+  -setState:  v24@0:8q16
+  -encodeWithCoder:  v24@0:8@16
+  -setDeviceName:  v24@0:8@16
+  -setDeviceModel:  v24@0:8@16
+
+=== GTDebugResponse (instanceSize 32) ===
+  -hash  Q16@0:8
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -blockedReason  @16@0:8
+  -isEqual:  B24@0:8@16
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -blockedBy  i16@0:8
+  -setBlockedBy:  v20@0:8i16
+  -setBlockedReason:  v24@0:8@16
+
+=== GTDebugServiceReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -didEmitWarning_:replyConnection:  v32@0:8@16@24
+  -operationDidComplete_:replyConnection:  v32@0:8@16@24
+  -profileStateDidChange_message_:replyConnection:  v32@0:8@16@24
+  -replayerStateDidChange_:replyConnection:  v32@0:8@16@24
+  -sessionWillTerminate_:replyConnection:  v32@0:8@16@24
+
+=== GTDebugServiceXPCDispatcher (instanceSize 32) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -completeURL_:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -fetch_completionHandler_:replyConnection:  v32@0:8@16@24
+  -find_:replyConnection:  v32@0:8@16@24
+  -go_:replyConnection:  v32@0:8@16@24
+  -info_:replyConnection:  v32@0:8@16@24
+  -list_:replyConnection:  v32@0:8@16@24
+  -loadTrace_progressHandler_completionHandler_:replyConnection:  v32@0:8@16@24
+  -profileEmbed:replyConnection:  v32@0:8@16@24
+  -profileListSessions:replyConnection:  v32@0:8@16@24
+  -profileLoad_:replyConnection:  v32@0:8@16@24
+  -profileRun_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -sessionStatus:replyConnection:  v32@0:8@16@24
+  -setAnchorPID_:replyConnection:  v32@0:8@16@24
+  -setIdleTimeout_:replyConnection:  v32@0:8@16@24
+  -terminate:replyConnection:  v32@0:8@16@24
+
+=== GTDebugServiceXPCObserver (instanceSize 32) ===
+  -didEmitWarning:  v24@0:8@16
+  -operationDidComplete:  v20@0:8i16
+  -profileStateDidChange:message:  v32@0:8q16@24
+  -replayerStateDidChange:  v24@0:8@16
+  -sessionWillTerminate:  v24@0:8q16
+
+=== GTDebugServiceXPCProxy (instanceSize 40) ===
+  -find:  @24@0:8@16
+  -terminate  v16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -sessionStatus  @16@0:8
+  -setIdleTimeout:  v24@0:8d16
+  -info:  @24@0:8@16
+  -go:  @24@0:8@16
+  -initWithConnection:serviceInfo:  @32@0:8@16@24
+  -deregisterObserver:  v24@0:8Q16
+  -completeURL:  @24@0:8@16
+  -fetch:completionHandler:  v32@0:8@16@?24
+  -list:  @24@0:8@16
+  -loadTrace:progressHandler:completionHandler:  v40@0:8@16@?24@?32
+  -profileEmbed  @16@0:8
+  -profileListSessions  @16@0:8
+  -profileLoad:  v24@0:8q16
+  -profileRun:  v24@0:8@16
+  -setAnchorPID:  v20@0:8i16
+
+=== GTDebugSessionConfig (instanceSize 48) ===
+  -deviceModel  @16@0:8
+  -deviceUDID  @16@0:8
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -deviceName  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -idleTimeout  d16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setIdleTimeout:  v24@0:8d16
+  -setDeviceName:  v24@0:8@16
+  -setDeviceUDID:  v24@0:8@16
+  -setDeviceModel:  v24@0:8@16
+  -setTraceURL:  v24@0:8@16
+  -traceURL  @16@0:8
+
+=== GTDebugSessionStatus (instanceSize 96) ===
+  -setSessionID:  v24@0:8@16
+  -hash  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -sessionID  @16@0:8
+  -deviceName  @16@0:8
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDeviceName:  v24@0:8@16
+  -currentURL  @16@0:8
+  -setCurrentURL:  v24@0:8@16
+  -anchorName  @16@0:8
+  -anchorPID  i16@0:8
+  -idleTimeRemaining  d16@0:8
+  -loadedProfileSessionIndex  q16@0:8
+  -profileState  q16@0:8
+  -replayerStatus  @16@0:8
+  -setAnchorName:  v24@0:8@16
+  -setAnchorPID:  v20@0:8i16
+  -setIdleTimeRemaining:  v24@0:8d16
+  -setLoadedProfileSessionIndex:  v24@0:8q16
+  -setProfileState:  v24@0:8q16
+  -setReplayerStatus:  v24@0:8@16
+  -setTraceSummary:  v24@0:8@16
+  -setTraceURL:  v24@0:8@16
+  -traceSummary  @16@0:8
+  -traceURL  @16@0:8
+
+=== GTDebugValue (instanceSize 24) ===
+  -setValue:  v24@0:8@16
+  -hash  Q16@0:8
+  -value  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setType:  v20@0:8i16
+  -.cxx_destruct  v16@0:8
+  -type  i16@0:8
+  -isEqual:  B24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDeviceCapabilities (instanceSize 8) ===
+  -daemonDeviceCapabilities  @16@0:8
+  -deviceCompatibilityCapabilitiesWithHeapDescriptors:  @24@0:8@16
+  -gpuToolsVersionQuery  @16@0:8
+  -inferiorEnvironment:  @24@0:8@16
+
+=== GTDeviceCapabilitiesXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -daemonDeviceCapabilities:replyConnection:  v32@0:8@16@24
+  -deviceCompatibilityCapabilitiesWithHeapDescriptors_:replyConnection:  v32@0:8@16@24
+  -gpuToolsVersionQuery:replyConnection:  v32@0:8@16@24
+  -inferiorEnvironment_:replyConnection:  v32@0:8@16@24
+
+=== GTDeviceCapabilitiesXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -daemonDeviceCapabilities  @16@0:8
+  -deviceCompatibilityCapabilitiesWithHeapDescriptors:  @24@0:8@16
+  -gpuToolsVersionQuery  @16@0:8
+  -inferiorEnvironment:  @24@0:8@16
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+
+=== GTDeviceProperties (instanceSize 128) ===
+  -setHardwareModel:  v24@0:8@16
+  -hardwareModel  @16@0:8
+  -setOsVersion:  v24@0:8@16
+  -setProductName:  v24@0:8@16
+  -buildVersion  @16@0:8
+  -productType  @16@0:8
+  -osVersion  @16@0:8
+  -setProductType:  v24@0:8@16
+  -deviceClass  @16@0:8
+  -setDeviceClass:  v24@0:8@16
+  -releaseType  @16@0:8
+  -productName  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setBuildVersion:  v24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithXPCObject:  @24@0:8@16
+  -marketingName  @16@0:8
+  -appleInternal  B16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setReleaseType:  v24@0:8@16
+  -setUniqueDeviceID:  v24@0:8@16
+  -uniqueDeviceID  @16@0:8
+  -locationID  Q16@0:8
+  -setLocationID:  v24@0:8Q16
+  -setMarketingName:  v24@0:8@16
+  -setAppleInternal:  v20@0:8B16
+  -cpuArchitecture  @16@0:8
+  -setCpuArchitecture:  v24@0:8@16
+  -reality  @16@0:8
+  -setEffectiveProductionStatusAp:  v20@0:8B16
+  -deviceSupportsLockdown  B16@0:8
+  -effectiveProductionStatusAp  B16@0:8
+  -initForEmbeddedSystem  @16@0:8
+  -isUIBuild  B16@0:8
+  -mobileDeviceMinimumVersion  @16@0:8
+  -osInstallEnvironment  B16@0:8
+  -remoteXPCVersionFlags  Q16@0:8
+  -setDeviceSupportsLockdown:  v20@0:8B16
+  -setIsUIBuild:  v20@0:8B16
+  -setMobileDeviceMinimumVersion:  v24@0:8@16
+  -setOsInstallEnvironment:  v20@0:8B16
+  -setReality:  v24@0:8@16
+  -setRemoteXPCVersionFlags:  v24@0:8Q16
+  -setStoreDemoMode:  v20@0:8B16
+  -storeDemoMode  B16@0:8
+
+=== GTDiagnosticsIssue (instanceSize 96) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -metalLogMessage  @16@0:8
+  -resourceAllocationCallstackData  @16@0:8
+  -setLibraryHash:  v24@0:8@16
+  -callstack  @16@0:8
+  -cpuCallstackData  @16@0:8
+  -cpuCallstackFramesNum  I16@0:8
+  -isDefaultLibrary  B16@0:8
+  -libraryHash  @16@0:8
+  -libraryOfflineSource  @16@0:8
+  -libraryOnlineSource  @16@0:8
+  -metalFunctionFile  @16@0:8
+  -metalFunctionName  @16@0:8
+  -resourceAllocationCallstackFramesNum  I16@0:8
+  -setCallstack:  v24@0:8@16
+  -setCpuCallstackData:  v24@0:8@16
+  -setCpuCallstackFramesNum:  v20@0:8I16
+  -setIsDefaultLibrary:  v20@0:8B16
+  -setLibraryOfflineSource:  v24@0:8@16
+  -setLibraryOnlineSource:  v24@0:8@16
+  -setMetalFunctionFile:  v24@0:8@16
+  -setMetalFunctionName:  v24@0:8@16
+  -setMetalLogMessage:  v24@0:8@16
+  -setResourceAllocationCallstackData:  v24@0:8@16
+  -setResourceAllocationCallstackFramesNum:  v20@0:8I16
+
+=== GTDisplayRequest (instanceSize 16) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDisplayRequestToken (instanceSize 24) ===
+  -requestID  Q16@0:8
+  -completed  v16@0:8
+  -waitUntilCompleted  v16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithID:  @24@0:8Q16
+
+=== GTDisplayResponse (instanceSize 24) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initWithID:  @24@0:8Q16
+
+=== GTDisplayServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -show_completionHandler_:replyConnection:  v32@0:8@16@24
+  -terminateProcess:replyConnection:  v32@0:8@16@24
+  -update_completionHandler_:replyConnection:  v32@0:8@16@24
+
+=== GTDisplayServiceXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -terminateProcess  v16@0:8
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -show:completionHandler:  @32@0:8@16@?24
+  -update:completionHandler:  @32@0:8@16@?24
+
+=== GTDisplayShowRequest (instanceSize 16) ===
+
+=== GTDisplayShowTextureRequest (instanceSize 80) ===
+  -setWidth:  v24@0:8Q16
+  -setLevel:  v20@0:8I16
+  -setPixelFormat:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -height  Q16@0:8
+  -pixelFormat  Q16@0:8
+  -depth  I16@0:8
+  -level  I16@0:8
+  -width  Q16@0:8
+  -setHeight:  v24@0:8Q16
+  -slice  I16@0:8
+  -setDepth:  v20@0:8I16
+  -setSlice:  v20@0:8I16
+  -encodeWithCoder:  v24@0:8@16
+  -plane  I16@0:8
+  -setPlane:  v20@0:8I16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -replayServicePort  Q16@0:8
+  -setReplayServicePort:  v24@0:8Q16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTDisplayUpdateOverlaysRequest (instanceSize 24) ===
+  -setOverlays:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -overlays  Q16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDisplayUpdateRequest (instanceSize 16) ===
+
+=== GTDisplayUpdateTerminationRequest (instanceSize 32) ===
+  -setPath:  v24@0:8@16
+  -connection  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -path  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setConnection:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTDisplayUpdateWindowConfigurationRequest (instanceSize 40) ===
+  -windowTitle  @16@0:8
+  -visible  B16@0:8
+  -setWindowTitle:  v24@0:8@16
+  -setVisible:  v20@0:8B16
+  -initWithCoder:  @24@0:8@16
+  -orientation  q16@0:8
+  -.cxx_destruct  v16@0:8
+  -setOrientation:  v24@0:8q16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTErrorReportServiceObserver (instanceSize 32) ===
+  -notifyRejectedConnections:  v24@0:8@16
+
+=== GTErrorReportServiceReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyRejectedConnections_:replyConnection:  v32@0:8@16@24
+
+=== GTErrorReportServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -fetchRejectedConnections_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+
+=== GTErrorReportServiceXPCProxy (instanceSize 32) ===
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -deregisterObserver:  v24@0:8Q16
+  -fetchRejectedConnections:  v24@0:8@?16
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -returnRejectedConnections:  @24@0:8^@16
+
+=== GTError_replayer (instanceSize 40) ===
+  -localizedDescription  @16@0:8
+  -dy_errorSignature  @16@0:8
+
+=== GTFaultingEncoder (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -metalLogMessage  @16@0:8
+  -cpuCallstackData  @16@0:8
+  -cpuCallstackFramesNum  I16@0:8
+  -setCpuCallstackData:  v24@0:8@16
+  -setCpuCallstackFramesNum:  v20@0:8I16
+  -setMetalLogMessage:  v24@0:8@16
+
+=== GTFileEntry (instanceSize 32) ===
+  -fileSize  Q16@0:8
+  -destination  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -path  @16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initWithLink:destination:  @32@0:8@16@24
+  -initWithPath:fileSize:  @32@0:8@16Q24
+
+=== GTFileTransferOptions (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -chunkSize  Q16@0:8
+  -setChunkSize:  v24@0:8Q16
+  -compressionAlgorithm  q16@0:8
+  -setCompressionAlgorithm:  v24@0:8q16
+
+=== GTFileWriterService (instanceSize 64) ===
+  -.cxx_destruct  v16@0:8
+  -initiateTransfer:basePath:fromDevice:options:completionHandler:  v56@0:8@16@24@32@40@?48
+  -_finishSession:error:  B32@0:8Q16^@24
+  -beginTransferSessionWithFileEntries:basePath:toDevice:options:sessionID:completionHandler:  v64@0:8@16@24@32@40Q48@?56
+  -initWithConnectionProvider:deviceUDID:urlAccessProvider:  @40@0:8@16@24@32
+  -initiateTransfer:basePath:fromDevice:toURL:options:completionHandler:  v64@0:8@16@24@32@40@48@?56
+  -startTransfer:basePath:fromDevice:options:completionHandler:  v56@0:8@16@24@32@40@?48
+  -startTransfer:basePath:fromDevice:toDirectory:options:completionHandler:  v64@0:8@16@24@32@40@48@?56
+  -writeFileData:sessionID:completionHandler:  v40@0:8@16Q24@?32
+
+=== GTFileWriterServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -beginTransferSessionWithFileEntries_basePath_toDevice_options_sessionID_completionHandler_:replyConnection:  v32@0:8@16@24
+  -initiateTransfer_basePath_fromDevice_options_completionHandler_:replyConnection:  v32@0:8@16@24
+  -startTransfer_basePath_fromDevice_options_completionHandler_:replyConnection:  v32@0:8@16@24
+  -startTransfer_basePath_fromDevice_toDirectory_options_completionHandler_:replyConnection:  v32@0:8@16@24
+  -writeFileData_sessionID_completionHandler_:replyConnection:  v32@0:8@16@24
+
+=== GTFileWriterServiceXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -initiateTransfer:basePath:fromDevice:options:completionHandler:  v56@0:8@16@24@32@40@?48
+  -beginTransferSessionWithFileEntries:basePath:toDevice:options:sessionID:completionHandler:  v64@0:8@16@24@32@40Q48@?56
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -startTransfer:basePath:fromDevice:options:completionHandler:  v56@0:8@16@24@32@40@?48
+  -startTransfer:basePath:fromDevice:toDirectory:options:completionHandler:  v64@0:8@16@24@32@40@48@?56
+  -writeFileData:sessionID:completionHandler:  v40@0:8@16Q24@?32
+
+=== GTFileWriterSession (instanceSize 8) ===
+
+=== GTFileWriterSessionCompressed (instanceSize 72) ===
+  -finish:  B24@0:8^@16
+  -.cxx_destruct  v16@0:8
+  -_finalizeCompressedFileData:  B24@0:8^@16
+  -_writeCompressedFileData:length:error:  B40@0:8r*16Q24^@32
+  -initWithFileEntries:relativeToURL:options:error:  @48@0:8@16@24@32^@40
+  -writeFileData:completionHandler:  v32@0:8@16@?24
+
+=== GTFileWriterSessionUncompressed (instanceSize 48) ===
+  -finish:  B24@0:8^@16
+  -.cxx_destruct  v16@0:8
+  -_closeCurrentFileDescriptor:  B24@0:8^@16
+  -_getCurrentFileDescriptor:  i24@0:8^@16
+  -_openNextFile:  i24@0:8^@16
+  -_writeUncompressedFileData:length:error:  B40@0:8r*16Q24^@32
+  -initWithFileEntries:relativeToURL:options:error:  @48@0:8@16@24@32^@40
+  -writeFileData:completionHandler:  v32@0:8@16@?24
+
+=== GTFuture_replayer (instanceSize 328) ===
+  -isFinished  B16@0:8
+  -isAsynchronous  B16@0:8
+  -waitUntilFinished  v16@0:8
+  -isExecuting  B16@0:8
+  -isCancelled  B16@0:8
+  -addDependency:  v24@0:8@16
+  -start  v16@0:8
+  -setError:  v24@0:8@16
+  -setCompletionBlock:  v24@0:8@?16
+  -observeValueForKeyPath:ofObject:change:context:  v48@0:8@16@24@32^v40
+  -queuePriority  q16@0:8
+  -completionBlock  @?16@0:8
+  -init  @16@0:8
+  -dealloc  v16@0:8
+  -cancel  v16@0:8
+  -error  @16@0:8
+  -result  @16@0:8
+  -dependencies  @16@0:8
+  -setQueuePriority:  v24@0:8q16
+  -setResult:  v24@0:8@16
+  -resolveWithFuture:  v24@0:8@16
+  -addResultHandler:  v24@0:8@?16
+  -_setResult:error:notify_NOLOCK:  v36@0:8@16@24B32
+  -_addDependency_REQUIRESLOCK:  v24@0:8@16
+  -_dependencies_NOLOCK  @16@0:8
+  -_start_NOLOCK  v16@0:8
+  -_waitForDependencies_REQUIRESLOCK  B16@0:8
+  -boolResult  B16@0:8
+  -intResult  i16@0:8
+  -notifyGroup:  v24@0:8@16
+  -notifyOnQueue:handler:  v32@0:8@16@?24
+  -requestResult:  v24@0:8@?16
+  -timeoutAfter:label:  v32@0:8d16@24
+  -uint32Result  I16@0:8
+  -waitUntilResolved  v16@0:8
+
+=== GTGPUAPSConfig (instanceSize 200) ===
+  -setDuration:  v24@0:8Q16
+  -.cxx_destruct  v16@0:8
+  -toDictionary  @16@0:8
+  -duration  Q16@0:8
+  -setPulsePeriod:  v24@0:8Q16
+  -pulsePeriod  Q16@0:8
+  -emitPos  Q16@0:8
+  -initForTimeline  @16@0:8
+  -overrideEmitPos  Q16@0:8
+  -setOverrideCliqueAdvanceReason:  v20@0:8B16
+  -setTileTracing:  v24@0:8Q16
+  -initForCounters  @16@0:8
+  -setCountPeriod:  v24@0:8Q16
+  -bufferSizeInKb  Q16@0:8
+  -cliqueAdvanceReason  B16@0:8
+  -cliqueTraceLevel  Q16@0:8
+  -countPeriod  Q16@0:8
+  -emitThreadControlFlow  Q16@0:8
+  -eslInstTracing  Q16@0:8
+  -grcOptions  @16@0:8
+  -grcTrigger  @16@0:8
+  -initForMinModeTimeline  @16@0:8
+  -initForProfiling  @16@0:8
+  -initForProfilingConfigurationDetermination  @16@0:8
+  -initForTimelineConfigurationDetermination  @16@0:8
+  -mGPUMask  Q16@0:8
+  -overrideCliqueAdvanceReason  B16@0:8
+  -overrideCliqueTraceLevel  Q16@0:8
+  -overrideCountPeriod  Q16@0:8
+  -overrideEmitThreadControlFlow  Q16@0:8
+  -overrideEslInstTracing  Q16@0:8
+  -overridePulsePeriod  Q16@0:8
+  -overrideTileTracing  Q16@0:8
+  -readConfig:  v24@0:8@16
+  -setBufferSizeInKb:  v24@0:8Q16
+  -setCliqueAdvanceReason:  v20@0:8B16
+  -setCliqueTraceLevel:  v24@0:8Q16
+  -setEmitPos:  v24@0:8Q16
+  -setEmitThreadControlFlow:  v24@0:8Q16
+  -setEslInstTracing:  v24@0:8Q16
+  -setMGPUMask:  v24@0:8Q16
+  -setOverrideCliqueTraceLevel:  v24@0:8Q16
+  -setOverrideCountPeriod:  v24@0:8Q16
+  -setOverrideEmitPos:  v24@0:8Q16
+  -setOverrideEmitThreadControlFlow:  v24@0:8Q16
+  -setOverrideEslInstTracing:  v24@0:8Q16
+  -setOverridePulsePeriod:  v24@0:8Q16
+  -setOverrideTileTracing:  v24@0:8Q16
+  -setSubSamplingMinTraced:  v24@0:8Q16
+  -setSubSamplingTargetThreshold:  v24@0:8Q16
+  -setSyncDrainMode:  v24@0:8Q16
+  -setSystemTimePeriod:  v24@0:8Q16
+  -setUscMaskPerMGPU:  v24@0:8@16
+  -setUscNumPerMGPU:  v24@0:8Q16
+  -subSamplingMinTraced  Q16@0:8
+  -subSamplingTargetThreshold  Q16@0:8
+  -syncDrainMode  Q16@0:8
+  -systemTimePeriod  Q16@0:8
+  -tileTracing  Q16@0:8
+  -uscMaskPerMGPU  @16@0:8
+  -uscNumPerMGPU  Q16@0:8
+
+=== GTIntKeyedDictionary_replayer (instanceSize 16) ===
+  -removeObjectForKey:  v24@0:8@16
+  -enumerateKeysAndObjectsUsingBlock:  v24@0:8@?16
+  -objectForKey:  @24@0:8@16
+  -removeAllObjects  v16@0:8
+  -initWithCoder:  @24@0:8@16
+  -allKeys  @16@0:8
+  -setObject:forKey:  v32@0:8@16@24
+  -count  Q16@0:8
+  -initWithCapacity:  @24@0:8Q16
+  -init  @16@0:8
+  -dealloc  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initWithIntKeyedDictionary:  @24@0:8@16
+  -objectForIntKey:  @24@0:8q16
+  -removeObjectForIntKey:  v24@0:8q16
+  -setObject:forIntKey:  v32@0:8@16q24
+
+=== GTLabelCache (instanceSize 24) ===
+  -initWithDataSource:  @24@0:8r^{GTMTLReplayDataSource=^{GTCaptureArchive}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{GTSMMTLContext}@^{GTMTLCaptureDescriptorInternal}^{GTTraceContext}{GTRange=QQ}{?={GTRange=QQ}{GTRange=QQ}{GTRange=QQ}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}}{?=^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_array_header_t}^{apr_array_header_t}}{GTError=Ii(?={?=***Q}{?=QQ*}{?=**}{?=QQ*})^{GTError}}^{GTMTLCaptureEnvironment}^vb1b1b1b1b1b59}16
+  -.cxx_destruct  v16@0:8
+  -objectLabelForStreamRef:functionIndex:  @32@0:8Q16Q24
+
+=== GTLaunchRequest (instanceSize 48) ===
+  -setSessionUUID:  v24@0:8@16
+  -setArguments:  v24@0:8@16
+  -sessionUUID  @16@0:8
+  -setEnvironment:  v24@0:8@16
+  -deviceUDID  @16@0:8
+  -arguments  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -environment  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDeviceUDID:  v24@0:8@16
+  -disableDisplay  B16@0:8
+  -preferXPCService  B16@0:8
+  -setDisableDisplay:  v20@0:8B16
+  -setPreferXPCService:  v20@0:8B16
+
+=== GTLaunchServiceXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -foregroundService:error:  B32@0:8Q16^@24
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -launchDebugService:error:  B32@0:8@16^@24
+  -launchMLReplayService:error:  B32@0:8@16^@24
+  -launchReplayService:error:  B32@0:8@16^@24
+  -processStateForService:completionHandler:  v32@0:8Q16@?24
+  -resumeService:error:  B32@0:8Q16^@24
+  -symbolicatorForService:completionHandler:  v32@0:8Q16@?24
+
+=== GTLocalXPCConnection (instanceSize 48) ===
+  -sendMessage:  v24@0:8@16
+  -connection  @16@0:8
+  -setError:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -cancel  v16@0:8
+  -error  @16@0:8
+  -sendMessage:replyHandler:  v32@0:8@16@?24
+  -sendMessageWithReplySync:  @24@0:8@16
+  -isTrusted  B16@0:8
+  -activateWithMessageHandler:andErrorHandler:  v32@0:8@?16@?24
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -registerDispatcher:forPort:  v32@0:8@16Q24
+  -sendMessageWithReplySync:error:  @32@0:8@16^@24
+  -deregisterDispatcher:  v24@0:8Q16
+  -initWithTransactionScopedXPCConnection:messageQueue:  @32@0:8@16@24
+  -initWithXPCConnection:messageQueue:  @32@0:8@16@24
+  -registerDispatcher:  Q24@0:8@16
+  -sendMessageAndWaitForDelivery:  v24@0:8@16
+
+=== GTLoopbackReplyStream (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithCallback:  @24@0:8@?16
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -dispatcherId  Q16@0:8
+  -setDispatcherId:  v24@0:8Q16
+
+=== GTLoopbackService (instanceSize 16) ===
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -echo:  @24@0:8@16
+  -echo:completionHandler:  v32@0:8@16@?24
+  -echo:repeat:callback:  v40@0:8@16Q24@?32
+  -echo:repeat:callback:complete:  v48@0:8@16Q24@?32@?40
+
+=== GTLoopbackServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -echo_:replyConnection:  v32@0:8@16@24
+  -echo_completionHandler_:replyConnection:  v32@0:8@16@24
+  -echo_repeat_callback_:replyConnection:  v32@0:8@16@24
+  -echo_repeat_callback_complete_:replyConnection:  v32@0:8@16@24
+
+=== GTLoopbackServiceXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -echo:  @24@0:8@16
+  -echo:completionHandler:  v32@0:8@16@?24
+  -echo:repeat:callback:  v40@0:8@16Q24@?32
+  -echo:repeat:callback:complete:  v48@0:8@16Q24@?32@?40
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+
+=== GTMLFunctionDescriptor (instanceSize 40) ===
+  -input  @16@0:8
+  -setInput:  v24@0:8@16
+  -output  @16@0:8
+  -setName:  v24@0:8@16
+  -state  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -name  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setOutput:  v24@0:8@16
+  -setState:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTMLReplayCompileIdentifiers (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -delegateId  Q16@0:8
+  -odixId  Q16@0:8
+  -setDelegateId:  v24@0:8Q16
+  -setOdixId:  v24@0:8Q16
+
+=== GTMLReplayErrorReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyError_:replyConnection:  v32@0:8@16@24
+
+=== GTMLReplayFetchDeviceCapabilities (instanceSize 32) ===
+  -setCompletionHandler:  v24@0:8@?16
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+
+=== GTMLReplayFetchDeviceCapabilitiesResponse (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -socName  @16@0:8
+  -setSocName:  v24@0:8@16
+
+=== GTMLReplayFetchInputs (instanceSize 48) ===
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -entryPoint  @16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setEntryPoint:  v24@0:8@16
+  -fetchInputContents  B16@0:8
+  -setFetchInputContents:  v20@0:8B16
+
+=== GTMLReplayFetchInputsResponse (instanceSize 40) ===
+  -inputs  @16@0:8
+  -setInputs:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTMLReplayFetchIntermediates (instanceSize 56) ===
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -entryPoint  @16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setEntryPoint:  v24@0:8@16
+  -compileIdentifiers  @16@0:8
+  -intermediateHandler  @?16@0:8
+  -setCompileIdentifiers:  v24@0:8@16
+  -setIntermediateHandler:  v24@0:8@?16
+
+=== GTMLReplayFetchModelInfo (instanceSize 32) ===
+  -setCompletionHandler:  v24@0:8@?16
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+
+=== GTMLReplayFetchModelInfoResponse (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -modelInfo  @16@0:8
+  -setModelInfo:  v24@0:8@16
+
+=== GTMLReplayFetchViewerGraph (instanceSize 40) ===
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -entryPoint  @16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setEntryPoint:  v24@0:8@16
+
+=== GTMLReplayFetchViewerGraphResponse (instanceSize 40) ===
+  -graphData  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setGraphData:  v24@0:8@16
+
+=== GTMLReplayInput (instanceSize 24) ===
+  -setName:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -name  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -tensor  @16@0:8
+  -setTensor:  v24@0:8@16
+
+=== GTMLReplayIntermediate (instanceSize 56) ===
+  -setIndex:  v24@0:8q16
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -index  q16@0:8
+  -.cxx_destruct  v16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -tensor  @16@0:8
+  -compileIds  @16@0:8
+  -intermediateId  @16@0:8
+  -intermediateType  q16@0:8
+  -setCompileIds:  v24@0:8@16
+  -setIntermediateId:  v24@0:8@16
+  -setIntermediateType:  v24@0:8q16
+  -setTensor:  v24@0:8@16
+
+=== GTMLReplayIntermediateCounter (instanceSize 16) ===
+  -increment  v16@0:8
+  -count  q16@0:8
+  -init  @16@0:8
+
+=== GTMLReplayIntermediateStreamDispatcher (instanceSize 32) ===
+  -initWithHandler:  @24@0:8@?16
+  -.cxx_destruct  v16@0:8
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -dispatcherId  Q16@0:8
+  -setDispatcherId:  v24@0:8Q16
+  -waitForReplies:error:  B32@0:8q16^@24
+
+=== GTMLReplayLoadCapture (instanceSize 40) ===
+  -assetURL  @16@0:8
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -setAssetURL:  v24@0:8@16
+
+=== GTMLReplayLoadInference (instanceSize 48) ===
+  -sessionId  Q16@0:8
+  -setSessionId:  v24@0:8Q16
+  -setCompletionHandler:  v24@0:8@?16
+  -setSessionID:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -sessionID  Q16@0:8
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setInferenceId:  v24@0:8Q16
+  -inferenceId  Q16@0:8
+  -setInferenceID:  v24@0:8Q16
+  -inferenceID  Q16@0:8
+
+=== GTMLReplayLoadInputs (instanceSize 48) ===
+  -inputs  @16@0:8
+  -setInputs:  v24@0:8@16
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -entryPoint  @16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setEntryPoint:  v24@0:8@16
+
+=== GTMLReplayLoadModel (instanceSize 64) ===
+  -assetURL  @16@0:8
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -setAssetURL:  v24@0:8@16
+  -allowedUnitKinds  Q16@0:8
+  -delegateType  q16@0:8
+  -preferredUnitKind  Q16@0:8
+  -setAllowedUnitKinds:  v24@0:8Q16
+  -setDelegateType:  v24@0:8q16
+  -setPreferredUnitKind:  v24@0:8Q16
+
+=== GTMLReplayModelInfo (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -setFunctions:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -entryPoint  @16@0:8
+  -functions  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setEntryPoint:  v24@0:8@16
+
+=== GTMLReplayRequest (instanceSize 24) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setVersion:  v24@0:8Q16
+  -setRequestId:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -version  Q16@0:8
+  -requestId  Q16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTMLReplayResponse (instanceSize 32) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -initWithRequest:  @24@0:8@16
+  -setVersion:  v24@0:8Q16
+  -setRequestId:  v24@0:8Q16
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -version  Q16@0:8
+  -requestId  Q16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTMLReplayServiceObserver (instanceSize 32) ===
+  -notifyError:  v24@0:8@16
+
+=== GTMLReplayServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -loadInference_:replyConnection:  v32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -fetchDeviceCapabilities_:replyConnection:  v32@0:8@16@24
+  -fetchInputs_:replyConnection:  v32@0:8@16@24
+  -fetchIntermediates_:replyConnection:  v32@0:8@16@24
+  -fetchModelInfo_:replyConnection:  v32@0:8@16@24
+  -fetchViewerGraph_:replyConnection:  v32@0:8@16@24
+  -loadCapture_:replyConnection:  v32@0:8@16@24
+  -loadInputs_:replyConnection:  v32@0:8@16@24
+  -loadModel_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -terminateProcess:replyConnection:  v32@0:8@16@24
+
+=== GTMLReplayServiceXPCProxy (instanceSize 88) ===
+  -processInfo  @16@0:8
+  -deviceUDID  @16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -serviceProperties  @16@0:8
+  -loadModel:  @24@0:8@16
+  -servicePort  Q16@0:8
+  -terminateProcess  v16@0:8
+  -initWithConnection:serviceInfo:  @32@0:8@16@24
+  -deregisterObserver:  v24@0:8Q16
+  -fetchModelInfo:  @24@0:8@16
+  -fetchDeviceCapabilities:  @24@0:8@16
+  -fetchInputs:  @24@0:8@16
+  -fetchIntermediates:  @24@0:8@16
+  -fetchViewerGraph:  @24@0:8@16
+  -loadCapture:  @24@0:8@16
+  -loadInference:  @24@0:8@16
+  -loadInputs:  @24@0:8@16
+
+=== GTMLReplayToken (instanceSize 32) ===
+  -completed  v16@0:8
+  -waitUntilCompleted  v16@0:8
+  -.cxx_destruct  v16@0:8
+  -cancel  B16@0:8
+  -requestId  Q16@0:8
+  -initWithService:requestId:  @32@0:8@16Q24
+
+=== GTMLReplayXPCMessage (instanceSize 56) ===
+  -finish  v16@0:8
+  -handleError:  v24@0:8@16
+  -setToken:  v24@0:8@16
+  -setRequest:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -send:  v24@0:8@16
+  -request  @16@0:8
+  -token  @16@0:8
+  -handleReply:error:  v32@0:8@16@24
+  -initWithRequest:completionHandler:response:service:selectorName:  @56@0:8@16@?24@32@40r*48
+  -send:withReplyStreamId:rawReplyHandler:  v40@0:8@16Q24@?32
+  -serializeRequest  v16@0:8
+
+=== GTMLTensor (instanceSize 24) ===
+  -setData:  v24@0:8@16
+  -setFormat:  v24@0:8q16
+  -format  q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+
+=== GTMLValueDescriptor (instanceSize 48) ===
+  -setDimensions:  v24@0:8@16
+  -setName:  v24@0:8@16
+  -setDataType:  v24@0:8q16
+  -valueType  q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -name  @16@0:8
+  -dataType  q16@0:8
+  -pixelFormatType  Q16@0:8
+  -.cxx_destruct  v16@0:8
+  -dimensions  @16@0:8
+  -setValueType:  v24@0:8q16
+  -encodeWithCoder:  v24@0:8@16
+  -setPixelFormatType:  v24@0:8Q16
+
+=== GTMTLCaptureServiceObserver (instanceSize 32) ===
+  -notifyCaptureObjectsChanged:  v24@0:8@16
+  -notifyCaptureProgress:  v24@0:8@16
+  -notifyCaptureRequest:  v24@0:8@16
+  -notifyUnsupportedFenum:  v24@0:8@16
+
+=== GTMTLCaptureServiceReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyCaptureObjectsChanged_:replyConnection:  v32@0:8@16@24
+  -notifyCaptureProgress_:replyConnection:  v32@0:8@16@24
+  -notifyCaptureRequest_:replyConnection:  v32@0:8@16@24
+  -notifyUnsupportedFenum_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLCaptureServiceXPCDispatcher (instanceSize 32) ===
+  -.cxx_destruct  v16@0:8
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -initWithService:properties:notifyConnection:  @40@0:8@16@24@32
+  -nextRequestID:replyConnection:  v32@0:8@16@24
+  -query_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -startWithDescriptor_completionHandler_:replyConnection:  v32@0:8@16@24
+  -stop:replyConnection:  v32@0:8@16@24
+  -update_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLCaptureServiceXPCProxy (instanceSize 40) ===
+  -abort  v16@0:8
+  -update:  @24@0:8@16
+  -respondsToSelector:  B24@0:8:16
+  -stop  v16@0:8
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -resume  v16@0:8
+  -serviceProperties  @16@0:8
+  -nextRequestID  Q16@0:8
+  -query:  @24@0:8@16
+  -deregisterObserver:  v24@0:8Q16
+  -createCaptureDescriptor  @16@0:8
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -startWithDescriptor:completionHandler:  @32@0:8@16@?24
+
+=== GTMTLDiagnosticsService (instanceSize 16) ===
+  -registerObserver:  Q24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -deregisterObserver:  v24@0:8Q16
+  -deregisterObserversForConnection:path:  v32@0:8@16@24
+  -notifyCommandBufferIssue:  v24@0:8@16
+  -notifyDiagnosticsIssue:  v24@0:8@16
+  -raiseRuntimeIssue:  v24@0:8@16
+
+=== GTMTLDiagnosticsServiceObserver (instanceSize 32) ===
+  -notifyCommandBufferIssue:  v24@0:8@16
+  -notifyDiagnosticsIssue:  v24@0:8@16
+
+=== GTMTLDiagnosticsServiceReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyCommandBufferIssue_:replyConnection:  v32@0:8@16@24
+  -notifyDiagnosticsIssue_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLDiagnosticsServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -raiseRuntimeIssue_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLDiagnosticsServiceXPCProxy (instanceSize 32) ===
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -deregisterObserver:  v24@0:8Q16
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -raiseRuntimeIssue:  v24@0:8@16
+
+=== GTMTLFXTracingDelegate (instanceSize 24) ===
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -scaler:didCreateBlitCommandEncoder:forEncode:  v40@0:8@16@24Q32
+  -scaler:didCreateComputeCommandEncoder:forEncode:  v40@0:8@16@24Q32
+  -scaler:didCreateRenderCommandEncoder:forEncode:  v40@0:8@16@24Q32
+  -_addEncoderInfo:  v20@0:8I16
+  -functionIndex  Q16@0:8
+  -mtlfxTracingInfo  @16@0:8
+  -setFunctionIndex:  v24@0:8Q16
+
+=== GTMTLReplayActivity (instanceSize 40) ===
+  -initWithType:  @24@0:8@16
+  -endTime  Q16@0:8
+  -setEndTime:  v24@0:8Q16
+  -summary  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -messageSerial  I16@0:8
+  -outputToLog:  v24@0:8@16
+  -previousActivity  @16@0:8
+  -setPreviousActivity:  v24@0:8@16
+  -signpostIntervalBegin:  v24@0:8Q16
+
+=== GTMTLReplayActivityCollectCounters (instanceSize 64) ===
+  -summary  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -initWithCounters:statLocations:index:  @40@0:8@16Q24Q32
+  -messageSerial  I16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityDebugFuncStop (instanceSize 56) ===
+  -summary  @16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -initWithCurrentIndex:targetIndex:  @32@0:8{?=II}16{?=II}24
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityDisplayAttachment (instanceSize 48) ===
+  -summary  @16@0:8
+  -initWithIndex:  @24@0:8{?=II}16
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityHarvestResourceObject (instanceSize 48) ===
+  -initWithAttributes:  @24@0:8@16
+  -summary  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityLoadArchive (instanceSize 48) ===
+  -initWithPath:  @24@0:8@16
+  -summary  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityLog (instanceSize 48) ===
+  -initWithLog:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -init:  @20@0:8B16
+  -enterActivity:  v24@0:8@16
+  -enterArgumentBufferDownload  v16@0:8
+  -enterArgumentBufferUpload  v16@0:8
+  -enterCollectCounters:statLocations:withIndex:  v40@0:8@16Q24Q32
+  -enterDebugFuncStopFromIndex:toIndex:  v32@0:8{?=II}16{?=II}24
+  -enterDisplayAttachmentAtIndex:  v24@0:8{?=II}16
+  -enterHarvestResourceObjectWithAttributes:  v24@0:8@16
+  -enterLoadArchiveWithPath:  v24@0:8@16
+  -enterMessage:  v24@0:8@16
+  -enterOptimizeRestores  v16@0:8
+  -enterPerformFrameTimingForIndex:  v20@0:8i16
+  -enterRestoreCommandBufferAtIndex:  v20@0:8I16
+  -enterRestoreResources:count:  v28@0:8r^{GTResourceRestoreRequest=QQQ*(?={?=QQ}{?={GTMTLTensorSlice={GTMTLTensorExtents=Q[16Q]}{GTMTLTensorExtents=Q[16Q]}}{GTMTLTensorExtents=Q[16Q]}CC[6c]}{?=SS[3S][3S]IIISCC}{?=II}{?=^{GTMTLAccelerationStructureDescriptor}Q^QIB[3c]})}16i24
+  -enterRewind  v16@0:8
+  -getBreadcrumbSummary  @16@0:8
+  -getBreadcrumbsAsJSON  @16@0:8
+  -gputracePath  @16@0:8
+  -leaveActivity  v16@0:8
+  -logActivitiesToFile:  v24@0:8@16
+  -logCommandBuffer:atIndex:  v28@0:8@16I24
+  -logCommandBuffer:withKey:  v32@0:8@16Q24
+  -logMTL4Queue:commit:options:atIndex:  v44@0:8@16@24@32I40
+  -logMTL4Queue:commit:options:withKeys:  v48@0:8@16@24@32@40
+  -logSharedCommandBuffer:  v24@0:8@16
+
+=== GTMTLReplayActivityMessage (instanceSize 48) ===
+  -initWithMessage:  @24@0:8@16
+  -summary  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -messageSerial  I16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityPerformFrameTiming (instanceSize 48) ===
+  -summary  @16@0:8
+  -initWithIndex:  @20@0:8i16
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -messageSerial  I16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityRestoreCommandBuffer (instanceSize 48) ===
+  -summary  @16@0:8
+  -initWithIndex:  @20@0:8I16
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -outputToLog:  v24@0:8@16
+
+=== GTMTLReplayActivityRestoreResources (instanceSize 56) ===
+  -summary  @16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -jsonObject  @16@0:8
+  -initWithRequests:count:  @28@0:8r^{GTResourceRestoreRequest=QQQ*(?={?=QQ}{?={GTMTLTensorSlice={GTMTLTensorExtents=Q[16Q]}{GTMTLTensorExtents=Q[16Q]}}{GTMTLTensorExtents=Q[16Q]}CC[6c]}{?=SS[3S][3S]IIISCC}{?=II}{?=^{GTMTLAccelerationStructureDescriptor}Q^QIB[3c]})}16i24
+  -outputToLog:  v24@0:8@16
+  -signpostIntervalBegin:  v24@0:8Q16
+
+=== GTMTLReplayErrorReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyError_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLReplayObjectMap (instanceSize 648) ===
+  -initWithDevice:  @24@0:8@16
+  -resources  @16@0:8
+  -interfaceOrientation  q16@0:8
+  -setInterfaceOrientation:  v24@0:8q16
+  -.cxx_destruct  v16@0:8
+  -contentRect  {CGRect={CGPoint=dd}{CGSize=dd}}16@0:8
+  -libraries  @16@0:8
+  -dynamicLibraries  @16@0:8
+  -resourceForKey:  @24@0:8Q16
+  -defaultDevice  @16@0:8
+  -eventForKey:  @24@0:8Q16
+  -defaultCommandQueue  @16@0:8
+  -windowRect  {CGRect={CGPoint=dd}{CGSize=dd}}16@0:8
+  -layerForKey:  @24@0:8Q16
+  -setLayer:forKey:  v32@0:8@16Q24
+  -MPSExternalCNNPoolingMaxForKey:  @24@0:8Q16
+  -MPSExternalCNNConvolutionForKey:  @24@0:8Q16
+  -MPSExternalCNNDilatedPoolingMaxForKey:  @24@0:8Q16
+  -MPSExternalCNNPoolingAverageForKey:  @24@0:8Q16
+  -MPSExternalCNNUnaryForKey:  @24@0:8Q16
+  -MPSExternalMatrixMultiplicationForKey:  @24@0:8Q16
+  -MPSExternalNDArrayBinaryGradientForKey:  @24@0:8Q16
+  -MPSMatrixPluginForKey:  @24@0:8Q16
+  -MPSNeuralNetworkPluginForKey:  @24@0:8Q16
+  -logStateForKey:  @24@0:8Q16
+  -setHeap:forKey:  v32@0:8@16Q24
+  -setMTL4FXTemporalScaler:forKey:  v32@0:8@16Q24
+  -setObjectPayloadBinding:forKey:  v32@0:8@16Q24
+  -setVisibleFunctionTable:forKey:  v32@0:8@16Q24
+  -MPSExternalNDArrayBinaryForKey:  @24@0:8Q16
+  -MPSExternalCNNBinaryForKey:  @24@0:8Q16
+  -MPSExternalCNNConvolutionGradientForKey:  @24@0:8Q16
+  -MPSExternalCNNNeuronForKey:  @24@0:8Q16
+  -MPSExternalCNNSoftMaxForKey:  @24@0:8Q16
+  -MPSExternalMatrixFullyConnectedForKey:  @24@0:8Q16
+  -MPSExternalMatrixVectorMultiplicationForKey:  @24@0:8Q16
+  -MPSExternalNDArrayConvolution2DGradientForKey:  @24@0:8Q16
+  -MPSNDArrayPluginForKey:  @24@0:8Q16
+  -defaultCompiler  @16@0:8
+  -drawableForKey:  @24@0:8Q16
+  -executeIndirectCommandBufferMap  @16@0:8
+  -functionForKey:  @24@0:8Q16
+  -globalTraceIdForEncoder:ofType:  I28@0:8Q16B24
+  -ioScratchBufferAllocatorForKey:  @24@0:8Q16
+  -motionEstimationPipelineForKey:  @24@0:8Q16
+  -mtl4RenderCommandEncoderForKey:  @24@0:8Q16
+  -removeBlitCommandEncoderForKey:  v24@0:8Q16
+  -setComputePipelineState:forKey:  v32@0:8@16Q24
+  -setMTL4CommandAllocator:forKey:  v32@0:8@16Q24
+  -setRasterizationRateMap:forKey:  v32@0:8@16Q24
+  -setRenderCommandEncoder:forKey:  v32@0:8@16Q24
+  -setTextureViewPoolEntry:forKey:  v32@0:8@16Q24
+  -accelerationStructureCommandEncoderForKey:  @24@0:8Q16
+  -accelerationStructureForKey:  @24@0:8Q16
+  -accelerationStructurePassDescriptorMap  @16@0:8
+  -addGlobalResidencySetToMTL4Queue:  v24@0:8@16
+  -addGlobalResidencySetToQueue:  v24@0:8@16
+  -addToGlobalResidencySet:  v24@0:8@16
+  -addUnusedResourceKey:  v24@0:8Q16
+  -allocationForKey:  @24@0:8Q16
+  -archiveMap  @16@0:8
+  -argumentEncoderForKey:  @24@0:8Q16
+  -binaryArchiveForKey:  @24@0:8Q16
+  -blitCommandEncoderForKey:  @24@0:8Q16
+  -blitPassDescriptorMap  @16@0:8
+  -bufferForHeapKey:  @24@0:8Q16
+  -bufferForKey:  @24@0:8Q16
+  -cleanUpResidencySet:  v24@0:8@16
+  -commandBufferForKey:  @24@0:8Q16
+  -commandQueueForKey:  @24@0:8Q16
+  -commitCommandBuffers:  v24@0:8^{GTMTLReplayController=^{GTMTLReplayDataSource}@@@^{GTMTLReplayDeviceInfo}^{GTMTLCoreSync}{GTMTLReplayHazardTracker=^{apr_hash_t}}@@@@@@@@@@@@@@@@@{?=@}^{GTCaptureArchiveDecompressor}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}QQ{?=II}(?={?=ii}Q){?=^{apr_hash_t}}{?=^{apr_array_header_t}AiAi@@}{?=@^{apr_hash_t}^{apr_hash_t}}@@i[4c][0{GTMTLReplayThreadData=^{_opaque_pthread_t}^{GTMTLReplayController}^{apr_hash_t}}]}16
+  -commitCommandBuffers:mtl4CompletionHandler:  v32@0:8^{GTMTLReplayController=^{GTMTLReplayDataSource}@@@^{GTMTLReplayDeviceInfo}^{GTMTLCoreSync}{GTMTLReplayHazardTracker=^{apr_hash_t}}@@@@@@@@@@@@@@@@@{?=@}^{GTCaptureArchiveDecompressor}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}QQ{?=II}(?={?=ii}Q){?=^{apr_hash_t}}{?=^{apr_array_header_t}AiAi@@}{?=@^{apr_hash_t}^{apr_hash_t}}@@i[4c][0{GTMTLReplayThreadData=^{_opaque_pthread_t}^{GTMTLReplayController}^{apr_hash_t}}]}16@?24
+  -computeCommandEncoderForKey:  @24@0:8Q16
+  -computePassDescriptorMap  @16@0:8
+  -computePipelineDescriptorMap  @16@0:8
+  -computePipelineStateForKey:  @24@0:8Q16
+  -counterSampleBufferForKey:  @24@0:8Q16
+  -defaultCommandQueue4  @16@0:8
+  -depthStencilStateForKey:  @24@0:8Q16
+  -deviceForKey:  @24@0:8Q16
+  -dynamicLibraryForKey:  @24@0:8Q16
+  -encodedCommandBuffers  @16@0:8
+  -encoderForKey:ofType:  @28@0:8Q16I24
+  -fenceForKey:  @24@0:8Q16
+  -frameInterpolatorForKey:  @24@0:8Q16
+  -functionHandleForKey:  @24@0:8Q16
+  -functionMap  @16@0:8
+  -functionPointerHandleForKey:  @24@0:8Q16
+  -functionPrivateArgumentForKey:  @24@0:8Q16
+  -globalResourceResidencySet  @16@0:8
+  -heapForKey:  @24@0:8Q16
+  -indirectCommandBufferForKey:  @24@0:8Q16
+  -indirectComputeCommandForKey:  @24@0:8Q16
+  -indirectRenderCommandForKey:  @24@0:8Q16
+  -intersectionFunctionTableForKey:  @24@0:8Q16
+  -ioCommandBufferForKey:  @24@0:8Q16
+  -ioCommandQueueForKey:  @24@0:8Q16
+  -ioScratchBufferForKey:  @24@0:8Q16
+  -iosurfaceForProperties:  @24@0:8@16
+  -lateEvalEventForKey:  @24@0:8Q16
+  -libraryForKey:  @24@0:8Q16
+  -logStateMap  @16@0:8
+  -mtl4ArchiveForKey:  @24@0:8Q16
+  -mtl4ArgumentTableForKey:  @24@0:8Q16
+  -mtl4BinaryFunctionForKey:  @24@0:8Q16
+  -mtl4CommandAllocatorForKey:  @24@0:8Q16
+  -mtl4CommandBufferForKey:  @24@0:8Q16
+  -mtl4CommandQueueForKey:  @24@0:8Q16
+  -mtl4CompilerForKey:  @24@0:8Q16
+  -mtl4ComputeCommandEncoderForKey:  @24@0:8Q16
+  -mtl4MachineLearningCommandEncoderForKey:  @24@0:8Q16
+  -mtl4MachineLearningPipelineStateForKey:  @24@0:8Q16
+  -mtl4OpenCommandBufferForKey:  @24@0:8Q16
+  -mtl4fxFrameInterpolatorForKey:  @24@0:8Q16
+  -mtl4fxSpatialScalerForKey:  @24@0:8Q16
+  -mtl4fxTemporalDenoisedScalerForKey:  @24@0:8Q16
+  -mtl4fxTemporalScalerForKey:  @24@0:8Q16
+  -newTemporaryArgumentTable:  @24@0:8@16
+  -objectPayloadBindingForKey:  @24@0:8Q16
+  -parallelRenderCommandEncoderForKey:  @24@0:8Q16
+  -pipelineLibraryForKey:  @24@0:8Q16
+  -presentDrawableWithKey:  v24@0:8Q16
+  -rasterizationRateMapForKey:  @24@0:8Q16
+  -removeAccelerationStructureCommandEncoderForKey:  v24@0:8Q16
+  -removeAccelerationStructureForKey:  v24@0:8Q16
+  -removeAliasableResourceForKey:  v24@0:8@16
+  -removeArgumentEncoderForKey:  v24@0:8Q16
+  -removeBinaryArchiveForKey:  v24@0:8Q16
+  -removeBinaryLibraryForKey:  v24@0:8Q16
+  -removeBufferForHeapKey:  v24@0:8Q16
+  -removeBufferForKey:  v24@0:8Q16
+  -removeCommandBufferForKey:  v24@0:8Q16
+  -removeCommandQueueForKey:  v24@0:8Q16
+  -removeComputeCommandEncoderForKey:  v24@0:8Q16
+  -removeComputePipelineStateForKey:  v24@0:8Q16
+  -removeCounterSampleBuffer:  v24@0:8Q16
+  -removeCounterSampleBufferForKey:  v24@0:8Q16
+  -removeDeadlineProfileForKey:  v24@0:8Q16
+  -removeDepthStencilStateForKey:  v24@0:8Q16
+  -removeDeviceForKey:  v24@0:8Q16
+  -removeDynamicLibraryForKey:  v24@0:8Q16
+  -removeEventForKey:  v24@0:8Q16
+  -removeFenceForKey:  v24@0:8Q16
+  -removeFrameInterpolatorForKey:  v24@0:8Q16
+  -removeFunctionForKey:  v24@0:8Q16
+  -removeFunctionHandleForKey:  v24@0:8Q16
+  -removeFunctionPointerHandleForKey:  v24@0:8Q16
+  -removeFunctionPrivateArgumentForKey:  v24@0:8Q16
+  -removeHeapForKey:  v24@0:8Q16
+  -removeIOCommandBufferForKey:  v24@0:8Q16
+  -removeIOCommandQueueForKey:  v24@0:8Q16
+  -removeIOScratchBufferAllocatorForKey:  v24@0:8Q16
+  -removeIOScratchBufferForKey:  v24@0:8Q16
+  -removeIndirectCommandBufferForKey:  v24@0:8Q16
+  -removeIndirectComputeCommandForKey:  v24@0:8Q16
+  -removeIndirectRenderCommandForKey:  v24@0:8Q16
+  -removeIntersectionFunctionTableForKey:  v24@0:8Q16
+  -removeLateEvalEventForKey:  v24@0:8Q16
+  -removeLibraryForKey:  v24@0:8Q16
+  -removeLogStateForKey:  v24@0:8Q16
+  -removeMPSExternalPluginBaseForKey:  v24@0:8Q16
+  -removeMTL4ArgumentTableForKey:  v24@0:8Q16
+  -removeMTL4BinaryFunction:  v24@0:8Q16
+  -removeMTL4CommandAllocatorForKey:  v24@0:8Q16
+  -removeMTL4CommandBufferForKey:  v24@0:8Q16
+  -removeMTL4CommandQueueForKey:  v24@0:8Q16
+  -removeMTL4CompilerForKey:  v24@0:8Q16
+  -removeMTL4ComputeCommandEncoderForKey:  v24@0:8Q16
+  -removeMTL4FXFrameInterpolatorForKey:  v24@0:8Q16
+  -removeMTL4FXSpatialScalerForKey:  v24@0:8Q16
+  -removeMTL4FXTemporalDenoisedScalerForKey:  v24@0:8Q16
+  -removeMTL4FXTemporalScalerForKey:  v24@0:8Q16
+  -removeMTL4MachineLearningCommandEncoderForKey:  v24@0:8Q16
+  -removeMTL4MachineLearningPipelineStateForKey:  v24@0:8Q16
+  -removeMTL4OpenCommandBufferForKey:  v24@0:8Q16
+  -removeMTL4RenderCommandEncoderForKey:  v24@0:8Q16
+  -removeMotionEstimationPipelineForKey:  v24@0:8Q16
+  -removeObjectPayloadBindingForKey:  v24@0:8Q16
+  -removeParallelRenderCommandEncoderForKey:  v24@0:8Q16
+  -removePipelineLibraryForKey:  v24@0:8Q16
+  -removeRasterizationRateMapForKey:  v24@0:8Q16
+  -removeRenderCommandEncoderForKey:  v24@0:8Q16
+  -removeRenderPipelineStateForKey:  v24@0:8Q16
+  -removeResidencySetForKey:  v24@0:8Q16
+  -removeResourceGroupForKey:  v24@0:8Q16
+  -removeResourceGroupSPIForKey:  v24@0:8Q16
+  -removeResourceStateCommandEncoderForKey:  v24@0:8Q16
+  -removeResourcesForKeys:  v24@0:8@16
+  -removeSamplerStateForKey:  v24@0:8Q16
+  -removeSharedEventForKey:  v24@0:8Q16
+  -removeSpatialScalerForKey:  v24@0:8Q16
+  -removeTemporalDenoisedScalerForKey:  v24@0:8Q16
+  -removeTemporalScalerForKey:  v24@0:8Q16
+  -removeTensorForKey:  v24@0:8Q16
+  -removeTextureForKey:  v24@0:8Q16
+  -removeTextureViewPoolForKey:  v24@0:8Q16
+  -removeVideoCommandEncoderForKey:  v24@0:8Q16
+  -removeVisibleFunctionHandleForKey:  v24@0:8Q16
+  -removeVisibleFunctionTableForKey:  v24@0:8Q16
+  -renderCommandEncoderForKey:  @24@0:8Q16
+  -renderPassDescriptorMap  @16@0:8
+  -renderPassDescriptorMapWithMemorylessSubstitutes:  @24@0:8@16
+  -renderPipelineDescriptorMap  @16@0:8
+  -renderPipelineStateForKey:  @24@0:8Q16
+  -residencySetForKey:  @24@0:8Q16
+  -residencySetIfExistsForKey:  @24@0:8Q16
+  -resourceGroupSPIForKey:  @24@0:8Q16
+  -resourceStateCommandEncoderForKey:  @24@0:8Q16
+  -resourceStatePassDescriptorMap  @16@0:8
+  -resourceViewPoolForKey:  @24@0:8Q16
+  -restoreIndirectCommandBufferDataMap  @16@0:8
+  -samplerStateForKey:  @24@0:8Q16
+  -setAccelerationStructure:forKey:  v32@0:8@16Q24
+  -setAccelerationStructureCommandEncoder:forKey:  v32@0:8@16Q24
+  -setArgumentEncoder:forKey:  v32@0:8@16Q24
+  -setBlitCommandEncoder:forKey:  v32@0:8@16Q24
+  -setBuffer:forHeapKey:  v32@0:8@16Q24
+  -setBuffer:forKey:  v32@0:8@16Q24
+  -setCommandBuffer:forKey:  v32@0:8@16Q24
+  -setCommandQueue:forKey:  v32@0:8@16Q24
+  -setComputeCommandEncoder:forKey:  v32@0:8@16Q24
+  -setContentRect:windowRect:properties:  v88@0:8{CGRect={CGPoint=dd}{CGSize=dd}}16{CGRect={CGPoint=dd}{CGSize=dd}}48@80
+  -setCounterSampleBuffer:forKey:  v32@0:8@16Q24
+  -setDeadlineProfile:forKey:  v32@0:8@16Q24
+  -setDebugCommandEncoder:forKey:  v32@0:8@16Q24
+  -setDefaultCommandQueue4:  v24@0:8@16
+  -setDefaultCommandQueue:  v24@0:8@16
+  -setDefaultCompiler:  v24@0:8@16
+  -setDepthStencilState:forKey:  v32@0:8@16Q24
+  -setDevice:forKey:  v32@0:8@16Q24
+  -setDrawable:forKey:  v32@0:8@16Q24
+  -setDynamicLibrary:forKey:  v32@0:8@16Q24
+  -setDynamicLibrary:forPath:  v32@0:8@16r*24
+  -setEncodedCommandBuffers:  v24@0:8@16
+  -setEvent:forKey:  v32@0:8@16Q24
+  -setFence:forKey:  v32@0:8@16Q24
+  -setFrameInterpolator:forKey:  v32@0:8@16Q24
+  -setFunction:forKey:  v32@0:8@16Q24
+  -setFunctionHandle:forKey:  v32@0:8@16Q24
+  -setFunctionPointerHandle:forKey:  v32@0:8@16Q24
+  -setFunctionPrivateArgument:forKey:  v32@0:8@16Q24
+  -setGlobalResourceResidencySet:  v24@0:8@16
+  -setIOCommandBuffer:forKey:  v32@0:8@16Q24
+  -setIOCommandQueue:forKey:  v32@0:8@16Q24
+  -setIOScratchBuffer:forKey:  v32@0:8@16Q24
+  -setIOScratchBufferAllocator:forKey:  v32@0:8@16Q24
+  -setIndirectCommandBuffer:forKey:  v32@0:8@16Q24
+  -setIndirectComputeCommand:forKey:  v32@0:8@16Q24
+  -setIndirectRenderCommand:forKey:  v32@0:8@16Q24
+  -setIntersectionFunctionTable:forKey:  v32@0:8@16Q24
+  -setLateEvalEvent:forKey:  v32@0:8@16Q24
+  -setLibrary:forKey:  v32@0:8@16Q24
+  -setLogState:forKey:  v32@0:8@16Q24
+  -setMPSExternalPluginBase:forKey:  v32@0:8@16Q24
+  -setMTL4Archive:forKey:  v32@0:8@16Q24
+  -setMTL4ArgumentTable:forKey:  v32@0:8@16Q24
+  -setMTL4BinaryFunction:forKey:  v32@0:8@16Q24
+  -setMTL4CommandBuffer:forKey:  v32@0:8@16Q24
+  -setMTL4CommandQueue:forKey:  v32@0:8@16Q24
+  -setMTL4Compiler:forKey:  v32@0:8@16Q24
+  -setMTL4ComputeCommandEncoder:forKey:  v32@0:8@16Q24
+  -setMTL4FXFrameInterpolator:forKey:  v32@0:8@16Q24
+  -setMTL4FXSpatialScaler:forKey:  v32@0:8@16Q24
+  -setMTL4FXTemporalDenoisedScaler:forKey:  v32@0:8@16Q24
+  -setMTL4MachineLearningCommandEncoder:forKey:  v32@0:8@16Q24
+  -setMTL4MachineLearningPipelineState:forKey:  v32@0:8@16Q24
+  -setMTL4OpenCommandBuffer:forKey:  v32@0:8@16Q24
+  -setMTL4RenderCommandEncoder:forKey:  v32@0:8@16Q24
+  -setMotionEstimationPipeline:forKey:  v32@0:8@16Q24
+  -setParallelRenderCommandEncoder:forKey:  v32@0:8@16Q24
+  -setPipelineLibrarySPI:forKey:  v32@0:8@16Q24
+  -setRenderPipelineState:forKey:  v32@0:8@16Q24
+  -setResidencySet:forKey:  v32@0:8@16Q24
+  -setResourceGroupSPI:forKey:  v32@0:8@16Q24
+  -setResourceStateCommandEncoder:forKey:  v32@0:8@16Q24
+  -setSamplerState:forKey:  v32@0:8@16Q24
+  -setSharedEvent:forKey:  v32@0:8@16Q24
+  -setSharedEventHandle:forKey:  v32@0:8@16Q24
+  -setSpatialScaler:forKey:  v32@0:8@16Q24
+  -setTemporalDenoisedScaler:forKey:  v32@0:8@16Q24
+  -setTemporalScaler:forKey:  v32@0:8@16Q24
+  -setTensor:forKey:  v32@0:8@16Q24
+  -setTexture:forKey:  v32@0:8@16Q24
+  -setTextureViewPool:forKey:  v32@0:8@16Q24
+  -setVideoCommandEncoder:forKey:  v32@0:8@16Q24
+  -sharedEventForKey:  @24@0:8Q16
+  -sharedEventHandleForKey:  @24@0:8Q16
+  -spatialScalerForKey:  @24@0:8Q16
+  -temporalDenoisedScalerForKey:  @24@0:8Q16
+  -temporalScalerForKey:  @24@0:8Q16
+  -temporalScalerMap  @16@0:8
+  -tensorForKey:  @24@0:8Q16
+  -textureForKey:  @24@0:8Q16
+  -textureViewPoolEntryForKey:  @24@0:8Q16
+  -textureViewPoolForKey:  @24@0:8Q16
+  -tryGetTextureForKey:  @24@0:8Q16
+  -unusedResourceKeys  @16@0:8
+  -videoCommandEncoderForKey:  @24@0:8Q16
+  -visibleFunctionTableForKey:  @24@0:8Q16
+  -windowProperties  @16@0:8
+
+=== GTMTLReplayService (instanceSize 64) ===
+  -update:  @24@0:8@16
+  -pause:  B24@0:8Q16
+  -initWithContext:  @24@0:8^{GTMTLReplayClient=^{apr_pool_t}^{GTMTLReplayController}Q{?=QQQdII}{?={?=II}IIfb1b1b1b1b28}@{GTMTLReplayWireframeRenderer=@{GTMTLReplayWireframeRenderPassDescriptor=@@SB[5C]}Q@@@@@@@@@@@@@@@@@}{GTMTLReplayOperationQueues=@@@}@@}16
+  -cancel:  B24@0:8Q16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -fetch:  @24@0:8@16
+  -servicePort  Q16@0:8
+  -resume:  B24@0:8Q16
+  -terminateProcess  v16@0:8
+  -display:  v24@0:8@16
+  -load:error:  B32@0:8@16^@24
+  -decode:  @24@0:8@16
+  -query:  @24@0:8@16
+  -notifyError:  v24@0:8@16
+  -setServicePort:  v24@0:8Q16
+  -deregisterObserver:  v24@0:8Q16
+  -deregisterObserversForConnection:path:  v32@0:8@16@24
+  -broadcastDisconnect:path:  v32@0:8@16@24
+  -fetchInto:  @24@0:8@16
+  -profile:  @24@0:8@16
+  -raytrace:  @24@0:8@16
+  -shaderdebug:  @24@0:8@16
+  -fetchIntoOperation:completionHandler:  v32@0:8@16@?24
+
+=== GTMTLReplayServiceObserver (instanceSize 32) ===
+  -notifyError:  v24@0:8@16
+
+=== GTMTLReplayServiceXPCDispatcher (instanceSize 40) ===
+  -.cxx_destruct  v16@0:8
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -bulkDataService:replyConnection:  v32@0:8@16@24
+  -cancel_:replyConnection:  v32@0:8@16@24
+  -decode_:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -display_:replyConnection:  v32@0:8@16@24
+  -fetchInto_:replyConnection:  v32@0:8@16@24
+  -fetch_:replyConnection:  v32@0:8@16@24
+  -initWithService:properties:bulkDataService:bulkDataServiceProperties:  @48@0:8@16@24@32@40
+  -load_error_:replyConnection:  v32@0:8@16@24
+  -pause_:replyConnection:  v32@0:8@16@24
+  -profile_:replyConnection:  v32@0:8@16@24
+  -query_:replyConnection:  v32@0:8@16@24
+  -raytrace_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -resume_:replyConnection:  v32@0:8@16@24
+  -shaderdebug_:replyConnection:  v32@0:8@16@24
+  -terminateProcess:replyConnection:  v32@0:8@16@24
+  -update_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLReplayServiceXPCProxy (instanceSize 120) ===
+  -processInfo  @16@0:8
+  -update:  @24@0:8@16
+  -pause:  B24@0:8Q16
+  -cancel:  B24@0:8Q16
+  -deviceUDID  @16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -fetch:  @24@0:8@16
+  -serviceProperties  @16@0:8
+  -servicePort  Q16@0:8
+  -resume:  B24@0:8Q16
+  -terminateProcess  v16@0:8
+  -display:  v24@0:8@16
+  -load:error:  B32@0:8@16^@24
+  -decode:  @24@0:8@16
+  -query:  @24@0:8@16
+  -initWithConnection:serviceInfo:  @32@0:8@16@24
+  -deregisterObserver:  v24@0:8Q16
+  -bulkDataProxy  @16@0:8
+  -fetchInto:  @24@0:8@16
+  -flushRpackets  @16@0:8
+  -profile:  @24@0:8@16
+  -raytrace:  @24@0:8@16
+  -shaderdebug:  @24@0:8@16
+
+=== GTMTLReplaySharedBlitBuffer (instanceSize 64) ===
+  -accelerationStructureCommandEncoder  @16@0:8
+  -commandBuffer  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -dealloc  v16@0:8
+  -blitCommandEncoder  @16@0:8
+  -renderCommandEncoderWithDescriptor:  @24@0:8@16
+  -commitCommandBuffer  B16@0:8
+  -releaseBuffer  v16@0:8
+  -resourcePool  @16@0:8
+  -_commitCommandBufferWithLog:sync:controller:  B40@0:8@16^{GTMTLCoreSync=}24^{GTMTLReplayController=^{GTMTLReplayDataSource}@@@^{GTMTLReplayDeviceInfo}^{GTMTLCoreSync}{GTMTLReplayHazardTracker=^{apr_hash_t}}@@@@@@@@@@@@@@@@@{?=@}^{GTCaptureArchiveDecompressor}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}QQ{?=II}(?={?=ii}Q){?=^{apr_hash_t}}{?=^{apr_array_header_t}AiAi@@}{?=@^{apr_hash_t}^{apr_hash_t}}@@i[4c][0{GTMTLReplayThreadData=^{_opaque_pthread_t}^{GTMTLReplayController}^{apr_hash_t}}]}32
+  -bufferWithLength:alignment:  @32@0:8Q16Q24
+  -clearCommandBuffer  v16@0:8
+  -commitCommandBufferAndWait  @16@0:8
+  -commitCommandBufferAndWaitWithLog:  @24@0:8@16
+  -commitCommandBufferWithExternalSync:  B24@0:8^{GTMTLCoreSync=}16
+  -commitCommandBufferWithLog:  B24@0:8@16
+  -initWithCommandQueue:resourcePool:controller:  @40@0:8@16@24^{GTMTLReplayController=^{GTMTLReplayDataSource}@@@^{GTMTLReplayDeviceInfo}^{GTMTLCoreSync}{GTMTLReplayHazardTracker=^{apr_hash_t}}@@@@@@@@@@@@@@@@@{?=@}^{GTCaptureArchiveDecompressor}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}{GTSMMTLCommandEncoder={GTSMMTLObject=IIQQQ^{GTSMMTLObject}}Q*(?=(?={GTSMMTLRenderCommandEncoder=^{GTMTLRenderPassDescriptor}[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[128Q][16Q]QQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}Q[8Q][8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fffff[4f]II[16f][16f][16f][16f][16f][16f][16f][16f][16f][16f]ffIII[31I][31I][31I]IIICCCCCCCCCCC[5c]}{?=^{GTMTLComputePassDescriptor}Q[1Q][1Q](?={?=[31Q][31Q]}{?=[31Q][31Q]})[31Q][128Q][16Q]{?={?=QQQ}{?=QQQ}}Q[31I]III[16f][16f]C[7c]}{?=Q}{?=^{GTMTLBlitPassDescriptor}}{GTSMMTLParallelCommandEncoder=^{GTMTLRenderPassDescriptor}[8Q][8Q]CCCC[4c]}{?=^{GTMTLResourceStatePassDescriptor}}{?=^{GTMTLAccelerationStructurePassDescriptor}})(?={GTSMMTL4RenderCommandEncoder=^{GTMTL4RenderPassDescriptor}[5Q]{?=[31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q][31Q]}QQQ[16{GTMTLViewport=dddddd}]Q[16{GTMTLScissorRect=QQQQ}]Q^{GTMTLVertexAmplificationViewMapping}[8Q]{GTMTLLogicalToPhysicalColorAttachmentMap=[8C]}fff[4f]IIf[31I][31I][31I]IICCCCCCC[5C]}{GTSMMTL4ComputeCommandEncoder=QQ{?=[31Q][31Q]}[31I]II[4c]}{GTSMMTL4MachineLearningCommandEncoder=QQ}))}QQ{?=II}(?={?=ii}Q){?=^{apr_hash_t}}{?=^{apr_array_header_t}AiAi@@}{?=@^{apr_hash_t}^{apr_hash_t}}@@i[4c][0{GTMTLReplayThreadData=^{_opaque_pthread_t}^{GTMTLReplayController}^{apr_hash_t}}]}32
+
+=== GTMTLReplaySharedBufferHeap (instanceSize 24) ===
+  -buffer  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -dealloc  v16@0:8
+  -initWithBuffer:resourcePool:  @32@0:8@16@24
+
+=== GTMTLReplaySharedBufferRange (instanceSize 40) ===
+  -contents  ^v16@0:8
+  -.cxx_destruct  v16@0:8
+  -length  Q16@0:8
+  -data  @16@0:8
+  -dataWithLength:  @24@0:8Q16
+  -initWithBuffer:  @24@0:8@16
+  -heapBuffer  @16@0:8
+  -heapLocation  Q16@0:8
+  -initWithHeap:range:  @40@0:8@16{_NSRange=QQ}24
+  -tensorAlias:  @24@0:8@16
+
+=== GTMTLReplaySharedResourcePool (instanceSize 168) ===
+  -device  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -dealloc  v16@0:8
+  -newTextureWithDescriptor:error:  @32@0:8@16^@24
+  -defaultBufferCapacity  Q16@0:8
+  -initWithDevice:bufferCapacity:  @32@0:8@16Q24
+  -newBufferHeapWithLength:  @24@0:8Q16
+  -reclaimAllocatedSize:  v24@0:8Q16
+  -reclaimBuffer:  v24@0:8@16
+  -releasePooledBuffers  v16@0:8
+  -setMaxPooledBuffers:  v24@0:8Q16
+  -waitUntilCapacity  v16@0:8
+
+=== GTMTLReplaySharedTexture (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -dealloc  v16@0:8
+  -initWithAllocatedSize:resourcePool:  @32@0:8Q16@24
+
+=== GTMTLResourceUsageItem (instanceSize 32) ===
+  -setKind:  v24@0:8Q16
+  -stage  C16@0:8
+  -kind  Q16@0:8
+  -setUsage:  v20@0:8C16
+  -initWithCoder:  @24@0:8@16
+  -setStage:  v20@0:8C16
+  -usage  C16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -resourceID  Q16@0:8
+  -setResourceID:  v24@0:8Q16
+
+=== GTMTLTelemetryServiceObserver (instanceSize 32) ===
+  -notifyStatistics:  v24@0:8@16
+
+=== GTMTLTelemetryServiceReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyStatistics_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLTelemetryServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -initWithService:properties:notifyConnection:  @40@0:8@16@24@32
+  -query_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -update_:replyConnection:  v32@0:8@16@24
+
+=== GTMTLTelemetryServiceXPCProxy (instanceSize 32) ===
+  -update:  @24@0:8@16
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -query:  @24@0:8@16
+  -deregisterObserver:  v24@0:8Q16
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+
+=== GTMTLTextureRenderEncoder (instanceSize 32) ===
+  -setAnchor:  v32@0:8{CGPoint=dd}16
+  -initWithDevice:  @24@0:8@16
+  -commands  @16@0:8
+  -setTransform:  v144@0:8{CATransform3D=dddddddddddddddd}16
+  -device  @16@0:8
+  -reset  v16@0:8
+  -.cxx_destruct  v16@0:8
+  -resetCommand  v16@0:8
+  -drawOverlay:color:shrinkToFit:  v32@0:8@16I24B28
+  -drawOverlay:color:shrinkToFit:waitEvent:waitValue:  v48@0:8@16I24B28@32Q40
+  -drawTexture:isDepthStencil:shrinkToFit:  v32@0:8@16B24B28
+  -drawTexture:isDepthStencil:shrinkToFit:waitEvent:waitValue:  v48@0:8@16B24B28@32Q40
+  -setBounds:contentsScale:  v56@0:8{CGRect={CGPoint=dd}{CGSize=dd}}16d48
+  -setWaitForEvent:value:  v32@0:8@16Q24
+  -submitCommand  v16@0:8
+
+=== GTMTLTextureRenderEncoderCommand (instanceSize 224) ===
+  -setAnchor:  v32@0:8{CGPoint=dd}16
+  -setTransform:  v144@0:8{CATransform3D=dddddddddddddddd}16
+  -anchor  {CGPoint=dd}16@0:8
+  -bounds  {CGRect={CGPoint=dd}{CGSize=dd}}16@0:8
+  -setBounds:  v48@0:8{CGRect={CGPoint=dd}{CGSize=dd}}16
+  -transform  {CATransform3D=dddddddddddddddd}16@0:8
+  -texture  @16@0:8
+  -waitEvent  @16@0:8
+  -init  @16@0:8
+  -setContentsScale:  v24@0:8d16
+  -.cxx_destruct  v16@0:8
+  -setTexture:  v24@0:8@16
+  -contentsScale  d16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -overlay  B16@0:8
+  -setOverlay:  v20@0:8B16
+  -rgb  I16@0:8
+  -setRgb:  v20@0:8I16
+  -setShrinkToFit:  v20@0:8B16
+  -depthStencil  B16@0:8
+  -setDepthStencil:  v20@0:8B16
+  -setWaitEvent:  v24@0:8@16
+  -setWaitEventValue:  v24@0:8Q16
+  -shrinkToFit  B16@0:8
+  -waitEventValue  Q16@0:8
+
+=== GTMTLTextureRenderer (instanceSize 64) ===
+  -initWithDevice:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWaits:commandBuffer:  v32@0:8@16@24
+  -getPipelineStateFromCache:withDescriptor:withFormat:  @40@0:8@16@24Q32
+  -render:withEncoder:withFormat:renderTargetSize:viewContentsScale:  v64@0:8@16@24Q32{CGSize=dd}40d56
+  -renderOverlay:color:shrinkToFit:withEncoder:withFormat:transform:anchor:bounds:renderTargetSize:viewContentsScale:  v248@0:8@16I24B28@32Q40{CATransform3D=dddddddddddddddd}48{CGPoint=dd}176{CGRect={CGPoint=dd}{CGSize=dd}}192{CGSize=dd}224d240
+  -renderTexture:isDepthStencil:shrinkToFit:withEncoder:withFormat:transform:anchor:bounds:renderTargetSize:viewContentsScale:  v248@0:8@16B24B28@32Q40{CATransform3D=dddddddddddddddd}48{CGPoint=dd}176{CGRect={CGPoint=dd}{CGSize=dd}}192{CGSize=dd}224d240
+  -wrapLinear:  @24@0:8@16
+
+=== GTMetalDrawable (instanceSize 32) ===
+  -texture  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithTexture:  @24@0:8@16
+  -initWithObjectMap:textureStreamRef:  @32@0:8@16Q24
+
+=== GTMetalLayerReplay (instanceSize 240) ===
+  -setTransform:  v144@0:8{CATransform3D=dddddddddddddddd}16
+  -device  @16@0:8
+  -bounds  {CGRect={CGPoint=dd}{CGSize=dd}}16@0:8
+  -setBounds:  v48@0:8{CGRect={CGPoint=dd}{CGSize=dd}}16
+  -transform  {CATransform3D=dddddddddddddddd}16@0:8
+  -setPixelFormat:  v24@0:8Q16
+  -anchorPoint  {CGPoint=dd}16@0:8
+  -pixelFormat  Q16@0:8
+  -setDevice:  v24@0:8@16
+  -setWantsExtendedDynamicRangeContent:  v20@0:8B16
+  -setAnchorPoint:  v32@0:8{CGPoint=dd}16
+  -setContentsScale:  v24@0:8d16
+  -setFramebufferOnly:  v20@0:8B16
+  -.cxx_destruct  v16@0:8
+  -wantsExtendedDynamicRangeContent  B16@0:8
+  -framebufferOnly  B16@0:8
+  -contentsScale  d16@0:8
+  -drawableSize  {CGSize=dd}16@0:8
+  -setDrawableSize:  v32@0:8{CGSize=dd}16
+  -colorspace  ^{CGColorSpace=}16@0:8
+  -setColorspace:  v24@0:8^{CGColorSpace=}16
+  -nextDrawable:  @24@0:8r^{GTNextDrawableConfig=@QQB[7c]}16
+
+=== GTMutableShaderProfilerStreamData (instanceSize 352) ===
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -_commonInit  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -addString:  Q24@0:8@16
+  -initWithNewFileFormatV2Support:  @20@0:8B16
+  -_copyForAddAPSData:prefix:  @32@0:8@16@24
+  -addAPSCounterData:  B24@0:8@16
+  -addAPSData:  B24@0:8@16
+  -addAPSTimelineData:  B24@0:8@16
+  -addBatchIdFilteredCounterData:  B24@0:8@16
+  -addCommandBuffers:count:  v32@0:8^{?=QQQII}16Q24
+  -addEncoders:count:  v32@0:8^{?=QQQIIII}16Q24
+  -addGPUCommands:count:  v32@0:8^{?=IIIIQIi}16Q24
+  -addGPUTimelineData:  B24@0:8@16
+  -addPipelinePerformanceStatisticsData:  v24@0:8@16
+  -addPipelineStates:count:  v32@0:8^{?=QQQIIII}16Q24
+  -addShaderFunctionInfo:count:  v32@0:8^{?=QQQIIII[8c]}16Q24
+  -addShaderProfilerData:  B24@0:8@16
+  -removeAPSCounterData  v16@0:8
+  -removeAPSData  v16@0:8
+  -removeAPSTimelineData  v16@0:8
+  -setBatchIdFilterableCounters:  v24@0:8@16
+  -setDataSourceHasUnusedResources:captureRange:  v36@0:8B16{_NSRange=QQ}20
+  -setNumBlitCalls:  v24@0:8Q16
+  -setPerDrawRawCounterData:  v24@0:8@16
+
+=== GTODIECaptureDescriptor (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -inferenceWindowSize  Q16@0:8
+  -setInferenceWindowSize:  v24@0:8Q16
+
+=== GTODIECaptureInference (instanceSize 24) ===
+  -sessionId  Q16@0:8
+  -setSessionId:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setInferenceId:  v24@0:8Q16
+  -inferenceId  Q16@0:8
+  -toStashItem  @16@0:8
+
+=== GTODIECaptureInferenceEvent (instanceSize 56) ===
+  -setEventType:  v24@0:8q16
+  -timestamp  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -eventType  q16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setTimestamp:  v24@0:8Q16
+  -inference  @16@0:8
+  -setInference:  v24@0:8@16
+  -setMlAssetLabel:  v24@0:8@16
+  -setWallclock:  v32@0:8{timespec=qq}16
+  -mlAssetLabel  @16@0:8
+  -wallclock  {timespec=qq}16@0:8
+
+=== GTODIECaptureReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyError_:replyConnection:  v32@0:8@16@24
+  -notifyInference_:replyConnection:  v32@0:8@16@24
+
+=== GTODIECaptureServiceObserver (instanceSize 32) ===
+  -notifyError:  v24@0:8@16
+  -notifyInference:  v24@0:8@16
+
+=== GTODIECaptureServiceXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -startCaptureWithDescriptor_error_:replyConnection:  v32@0:8@16@24
+  -stopCapture:replyConnection:  v32@0:8@16@24
+
+=== GTODIECaptureServiceXPCProxy (instanceSize 48) ===
+  -stopCapture  v16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -startCaptureWithDescriptor:error:  Q32@0:8@16^@24
+  -initWithConnection:serviceInfo:  @32@0:8@16@24
+  -deregisterObserver:  v24@0:8Q16
+
+=== GTObservableService (instanceSize 32) ===
+  -registerObserver:  Q24@0:8@16
+  -count  Q16@0:8
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithName:  @24@0:8@16
+  -deregisterObserver:  v24@0:8Q16
+  -deregisterObserversForConnection:path:  v32@0:8@16@24
+  -notifyAll:  v24@0:8@?16
+
+=== GTPerfStatsHelper (instanceSize 64) ===
+  -reset  v16@0:8
+  -.cxx_construct  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setup  v16@0:8
+  -initWithOutputPath:  @24@0:8@16
+  -initWithConfigurationVariables:  @24@0:8@16
+  -_collectOperatingPoints  B16@0:8
+  -_frequenciesForStateName:forReg:  @28@0:8r*16I24
+  -exportStats  @16@0:8
+  -gatherStats  v16@0:8
+  -startCollectingPerfStatsAtInterval:andPeriodicSamplesAtInterval:  v32@0:8Q16Q24
+  -stopCollectingStats  v16@0:8
+
+=== GTProcessInfo (instanceSize 48) ===
+  -setProcessName:  v24@0:8@16
+  -setArguments:  v24@0:8@16
+  -processName  @16@0:8
+  -setEnvironment:  v24@0:8@16
+  -arguments  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setProcessIdentifier:  v20@0:8i16
+  -bundleIdentifier  @16@0:8
+  -processIdentifier  i16@0:8
+  -init  @16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setBundleIdentifier:  v24@0:8@16
+  -environment  @16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -ppid  i16@0:8
+  -setPpid:  v20@0:8i16
+
+=== GTProcessService (instanceSize 24) ===
+  -processInfo  @16@0:8
+  -setProcessInfo:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -setServiceProperties:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -serviceProperties  @16@0:8
+  -initWithService:processInfo:  @32@0:8@16@24
+
+=== GTProcessState (instanceSize 16) ===
+  -isSuspended  B16@0:8
+  -setIsSuspended:  v20@0:8B16
+
+=== GTProfileErrors (instanceSize 8) ===
+
+=== GTRasterMapLayer (instanceSize 48) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -size  {GTSize=QQQ}16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setSize:  v40@0:8{GTSize=QQQ}16
+  -horizontalLogicalCoordinatesAtPhysicalTileBoundaries  @16@0:8
+  -setHorizontalLogicalCoordinatesAtPhysicalTileBoundaries:  v24@0:8@16
+  -setVerticalLogicalCoordinatesAtPhysicalTileBoundaries:  v24@0:8@16
+  -verticalLogicalCoordinatesAtPhysicalTileBoundaries  @16@0:8
+
+=== GTRejectedConnectionReport (instanceSize 32) ===
+  -setName:  v24@0:8@16
+  -timestamp  @16@0:8
+  -setPid:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -name  @16@0:8
+  -pid  Q16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setTimestamp:  v24@0:8@16
+
+=== GTRelayedXPCConnection (instanceSize 56) ===
+  -sendMessage:  v24@0:8@16
+  -connection  @16@0:8
+  -setError:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -cancel  v16@0:8
+  -error  @16@0:8
+  -sendMessage:replyHandler:  v32@0:8@16@?24
+  -isTrusted  B16@0:8
+  -activateWithMessageHandler:andErrorHandler:  v32@0:8@?16@?24
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -registerDispatcher:forPort:  v32@0:8@16Q24
+  -initWithConnection:routingInfo:  @56@0:8@16{MessageRemoteRoutingInfo=QQQB[7c]}24
+  -sendMessageWithReplySync:error:  @32@0:8@16^@24
+  -_setRoutingPropertiesForMessage:  v24@0:8@16
+  -deregisterDispatcher:  v24@0:8Q16
+  -registerDispatcher:  Q24@0:8@16
+  -sendMessageAndWaitForDelivery:  v24@0:8@16
+  -setHandleDeviceLocally  v16@0:8
+
+=== GTRemoteDeviceBrowserReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyDeviceListChanged_:replyConnection:  v32@0:8@16@24
+
+=== GTRemoteDeviceBrowserXPCProxy (instanceSize 32) ===
+  -allDevices  @16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -deregisterObserver:  v24@0:8Q16
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+
+=== GTReplayADSReplyStream (instanceSize 40) ===
+  -.cxx_destruct  v16@0:8
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -dispatcherId  Q16@0:8
+  -initWithCallback:bulkDataProxy:andToken:  @40@0:8@?16@24@32
+  -setDispatcherId:  v24@0:8Q16
+
+=== GTReplayConfiguration (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -disableHeapTextureCompression  B16@0:8
+  -disableOptimizeRestores  B16@0:8
+  -enableCapture  B16@0:8
+  -enableDisplayOnDevice  B16@0:8
+  -enableHUD  B16@0:8
+  -enableLiveICBs  B16@0:8
+  -enableReplayFromOtherPlatforms  B16@0:8
+  -enableStopOnError  B16@0:8
+  -enableValidation  B16@0:8
+  -forceLoadActionClear  B16@0:8
+  -forceLoadUnusedResources  B16@0:8
+  -forceResourcesResident  B16@0:8
+  -forceWaitUntilCompleted  B16@0:8
+  -setDisableHeapTextureCompression:  v20@0:8B16
+  -setDisableOptimizeRestores:  v20@0:8B16
+  -setEnableCapture:  v20@0:8B16
+  -setEnableDisplayOnDevice:  v20@0:8B16
+  -setEnableHUD:  v20@0:8B16
+  -setEnableLiveICBs:  v20@0:8B16
+  -setEnableReplayFromOtherPlatforms:  v20@0:8B16
+  -setEnableStopOnError:  v20@0:8B16
+  -setEnableValidation:  v20@0:8B16
+  -setForceLoadActionClear:  v20@0:8B16
+  -setForceLoadUnusedResources:  v20@0:8B16
+  -setForceResourcesResident:  v20@0:8B16
+  -setForceWaitUntilCompleted:  v20@0:8B16
+
+=== GTReplayDecodeAB (instanceSize 32) ===
+  -setIndex:  v20@0:8I16
+  -initWithCoder:  @24@0:8@16
+  -index  I16@0:8
+  -setType:  v20@0:8S16
+  -type  S16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+
+=== GTReplayDecodeGenericAccelerationStructure (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayDecodeICB (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchAccelerationStructure (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchBuffer (instanceSize 48) ===
+  -range  {GTRange=QQ}16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setRange:  v32@0:8{GTRange=QQ}16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchHeap (instanceSize 48) ===
+  -range  {GTRange=QQ}16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setRange:  v32@0:8{GTRange=QQ}16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchImageBlock (instanceSize 32) ===
+  -setIndex:  v20@0:8I16
+  -initWithCoder:  @24@0:8@16
+  -index  I16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+
+=== GTReplayFetchInto (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -setEvent:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -event  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -dest  @16@0:8
+  -setDest:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -decodeXPCOnlyObjects:  v24@0:8@16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -encodeXPCOnlyObjects:  v24@0:8@16
+
+=== GTReplayFetchIntoRenderMask (instanceSize 40) ===
+  -encodeFetchIntoOperation:error:  B32@0:8^{GTMTLReplayClient=^{apr_pool_t}^{GTMTLReplayController}Q{?=QQQdII}{?={?=II}IIfb1b1b1b1b28}@{GTMTLReplayWireframeRenderer=@{GTMTLReplayWireframeRenderPassDescriptor=@@SB[5C]}Q@@@@@@@@@@@@@@@@@}{GTMTLReplayOperationQueues=@@@}@@}16^@24
+
+=== GTReplayFetchIntoTexture (instanceSize 72) ===
+  -encodeFetchIntoOperation:error:  B32@0:8^{GTMTLReplayClient=^{apr_pool_t}^{GTMTLReplayController}Q{?=QQQdII}{?={?=II}IIfb1b1b1b1b28}@{GTMTLReplayWireframeRenderer=@{GTMTLReplayWireframeRenderPassDescriptor=@@SB[5C]}Q@@@@@@@@@@@@@@@@@}{GTMTLReplayOperationQueues=@@@}@@}16^@24
+  -setLevel:  v20@0:8I16
+  -initWithCoder:  @24@0:8@16
+  -depth  I16@0:8
+  -level  I16@0:8
+  -slice  I16@0:8
+  -setDepth:  v20@0:8I16
+  -setSlice:  v20@0:8I16
+  -encodeWithCoder:  v24@0:8@16
+  -plane  I16@0:8
+  -setPlane:  v20@0:8I16
+  -resolveMultisampleTexture  B16@0:8
+  -setResolveMultisampleTexture:  v20@0:8B16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchIntoWireframe (instanceSize 40) ===
+  -encodeFetchIntoOperation:error:  B32@0:8^{GTMTLReplayClient=^{apr_pool_t}^{GTMTLReplayController}Q{?=QQQdII}{?={?=II}IIfb1b1b1b1b28}@{GTMTLReplayWireframeRenderer=@{GTMTLReplayWireframeRenderPassDescriptor=@@SB[5C]}Q@@@@@@@@@@@@@@@@@}{GTMTLReplayOperationQueues=@@@}@@}16^@24
+
+=== GTReplayFetchMLGraph (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -setPipelineRef:  v24@0:8Q16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -pipelineRef  Q16@0:8
+
+=== GTReplayFetchMLGraphData (instanceSize 48) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -setMlModuleKey:  v24@0:8@16
+  -setPipelineRef:  v24@0:8Q16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -mlModuleKey  @16@0:8
+  -mlResourceKey  @16@0:8
+  -pipelineRef  Q16@0:8
+  -setMlResourceKey:  v24@0:8@16
+
+=== GTReplayFetchMLIntermediateData (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -intermediateOps  @16@0:8
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -setPipelineRef:  v24@0:8Q16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -pipelineRef  Q16@0:8
+  -setIntermediateOps:  v24@0:8@16
+
+=== GTReplayFetchPipelineBinaries (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchPostVertex (instanceSize 80) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -objectShaderThreadgroupBeginBounds  {GTPoint3D=QQQ}16@0:8
+  -objectShaderThreadgroupBoundsPresent  B16@0:8
+  -objectShaderThreadgroupEndBounds  {GTPoint3D=QQQ}16@0:8
+  -setObjectShaderThreadgroupBeginBounds:  v40@0:8{GTPoint3D=QQQ}16
+  -setObjectShaderThreadgroupBoundsPresent:  v20@0:8B16
+  -setObjectShaderThreadgroupEndBounds:  v40@0:8{GTPoint3D=QQQ}16
+
+=== GTReplayFetchTensor (instanceSize 304) ===
+  -initWithCoder:  @24@0:8@16
+  -slice  {GTMTLTensorSlice={GTMTLTensorExtents=Q[16Q]}{GTMTLTensorExtents=Q[16Q]}}16@0:8
+  -setSlice:  v288@0:8{GTMTLTensorSlice={GTMTLTensorExtents=Q[16Q]}{GTMTLTensorExtents=Q[16Q]}}16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchTexture (instanceSize 128) ===
+  -region  {GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}16@0:8
+  -setRegion:  v64@0:8{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}16
+  -setLevel:  v20@0:8I16
+  -initWithCoder:  @24@0:8@16
+  -depth  I16@0:8
+  -level  I16@0:8
+  -slice  I16@0:8
+  -setDepth:  v20@0:8I16
+  -size  {GTSize=QQQ}16@0:8
+  -setSlice:  v20@0:8I16
+  -encodeWithCoder:  v24@0:8@16
+  -setSize:  v40@0:8{GTSize=QQQ}16
+  -plane  I16@0:8
+  -setPlane:  v20@0:8I16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -resolveMultisampleTexture  B16@0:8
+  -setResolveMultisampleTexture:  v20@0:8B16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayFetchThreadgroup (instanceSize 32) ===
+  -setIndex:  v20@0:8I16
+  -initWithCoder:  @24@0:8@16
+  -index  I16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+
+=== GTReplayFetchWireframe (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -solid  B16@0:8
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setSolid:  v20@0:8B16
+
+=== GTReplayLoadRequest (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setGputraceURL:  v24@0:8@16
+  -gputraceURL  @16@0:8
+
+=== GTReplayMTL4FXTemporalDenoisedScaler (instanceSize 40) ===
+  -outputTexture  @16@0:8
+  -setOutputTexture:  v24@0:8@16
+  -outputWidth  Q16@0:8
+  -reset  B16@0:8
+  -inputHeight  Q16@0:8
+  -outputHeight  Q16@0:8
+  -setReset:  v20@0:8B16
+  -fence  @16@0:8
+  -setFence:  v24@0:8@16
+  -inputWidth  Q16@0:8
+  -colorTexture  @16@0:8
+  -setPreExposure:  v20@0:8f16
+  -specularHitDistanceTextureUsage  Q16@0:8
+  -transparencyOverlayTextureUsage  Q16@0:8
+  -denoiseStrengthMaskTextureUsage  Q16@0:8
+  -exposureTexture  @16@0:8
+  -isDepthReversed  B16@0:8
+  -colorTextureBarrierStages  Q16@0:8
+  -colorTextureFormat  Q16@0:8
+  -colorTextureUsage  Q16@0:8
+  -debugTexture  @16@0:8
+  -denoiseStrengthMaskTexture  @16@0:8
+  -denoiseStrengthMaskTextureFormat  Q16@0:8
+  -depthTexture  @16@0:8
+  -depthTextureFormat  Q16@0:8
+  -depthTextureUsage  Q16@0:8
+  -diffuseAlbedoTexture  @16@0:8
+  -diffuseAlbedoTextureFormat  Q16@0:8
+  -diffuseAlbedoTextureUsage  Q16@0:8
+  -dilatedMotionVectors  @16@0:8
+  -encodeToCommandBuffer:  v24@0:8@16
+  -inputContentHeight  Q16@0:8
+  -inputContentMaxScale  f16@0:8
+  -inputContentMinScale  f16@0:8
+  -inputContentWidth  Q16@0:8
+  -jitterOffsetX  f16@0:8
+  -jitterOffsetY  f16@0:8
+  -motionTexture  @16@0:8
+  -motionTextureFormat  Q16@0:8
+  -motionTextureUsage  Q16@0:8
+  -motionVectorScaleX  f16@0:8
+  -motionVectorScaleY  f16@0:8
+  -normalTexture  @16@0:8
+  -normalTextureFormat  Q16@0:8
+  -normalTextureUsage  Q16@0:8
+  -outputTextureBarrierStages  Q16@0:8
+  -outputTextureFormat  Q16@0:8
+  -outputTextureUsage  Q16@0:8
+  -preExposure  f16@0:8
+  -reactiveMaskTexture  @16@0:8
+  -reactiveMaskTextureFormat  Q16@0:8
+  -reactiveMaskTextureUsage  Q16@0:8
+  -reactiveTextureUsage  Q16@0:8
+  -roughnessTexture  @16@0:8
+  -roughnessTextureFormat  Q16@0:8
+  -roughnessTextureUsage  Q16@0:8
+  -setColorTexture:  v24@0:8@16
+  -setColorTextureBarrierStages:  v24@0:8Q16
+  -setDebugTexture:  v24@0:8@16
+  -setDenoiseStrengthMaskTexture:  v24@0:8@16
+  -setDepthReversed:  v20@0:8B16
+  -setDepthTexture:  v24@0:8@16
+  -setDiffuseAlbedoTexture:  v24@0:8@16
+  -setExposureTexture:  v24@0:8@16
+  -setInputContentHeight:  v24@0:8Q16
+  -setInputContentWidth:  v24@0:8Q16
+  -setJitterOffsetX:  v20@0:8f16
+  -setJitterOffsetY:  v20@0:8f16
+  -setMotionTexture:  v24@0:8@16
+  -setMotionVectorScaleX:  v20@0:8f16
+  -setMotionVectorScaleY:  v20@0:8f16
+  -setNormalTexture:  v24@0:8@16
+  -setReactiveMaskTexture:  v24@0:8@16
+  -setRoughnessTexture:  v24@0:8@16
+  -setShouldResetHistory:  v20@0:8B16
+  -setSpecularAlbedoTexture:  v24@0:8@16
+  -setSpecularHitDistanceTexture:  v24@0:8@16
+  -setTransparencyOverlayTexture:  v24@0:8@16
+  -setViewToClipMatrix:  v80@0:8{?=[4]}16
+  -setWorldToViewMatrix:  v80@0:8{?=[4]}16
+  -shouldResetHistory  B16@0:8
+  -specularAlbedoTexture  @16@0:8
+  -specularAlbedoTextureFormat  Q16@0:8
+  -specularAlbedoTextureUsage  Q16@0:8
+  -specularHitDistanceTexture  @16@0:8
+  -specularHitDistanceTextureFormat  Q16@0:8
+  -transparencyOverlayTexture  @16@0:8
+  -transparencyOverlayTextureFormat  Q16@0:8
+  -viewToClipMatrix  {?=[4]}16@0:8
+  -worldToViewMatrix  {?=[4]}16@0:8
+  -initWithDevice:descriptor:compiler:  @40@0:8@16@24@32
+
+=== GTReplayMTL4FXTemporalScaler (instanceSize 40) ===
+  -outputTexture  @16@0:8
+  -setOutputTexture:  v24@0:8@16
+  -outputWidth  Q16@0:8
+  -reset  B16@0:8
+  -inputHeight  Q16@0:8
+  -outputHeight  Q16@0:8
+  -setReset:  v20@0:8B16
+  -fence  @16@0:8
+  -setFence:  v24@0:8@16
+  -inputWidth  Q16@0:8
+  -colorTexture  @16@0:8
+  -setPreExposure:  v20@0:8f16
+  -exposureTexture  @16@0:8
+  -isDepthReversed  B16@0:8
+  -colorContentOffsetX  Q16@0:8
+  -colorContentOffsetY  Q16@0:8
+  -colorTextureBarrierStages  Q16@0:8
+  -colorTextureFormat  Q16@0:8
+  -colorTextureUsage  Q16@0:8
+  -currentViewToClipMatrix  {?=[4]}16@0:8
+  -currentWorldToViewMatrix  {?=[4]}16@0:8
+  -debugTexture  @16@0:8
+  -depthContentOffsetX  Q16@0:8
+  -depthContentOffsetY  Q16@0:8
+  -depthTexture  @16@0:8
+  -depthTextureFormat  Q16@0:8
+  -depthTextureUsage  Q16@0:8
+  -dilatedMotionVectors  @16@0:8
+  -encodeToCommandBuffer:  v24@0:8@16
+  -inputContentHeight  Q16@0:8
+  -inputContentMaxScale  f16@0:8
+  -inputContentMinScale  f16@0:8
+  -inputContentWidth  Q16@0:8
+  -jitterOffsetX  f16@0:8
+  -jitterOffsetY  f16@0:8
+  -motionContentOffsetX  Q16@0:8
+  -motionContentOffsetY  Q16@0:8
+  -motionTexture  @16@0:8
+  -motionTextureFormat  Q16@0:8
+  -motionTextureUsage  Q16@0:8
+  -motionVectorScaleX  f16@0:8
+  -motionVectorScaleY  f16@0:8
+  -outputOffsetX  Q16@0:8
+  -outputOffsetY  Q16@0:8
+  -outputTextureBarrierStages  Q16@0:8
+  -outputTextureFormat  Q16@0:8
+  -outputTextureUsage  Q16@0:8
+  -preExposure  f16@0:8
+  -previousJitterOffset  {CGPoint=dd}16@0:8
+  -previousViewToClipMatrix  {?=[4]}16@0:8
+  -previousWorldToViewMatrix  {?=[4]}16@0:8
+  -reactiveMaskContentOffsetX  Q16@0:8
+  -reactiveMaskContentOffsetY  Q16@0:8
+  -reactiveMaskTexture  @16@0:8
+  -reactiveMaskTextureFormat  Q16@0:8
+  -reactiveMaskTextureUsage  Q16@0:8
+  -reactiveTextureUsage  Q16@0:8
+  -setColorContentOffsetX:  v24@0:8Q16
+  -setColorContentOffsetY:  v24@0:8Q16
+  -setColorTexture:  v24@0:8@16
+  -setColorTextureBarrierStages:  v24@0:8Q16
+  -setCurrentViewToClipMatrix:  v80@0:8{?=[4]}16
+  -setCurrentWorldToViewMatrix:  v80@0:8{?=[4]}16
+  -setDebugTexture:  v24@0:8@16
+  -setDepthContentOffsetX:  v24@0:8Q16
+  -setDepthContentOffsetY:  v24@0:8Q16
+  -setDepthReversed:  v20@0:8B16
+  -setDepthTexture:  v24@0:8@16
+  -setExposureTexture:  v24@0:8@16
+  -setInputContentHeight:  v24@0:8Q16
+  -setInputContentWidth:  v24@0:8Q16
+  -setJitterOffsetX:  v20@0:8f16
+  -setJitterOffsetY:  v20@0:8f16
+  -setMotionContentOffsetX:  v24@0:8Q16
+  -setMotionContentOffsetY:  v24@0:8Q16
+  -setMotionTexture:  v24@0:8@16
+  -setMotionVectorScaleX:  v20@0:8f16
+  -setMotionVectorScaleY:  v20@0:8f16
+  -setOutputOffsetX:  v24@0:8Q16
+  -setOutputOffsetY:  v24@0:8Q16
+  -setPreviousJitterOffset:  v32@0:8{CGPoint=dd}16
+  -setPreviousViewToClipMatrix:  v80@0:8{?=[4]}16
+  -setPreviousWorldToViewMatrix:  v80@0:8{?=[4]}16
+  -setReactiveMaskContentOffsetX:  v24@0:8Q16
+  -setReactiveMaskContentOffsetY:  v24@0:8Q16
+  -setReactiveMaskTexture:  v24@0:8@16
+  -initWithDevice:descriptor:compiler:  @40@0:8@16@24@32
+
+=== GTReplayMTLFXTemporalDenoisedScaler (instanceSize 40) ===
+  -outputTexture  @16@0:8
+  -setOutputTexture:  v24@0:8@16
+  -outputWidth  Q16@0:8
+  -reset  B16@0:8
+  -inputHeight  Q16@0:8
+  -outputHeight  Q16@0:8
+  -setReset:  v20@0:8B16
+  -initWithDevice:descriptor:  @32@0:8@16@24
+  -fence  @16@0:8
+  -setFence:  v24@0:8@16
+  -encodeToCommandQueue:  v24@0:8@16
+  -inputWidth  Q16@0:8
+  -colorTexture  @16@0:8
+  -setPreExposure:  v20@0:8f16
+  -specularHitDistanceTextureUsage  Q16@0:8
+  -transparencyOverlayTextureUsage  Q16@0:8
+  -denoiseStrengthMaskTextureUsage  Q16@0:8
+  -exposureTexture  @16@0:8
+  -isDepthReversed  B16@0:8
+  -colorTextureFormat  Q16@0:8
+  -colorTextureUsage  Q16@0:8
+  -debugTexture  @16@0:8
+  -denoiseStrengthMaskTexture  @16@0:8
+  -denoiseStrengthMaskTextureFormat  Q16@0:8
+  -depthTexture  @16@0:8
+  -depthTextureFormat  Q16@0:8
+  -depthTextureUsage  Q16@0:8
+  -diffuseAlbedoTexture  @16@0:8
+  -diffuseAlbedoTextureFormat  Q16@0:8
+  -diffuseAlbedoTextureUsage  Q16@0:8
+  -dilatedMotionVectors  @16@0:8
+  -encodeToCommandBuffer:  v24@0:8@16
+  -inputContentHeight  Q16@0:8
+  -inputContentMaxScale  f16@0:8
+  -inputContentMinScale  f16@0:8
+  -inputContentWidth  Q16@0:8
+  -jitterOffsetX  f16@0:8
+  -jitterOffsetY  f16@0:8
+  -motionTexture  @16@0:8
+  -motionTextureFormat  Q16@0:8
+  -motionTextureUsage  Q16@0:8
+  -motionVectorScaleX  f16@0:8
+  -motionVectorScaleY  f16@0:8
+  -normalTexture  @16@0:8
+  -normalTextureFormat  Q16@0:8
+  -normalTextureUsage  Q16@0:8
+  -outputTextureFormat  Q16@0:8
+  -outputTextureUsage  Q16@0:8
+  -preExposure  f16@0:8
+  -reactiveMaskTexture  @16@0:8
+  -reactiveMaskTextureFormat  Q16@0:8
+  -reactiveMaskTextureUsage  Q16@0:8
+  -reactiveTextureUsage  Q16@0:8
+  -roughnessTexture  @16@0:8
+  -roughnessTextureFormat  Q16@0:8
+  -roughnessTextureUsage  Q16@0:8
+  -setColorTexture:  v24@0:8@16
+  -setDebugTexture:  v24@0:8@16
+  -setDenoiseStrengthMaskTexture:  v24@0:8@16
+  -setDepthReversed:  v20@0:8B16
+  -setDepthTexture:  v24@0:8@16
+  -setDiffuseAlbedoTexture:  v24@0:8@16
+  -setExposureTexture:  v24@0:8@16
+  -setInputContentHeight:  v24@0:8Q16
+  -setInputContentWidth:  v24@0:8Q16
+  -setJitterOffsetX:  v20@0:8f16
+  -setJitterOffsetY:  v20@0:8f16
+  -setMotionTexture:  v24@0:8@16
+  -setMotionVectorScaleX:  v20@0:8f16
+  -setMotionVectorScaleY:  v20@0:8f16
+  -setNormalTexture:  v24@0:8@16
+  -setReactiveMaskTexture:  v24@0:8@16
+  -setRoughnessTexture:  v24@0:8@16
+  -setShouldResetHistory:  v20@0:8B16
+  -setSpecularAlbedoTexture:  v24@0:8@16
+  -setSpecularHitDistanceTexture:  v24@0:8@16
+  -setTransparencyOverlayTexture:  v24@0:8@16
+  -setViewToClipMatrix:  v80@0:8{?=[4]}16
+  -setWorldToViewMatrix:  v80@0:8{?=[4]}16
+  -shouldResetHistory  B16@0:8
+  -specularAlbedoTexture  @16@0:8
+  -specularAlbedoTextureFormat  Q16@0:8
+  -specularAlbedoTextureUsage  Q16@0:8
+  -specularHitDistanceTexture  @16@0:8
+  -specularHitDistanceTextureFormat  Q16@0:8
+  -transparencyOverlayTexture  @16@0:8
+  -transparencyOverlayTextureFormat  Q16@0:8
+  -viewToClipMatrix  {?=[4]}16@0:8
+  -worldToViewMatrix  {?=[4]}16@0:8
+
+=== GTReplayMTLFXTemporalScaler (instanceSize 40) ===
+  -outputTexture  @16@0:8
+  -setOutputTexture:  v24@0:8@16
+  -outputWidth  Q16@0:8
+  -reset  B16@0:8
+  -inputHeight  Q16@0:8
+  -outputHeight  Q16@0:8
+  -setReset:  v20@0:8B16
+  -initWithDevice:descriptor:  @32@0:8@16@24
+  -fence  @16@0:8
+  -setFence:  v24@0:8@16
+  -encodeToCommandQueue:  v24@0:8@16
+  -inputWidth  Q16@0:8
+  -colorTexture  @16@0:8
+  -setPreExposure:  v20@0:8f16
+  -exposureTexture  @16@0:8
+  -isDepthReversed  B16@0:8
+  -colorContentOffsetX  Q16@0:8
+  -colorContentOffsetY  Q16@0:8
+  -colorTextureFormat  Q16@0:8
+  -colorTextureUsage  Q16@0:8
+  -currentViewToClipMatrix  {?=[4]}16@0:8
+  -currentWorldToViewMatrix  {?=[4]}16@0:8
+  -debugTexture  @16@0:8
+  -depthContentOffsetX  Q16@0:8
+  -depthContentOffsetY  Q16@0:8
+  -depthTexture  @16@0:8
+  -depthTextureFormat  Q16@0:8
+  -depthTextureUsage  Q16@0:8
+  -dilatedMotionVectors  @16@0:8
+  -encodeToCommandBuffer:  v24@0:8@16
+  -inputContentHeight  Q16@0:8
+  -inputContentMaxScale  f16@0:8
+  -inputContentMinScale  f16@0:8
+  -inputContentWidth  Q16@0:8
+  -jitterOffsetX  f16@0:8
+  -jitterOffsetY  f16@0:8
+  -motionContentOffsetX  Q16@0:8
+  -motionContentOffsetY  Q16@0:8
+  -motionTexture  @16@0:8
+  -motionTextureFormat  Q16@0:8
+  -motionTextureUsage  Q16@0:8
+  -motionVectorScaleX  f16@0:8
+  -motionVectorScaleY  f16@0:8
+  -outputOffsetX  Q16@0:8
+  -outputOffsetY  Q16@0:8
+  -outputTextureFormat  Q16@0:8
+  -outputTextureUsage  Q16@0:8
+  -preExposure  f16@0:8
+  -previousJitterOffset  {CGPoint=dd}16@0:8
+  -previousViewToClipMatrix  {?=[4]}16@0:8
+  -previousWorldToViewMatrix  {?=[4]}16@0:8
+  -reactiveMaskContentOffsetX  Q16@0:8
+  -reactiveMaskContentOffsetY  Q16@0:8
+  -reactiveMaskTexture  @16@0:8
+  -reactiveMaskTextureFormat  Q16@0:8
+  -reactiveMaskTextureUsage  Q16@0:8
+  -reactiveTextureUsage  Q16@0:8
+  -setColorContentOffsetX:  v24@0:8Q16
+  -setColorContentOffsetY:  v24@0:8Q16
+  -setColorTexture:  v24@0:8@16
+  -setCurrentViewToClipMatrix:  v80@0:8{?=[4]}16
+  -setCurrentWorldToViewMatrix:  v80@0:8{?=[4]}16
+  -setDebugTexture:  v24@0:8@16
+  -setDepthContentOffsetX:  v24@0:8Q16
+  -setDepthContentOffsetY:  v24@0:8Q16
+  -setDepthReversed:  v20@0:8B16
+  -setDepthTexture:  v24@0:8@16
+  -setExposureTexture:  v24@0:8@16
+  -setInputContentHeight:  v24@0:8Q16
+  -setInputContentWidth:  v24@0:8Q16
+  -setJitterOffsetX:  v20@0:8f16
+  -setJitterOffsetY:  v20@0:8f16
+  -setMotionContentOffsetX:  v24@0:8Q16
+  -setMotionContentOffsetY:  v24@0:8Q16
+  -setMotionTexture:  v24@0:8@16
+  -setMotionVectorScaleX:  v20@0:8f16
+  -setMotionVectorScaleY:  v20@0:8f16
+  -setOutputOffsetX:  v24@0:8Q16
+  -setOutputOffsetY:  v24@0:8Q16
+  -setPreviousJitterOffset:  v32@0:8{CGPoint=dd}16
+  -setPreviousViewToClipMatrix:  v80@0:8{?=[4]}16
+  -setPreviousWorldToViewMatrix:  v80@0:8{?=[4]}16
+  -setReactiveMaskContentOffsetX:  v24@0:8Q16
+  -setReactiveMaskContentOffsetY:  v24@0:8Q16
+  -setReactiveMaskTexture:  v24@0:8@16
+
+=== GTReplayProfileBatchFilteredCounters (instanceSize 48) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -saveProfilerRaw  B16@0:8
+  -setSaveProfilerRaw:  v20@0:8B16
+
+=== GTReplayProfileDerivedCounters (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayProfileReplyStream (instanceSize 48) ===
+  -.cxx_destruct  v16@0:8
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -dispatcherId  Q16@0:8
+  -initWithCallback:bulkDataProxy:andToken:  @40@0:8@?16@24@32
+  -setDispatcherId:  v24@0:8Q16
+
+=== GTReplayProfileRequest (instanceSize 40) ===
+  -setPriority:  v20@0:8I16
+  -initWithCoder:  @24@0:8@16
+  -setProfileData:  v24@0:8@16
+  -priority  I16@0:8
+  -profileData  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setStreamHandler:  v24@0:8@?16
+  -streamHandler  @?16@0:8
+  -profileDataVersion  i16@0:8
+  -setProfileDataVersion:  v20@0:8i16
+
+=== GTReplayProfileTimeline (instanceSize 48) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -saveProfilerRaw  B16@0:8
+  -shaderProfiling  B16@0:8
+  -setSaveProfilerRaw:  v20@0:8B16
+  -setShaderProfiling:  v20@0:8B16
+
+=== GTReplayQueryConfiguration (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayQueryDerivedCounters (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayQueryDeviceCapabilities (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayQueryICBTranslation (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+
+=== GTReplayQueryPerformanceState (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayQueryRasterMap (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayQueryRasterMapReply (instanceSize 40) ===
+  -layers  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -setLayers:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -physicalGranularity  {GTSize=QQQ}16@0:8
+  -setPhysicalGranularity:  v40@0:8{GTSize=QQQ}16
+
+=== GTReplayQueryResourceUsage (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+
+=== GTReplayQuerySessionInfo (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayRaytraceRequest (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setStreamHandler:  v24@0:8@?16
+  -streamHandler  @?16@0:8
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayRequest (instanceSize 16) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initNoRequestID  @16@0:8
+  -decodeXPCOnlyObjects:  v24@0:8@16
+  -encodeXPCOnlyObjects:  v24@0:8@16
+
+=== GTReplayRequestBatch (instanceSize 40) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setCompletionHandler:  v24@0:8@?16
+  -requests  @16@0:8
+  -setPriority:  v20@0:8I16
+  -priority  I16@0:8
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -setRequests:  v24@0:8@16
+  -initNoRequestID  @16@0:8
+
+=== GTReplayRequestToken (instanceSize 32) ===
+  -completed  v16@0:8
+  -pause  B16@0:8
+  -waitUntilCompleted  v16@0:8
+  -.cxx_destruct  v16@0:8
+  -cancel  B16@0:8
+  -resume  B16@0:8
+  -tokenId  Q16@0:8
+  -initWithService:andTokenId:  @32@0:8@16Q24
+
+=== GTReplayRequestUnknown (instanceSize 16) ===
+  -initNoRequestID  @16@0:8
+
+=== GTReplayResponse (instanceSize 40) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setVersion:  v24@0:8(GTDataVersion={?=II}Q)16
+  -setData:  v24@0:8@16
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -version  (GTDataVersion={?=II}Q)16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+
+=== GTReplayResponseStream (instanceSize 48) ===
+  -initWithState:  @20@0:8I16
+  -state  I16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setState:  v20@0:8I16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplaySessionInfo (instanceSize 48) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setGputraceURL:  v24@0:8@16
+  -accelerationViewerVersion  Q16@0:8
+  -gputraceURL  @16@0:8
+  -setAccelerationViewerVersion:  v24@0:8Q16
+  -setShaderDebuggerVersion:  v24@0:8Q16
+  -setShaderProfilerVersion:  v24@0:8Q16
+  -setSupportsMTL4ShaderDebugger:  v20@0:8B16
+  -setSupportsMTL4ShaderReload:  v20@0:8B16
+  -shaderDebuggerVersion  Q16@0:8
+  -shaderProfilerVersion  Q16@0:8
+  -supportsMTL4ShaderDebugger  B16@0:8
+  -supportsMTL4ShaderReload  B16@0:8
+
+=== GTReplayShaderDebugFragment (instanceSize 96) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setMaxSampleID:  v20@0:8I16
+  -setMinSampleID:  v20@0:8I16
+  -maxPixelPosition  {GTPoint2D=QQ}16@0:8
+  -maxSampleID  I16@0:8
+  -minPixelPosition  {GTPoint2D=QQ}16@0:8
+  -minSampleID  I16@0:8
+  -renderTargetArrayIndex  I16@0:8
+  -setMaxPixelPosition:  v32@0:8{GTPoint2D=QQ}16
+  -setMinPixelPosition:  v32@0:8{GTPoint2D=QQ}16
+  -setRenderTargetArrayIndex:  v20@0:8I16
+
+=== GTReplayShaderDebugKernel (instanceSize 96) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -maxThreadPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -minThreadPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -setMaxThreadPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+  -setMinThreadPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+
+=== GTReplayShaderDebugMesh (instanceSize 128) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -amplificationID  I16@0:8
+  -objectThreadgroupPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -maxThreadPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -minThreadPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -setAmplificationID:  v20@0:8I16
+  -setMaxThreadPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+  -setMinThreadPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+  -setObjectThreadgroupPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+
+=== GTReplayShaderDebugObject (instanceSize 96) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -maxThreadPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -minThreadPositionInGrid  {GTPoint3D=QQQ}16@0:8
+  -setMaxThreadPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+  -setMinThreadPositionInGrid:  v40@0:8{GTPoint3D=QQQ}16
+
+=== GTReplayShaderDebugPostTessellationVertex (instanceSize 64) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -instanceID  I16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setInstanceID:  v20@0:8I16
+  -amplificationID  I16@0:8
+  -patchIDs  @16@0:8
+  -setAmplificationID:  v20@0:8I16
+  -setPatchIDs:  v24@0:8@16
+
+=== GTReplayShaderDebugRequest (instanceSize 48) ===
+  -setCompletionHandler:  v24@0:8@?16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -setProgramData:  v24@0:8@16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -programData  @16@0:8
+  -programDataVersion  i16@0:8
+  -setProgramDataVersion:  v20@0:8i16
+
+=== GTReplayShaderDebugVertex (instanceSize 64) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -instanceID  I16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setInstanceID:  v20@0:8I16
+  -amplificationID  I16@0:8
+  -setAmplificationID:  v20@0:8I16
+  -setVertexIDs:  v24@0:8@16
+  -vertexIDs  @16@0:8
+
+=== GTReplayUnarchiver (instanceSize 8) ===
+
+=== GTReplayUpdateAccelerationStructureSession (instanceSize 32) ===
+  -setData:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+  -sessionsID  Q16@0:8
+  -setSessionsID:  v24@0:8Q16
+
+=== GTReplayUpdateConfiguration (instanceSize 24) ===
+  -configuration  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setConfiguration:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayUpdateLibrary (instanceSize 56) ===
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setShaderIR:  v24@0:8@16
+  -setShaderSource:  v24@0:8@16
+  -setShaderURL:  v24@0:8@16
+  -setStreamRef:  v24@0:8Q16
+  -shaderIR  @16@0:8
+  -shaderSource  @16@0:8
+  -shaderURL  @16@0:8
+  -streamRef  Q16@0:8
+
+=== GTReplayUpdateLibraryCache (instanceSize 32) ===
+  -setUuid:  v24@0:8@16
+  -uuid  @16@0:8
+  -setData:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+
+=== GTReplayUpdateResult (instanceSize 48) ===
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -updatePipelines  @16@0:8
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -setUpdatePipelines:  v24@0:8@16
+  -streamRef  Q16@0:8
+
+=== GTReplayUpdateTermination (instanceSize 32) ===
+  -setPath:  v24@0:8@16
+  -connection  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -path  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setConnection:  v24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTReplayWrapperBase (instanceSize 40) ===
+  -forwardingTargetForSelector:  @24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -effectID  Q16@0:8
+  -executionMode  Q16@0:8
+  -setExecutionMode:  v20@0:8C16
+  -tracingDelegate  @16@0:8
+  -setTracingDelegate:  v24@0:8@16
+
+=== GTReplayerDisplayRequest (instanceSize 40) ===
+  -setIndex:  v20@0:8I16
+  -setFilters:  v20@0:8i16
+  -initWithCoder:  @24@0:8@16
+  -index  I16@0:8
+  -filters  i16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDispatchUID:  v24@0:8(?={?=ii}Q)16
+  -dispatchUID  (?={?=ii}Q)16@0:8
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTReplayerOperation (instanceSize 264) ===
+  -main  v16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithBatch:withBlock:  @32@0:8@16@?24
+  -initWithRequestID:withBlock:  @32@0:8Q16@?24
+
+=== GTReplayerOperationBatch (instanceSize 24) ===
+  -addOperation:  v24@0:8@16
+  -finish:  v24@0:8@16
+  -uuid  Q16@0:8
+  -.cxx_destruct  v16@0:8
+  -flush:  v24@0:8@16
+  -initWithRequestID:  @24@0:8Q16
+
+=== GTReplayerTextureViewPoolBufferEntry (instanceSize 40) ===
+  -initWithBuffer:descriptor:offset:bytesPerRow:  @48@0:8@16@24Q32Q40
+  -.cxx_destruct  v16@0:8
+  -materializeTextureView  @16@0:8
+
+=== GTReplayerTextureViewPoolTextureEntry (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithTexture:descriptor:  @32@0:8@16@24
+  -materializeTextureView  @16@0:8
+
+=== GTResourceBindingProvider (instanceSize 22408) ===
+  -initWithDataSource:  @24@0:8r^{GTMTLReplayDataSource=^{GTCaptureArchive}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{GTSMMTLContext}@^{GTMTLCaptureDescriptorInternal}^{GTTraceContext}{GTRange=QQ}{?={GTRange=QQ}{GTRange=QQ}{GTRange=QQ}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}}{?=^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_array_header_t}^{apr_array_header_t}}{GTError=Ii(?={?=***Q}{?=QQ*}{?=**}{?=QQ*})^{GTError}}^{GTMTLCaptureEnvironment}^vb1b1b1b1b1b59}16
+  -dataSource  r^{GTMTLReplayDataSource=^{GTCaptureArchive}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{GTSMMTLContext}@^{GTMTLCaptureDescriptorInternal}^{GTTraceContext}{GTRange=QQ}{?={GTRange=QQ}{GTRange=QQ}{GTRange=QQ}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}}{?=^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_array_header_t}^{apr_array_header_t}}{GTError=Ii(?={?=***Q}{?=QQ*}{?=**}{?=QQ*})^{GTError}}^{GTMTLCaptureEnvironment}^vb1b1b1b1b1b59}16@0:8
+  -dealloc  v16@0:8
+  -_updateParallelEncoderForRange:  v32@0:8{_NSRange=QQ}16
+  -_commandBufferRefForIndex:  Q20@0:8i16
+  -_commandQueueRefForCommandBuffer:  Q24@0:8Q16
+  -_createBindingsArray  ^{apr_array_header_t=^{apr_pool_t}iii*}16@0:8
+  -_createDirectBindingsArray  ^{apr_array_header_t=^{apr_pool_t}iii*}16@0:8
+  -_isDeferredStoreAction:  B24@0:8r^{GTMTLRenderPassDescriptor=[8{GTMTLRenderPassColorAttachmentDescriptor={GTMTLRenderPassAttachmentDescriptor=QQSSSSCCCCCC[2C]}{?=dddd}}][4{GTMTLRenderPassSampleBufferAttachmentDescriptor=QQQQQ}]{GTMTLRenderPassDepthAttachmentDescriptor={GTMTLRenderPassAttachmentDescriptor=QQSSSSCCCCCC[2C]}dC[7C]}{GTMTLRenderPassStencilAttachmentDescriptor={GTMTLRenderPassAttachmentDescriptor=QQSSSSCCCCCC[2C]}IC[3C]}^fQQQQISSSSSSCCCCCCCC}16
+  -_loadIndirectCommand:func:  v32@0:8^{IndirectCommand={?=Q{GTRange=QQ}{GTData=^vQ}}{GTMTLIndirectCommandEncoder=^{GTMTLIndirectCommandBufferDescriptor}QQQQQQQQQQQQQQQQQQQQQQQQQQ}{GTMTLIndirectResources=^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}C[7c]}*}16r^{GTTraceFunc=QICCCC[48c]}24
+  -_processBindingsForEncoderRange:  v32@0:8{_NSRange=QQ}16
+  -_processBindingsForFunctionIndex:subCommandIndex:directBindingsOnly:  v36@0:8Q16q24B32
+  -_processCommandBufferResidencySetBindings:endIndex:  v32@0:8Q16Q24
+  -_processCommandQueueResidencySetBindings:endIndex:  v32@0:8Q16Q24
+  -_processIndirectCommand:subCommandIndex:bindings:  v40@0:8r^{IndirectCommand={?=Q{GTRange=QQ}{GTData=^vQ}}{GTMTLIndirectCommandEncoder=^{GTMTLIndirectCommandBufferDescriptor}QQQQQQQQQQQQQQQQQQQQQQQQQQ}{GTMTLIndirectResources=^{apr_array_header_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}^{apr_hash_t}C[7c]}*}16q24^{apr_hash_t=}32
+  -_processNonEncoderBindings:directBindingsOnly:  v28@0:8Q16B24
+  -_residencySetBindings:  v20@0:8i16
+  -bindingsForEncoderRange:  ^{apr_array_header_t=^{apr_pool_t}iii*}32@0:8{_NSRange=QQ}16
+  -bindingsForFunctionIndex:subCommandIndex:  ^{apr_array_header_t=^{apr_pool_t}iii*}32@0:8Q16q24
+  -directBindingsForFunctionIndex:subCommandIndex:  ^{apr_array_header_t=^{apr_pool_t}iii*}32@0:8Q16q24
+
+=== GTSPStringCache (instanceSize 24) ===
+
+=== GTServiceConnection (instanceSize 32) ===
+  -sendMessage:  v24@0:8@16
+  -deviceUDID  @16@0:8
+  -connection  @16@0:8
+  -setError:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -cancel  v16@0:8
+  -error  @16@0:8
+  -sendMessage:replyHandler:  v32@0:8@16@?24
+  -isTrusted  B16@0:8
+  -activateWithMessageHandler:andErrorHandler:  v32@0:8@?16@?24
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -registerDispatcher:forPort:  v32@0:8@16Q24
+  -initWithConnection:device:port:  @40@0:8@16@24Q32
+  -sendMessageWithReplySync:error:  @32@0:8@16^@24
+  -_setRoutingPropertiesForMessage:  v24@0:8@16
+  -_setRoutingPropertiesForMessage:withReplyStreamId:  v32@0:8@16Q24
+  -deregisterDispatcher:  v24@0:8Q16
+  -registerDispatcher:  Q24@0:8@16
+  -sendMessage:withReplyStreamId:  v32@0:8@16Q24
+  -sendMessage:withReplyStreamId:replyHandler:  v40@0:8@16Q24@?32
+  -sendMessageAndWaitForDelivery:  v24@0:8@16
+  -sendMessageWithReplySync:replyStreamId:error:  @40@0:8@16Q24^@32
+
+=== GTServiceObserver (instanceSize 32) ===
+  -connection  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -initWithMessage:notifyConnection:  @32@0:8@16@24
+  -replyPath  @16@0:8
+  -replyStream  Q16@0:8
+
+=== GTServiceProperties (instanceSize 56) ===
+  -setProtocolName:  v24@0:8@16
+  -protocolName  @16@0:8
+  -deviceUDID  @16@0:8
+  -setVersion:  v24@0:8Q16
+  -setPlatform:  v20@0:8i16
+  -initWithCoder:  @24@0:8@16
+  -platform  i16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -version  Q16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -setDeviceUDID:  v24@0:8@16
+  -servicePort  Q16@0:8
+  -initWithProtocol:  @24@0:8@16
+  -setServicePort:  v24@0:8Q16
+  -protocolMethods  @16@0:8
+  -setProtocolMethods:  v24@0:8@16
+
+=== GTServiceProvider (instanceSize 40) ===
+  -allServices  @16@0:8
+  -registerObserver:  Q24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -deregisterService:  v24@0:8Q16
+  -deregisterObserver:  v24@0:8Q16
+  -deregisterObserversForConnection:path:  v32@0:8@16@24
+  -_registerService:forProcess:forPort:  v40@0:8@16@24Q32
+  -disconnectServicePorts:  v24@0:8@16
+  -notifyServiceListChanged:  v24@0:8@16
+  -registerDefaultServiceProvider:forProcess:  v32@0:8@16@24
+  -registerService:forProcess:  v32@0:8@16@24
+  -waitForService:completionHandler:  v32@0:8@16@?24
+  -waitForService:error:  B32@0:8@16^@24
+
+=== GTServiceProviderObserver (instanceSize 32) ===
+  -notifyServiceListChanged:  v24@0:8@16
+
+=== GTServiceProviderReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyServiceListChanged_:replyConnection:  v32@0:8@16@24
+
+=== GTServiceProviderXPCDispatcher (instanceSize 32) ===
+  -setConnections:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -allServices:replyConnection:  v32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -deregisterService_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -registerService_forProcess_:replyConnection:  v32@0:8@16@24
+  -waitForService_completionHandler_:replyConnection:  v32@0:8@16@24
+  -waitForService_error_:replyConnection:  v32@0:8@16@24
+
+=== GTServiceProviderXPCProxy (instanceSize 40) ===
+  -allServices  @16@0:8
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -deregisterService:  v24@0:8Q16
+  -deregisterObserver:  v24@0:8Q16
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -registerService:forProcess:  v32@0:8@16@24
+  -waitForService:completionHandler:  v32@0:8@16@?24
+  -waitForService:error:  B32@0:8@16^@24
+
+=== GTShaderProfilerBinaryAnalysisResult (instanceSize 328) ===
+  -setVersion:  v20@0:8I16
+  -instructions  r^{?=IIQQIICCS}16@0:8
+  -initWithCoder:  @24@0:8@16
+  -.cxx_construct  @16@0:8
+  -init  @16@0:8
+  -stringAtIndex:  @24@0:8Q16
+  -.cxx_destruct  v16@0:8
+  -version  I16@0:8
+  -instructionCount  Q16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setStrings:  v24@0:8@16
+  -clauses  r^{?=QQIIII}16@0:8
+  -binaryRangeData  @16@0:8
+  -instructionData  @16@0:8
+  -lastBinaryRange  r^{?=IQQII}16@0:8
+  -binaryLocations  r^{?=IIII}16@0:8
+  -lastInstruction  r^{?=IIQQIICCS}16@0:8
+  -binaryInfo  ^v16@0:8
+  -binaryLocationCount  Q16@0:8
+  -binaryLocationData  @16@0:8
+  -binaryRangeCount  Q16@0:8
+  -binaryRanges  r^{?=IQQII}16@0:8
+  -branchTargetCount  Q16@0:8
+  -branchTargetData  @16@0:8
+  -branchTargets  r^{?=Q}16@0:8
+  -clauseCount  Q16@0:8
+  -clauseData  @16@0:8
+  -lastBinaryLocation  r^{?=IIII}16@0:8
+  -lastBranchTarget  r^{?=Q}16@0:8
+  -lastClause  r^{?=QQIIII}16@0:8
+  -lastRegisterInfo  r^{?=II}16@0:8
+  -maxOffset  Q16@0:8
+  -registerInfo  r^{?=II}16@0:8
+  -registerInfoCount  Q16@0:8
+  -registerInfoData  @16@0:8
+  -registerInfoOffsetForInstructionIndex:  Q24@0:8Q16
+  -setBinaryLocationData:  v24@0:8@16
+  -setBinaryRangeData:  v24@0:8@16
+  -setBranchTargetData:  v24@0:8@16
+  -setClauseData:  v24@0:8@16
+  -setInstructionData:  v24@0:8@16
+  -setRegisterInfoData:  v24@0:8@16
+
+=== GTShaderProfilerDebugDump (instanceSize 16) ===
+  -.cxx_destruct  v16@0:8
+  -initWithDirectory:  @24@0:8@16
+  -setDirectory:  v24@0:8@16
+  -filePathFromFileName:  @24@0:8@16
+
+=== GTShaderProfilerDeviceInfo (instanceSize 48) ===
+  -build  @16@0:8
+  -setName:  v24@0:8@16
+  -setVersion:  v24@0:8@16
+  -setPlatform:  v20@0:8i16
+  -setBuild:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -platform  i16@0:8
+  -name  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -version  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -metalVersion  @16@0:8
+  -setMetalVersion:  v24@0:8@16
+
+=== GTShaderProfilerSessionRequest (instanceSize 32) ===
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -executionMode  I16@0:8
+  -setExecutionMode:  v20@0:8I16
+  -performanceState  I16@0:8
+  -profilerMode  I16@0:8
+  -setPerformanceState:  v20@0:8I16
+  -setProfilerMode:  v20@0:8I16
+  -setStreamDataToLoad:  v24@0:8@16
+  -streamDataToLoad  @16@0:8
+
+=== GTShaderProfilerStreamData (instanceSize 344) ===
+  -setDeviceInfo:  v24@0:8@16
+  -deviceInfo  @16@0:8
+  -debugDump:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -shortDescription  @16@0:8
+  -init  @16@0:8
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -dealloc  v16@0:8
+  -version  Q16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -encodeWithCoder:  v24@0:8@16
+  -strings  @16@0:8
+  -encode:error:  @32@0:8@16^@24
+  -setTraceName:  v24@0:8@16
+  -traceName  @16@0:8
+  -pipelineStates  r^{?=QQQIIII}16@0:8
+  -dataFileURL  @16@0:8
+  -encoders  r^{?=QQQIIII}16@0:8
+  -metalDeviceName  @16@0:8
+  -GPUCommandInfoFromFunctionIndex:subCommandIndex:  r^{?=IIIIQIi}24@0:8I16i20
+  -archivedAPSData  @16@0:8
+  -metalPluginName  @16@0:8
+  -encodeAPSArrayForOldHost:array:  v32@0:8@16@24
+  -encoderInfoData  @16@0:8
+  -initWithNewFileFormatV2Support:  @20@0:8B16
+  -patchObjectIds:  v24@0:8@16
+  -_setupDataPath  @16@0:8
+  -_writeLocalData:dataPath:to:  v40@0:8@16@24@32
+  -archivedAPSCounterData  @16@0:8
+  -archivedAPSTimelineData  @16@0:8
+  -archivedBatchIdFilteredCounterData  @16@0:8
+  -archivedGPUTimelineData  @16@0:8
+  -archivedPerDrawRawCounterData  @16@0:8
+  -archivedShaderProfilerData  @16@0:8
+  -batchIdFilterableCounters  @16@0:8
+  -blitCallCount  Q16@0:8
+  -cleanupLocalFiles  v16@0:8
+  -commandBufferInfoCount  Q16@0:8
+  -commandBufferInfoData  @16@0:8
+  -commandBuffers  r^{?=QQQII}16@0:8
+  -dataFromUnarchvedMetadata:  @24@0:8@16
+  -dataSourceCaptureRange  {_NSRange=QQ}16@0:8
+  -dataSourceHasUnusedResources  B16@0:8
+  -encoderInfoCount  Q16@0:8
+  -encoderInfoFromFunctionIndex:  r^{?=QQQIIII}20@0:8I16
+  -enumerateUnarchivedBatchIdFilteredCounterData:  v24@0:8@?16
+  -enumerateUnarchivedGPUTimelineData:  v24@0:8@?16
+  -enumerateUnarchivedShaderProfilerData:  v24@0:8@?16
+  -functionInfo  r^{?=QQQIIII[8c]}16@0:8
+  -functionInfoCount  Q16@0:8
+  -functionInfoData  @16@0:8
+  -gpuCommandInfoCount  Q16@0:8
+  -gpuCommandInfoData  @16@0:8
+  -gpuCommands  r^{?=IIIIQIi}16@0:8
+  -gpuGeneration  I16@0:8
+  -initWithPreSiBundle:  @24@0:8@16
+  -isPreSiData  B16@0:8
+  -pipelinePerformanceStatistics  @16@0:8
+  -pipelineStateInfoCount  Q16@0:8
+  -pipelineStateInfoData  @16@0:8
+  -preSiBundleURL  @16@0:8
+  -profiledExecutionMode  I16@0:8
+  -profiledPerformanceState  I16@0:8
+  -profiledProfilerMode  I16@0:8
+  -setMetalDeviceName:  v24@0:8@16
+  -setMetalPluginName:  v24@0:8@16
+  -setProfiledExecutionMode:  v20@0:8I16
+  -setProfiledPerformanceState:  v20@0:8I16
+  -setProfiledProfilerMode:  v20@0:8I16
+  -setSupportsFileFormatV2:  v20@0:8B16
+  -supportsFileFormatV2  B16@0:8
+  -unarchivedAPSCounterData  @16@0:8
+  -unarchivedAPSData  @16@0:8
+  -unarchivedAPSTimelineData  @16@0:8
+  -unarchivedBatchIdFilteredCounterData  @16@0:8
+  -unarchivedGPUTimelineData  @16@0:8
+  -unarchivedShaderProfilerData  @16@0:8
+  -unixTimestamp  q16@0:8
+
+=== GTShaderProfilerStreamDataForMetadata (instanceSize 344) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTShaderProfilerStringCache (instanceSize 24) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -strings  @16@0:8
+  -addString:  Q24@0:8@16
+  -stringFromIndex:  @24@0:8Q16
+
+=== GTShaderProfilerTimingInfo (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -time  Q16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -computeTime  Q16@0:8
+  -fragmentTime  Q16@0:8
+  -initWithTime:vertexTime:fragmentTime:computeTime:  @48@0:8Q16Q24Q32Q40
+  -vertexTime  Q16@0:8
+
+=== GTSharedMemoryTransport_replayer (instanceSize 464) ===
+  -connected  B16@0:8
+  -initWithMode:  @20@0:8i16
+  -init  @16@0:8
+  -dealloc  v16@0:8
+  -_invalidate  v16@0:8
+  -connect  @16@0:8
+  -setUrl:  v24@0:8@16
+  -deferred  B16@0:8
+  -_clientConnect:  B24@0:8^@16
+  -_copyToSM:size:  v32@0:8r^v16q24
+  -_getSharedMemoryNameWithSuffix:  @24@0:8@16
+  -_serverConnect:  B24@0:8^@16
+  -_setupIOBuffers  v16@0:8
+  -_accumulateMessageBytes  v16@0:8
+  -_calculateVMRegionMapSize:  Q24@0:8Q16
+  -_computeBytesAvailableToRead  Q16@0:8
+  -_computeBytesAvailableToWrite  Q16@0:8
+  -_copyFromSM:size:  v32@0:8^v16Q24
+  -_createAndRunSources:  B24@0:8^@16
+  -_dequeueIncomingMessages  v16@0:8
+  -_dequeuePacket  v16@0:8
+  -_initializeSMRegion:size:name:error:  B48@0:8^^{sm_region_header}16Q24r*32^@40
+  -_mapSharedMemoryFile:size:error:  ^v36@0:8i16Q20^@28
+  -_nextMessageSerial  I16@0:8
+  -_openSMRegion:size:name:error:  B48@0:8^^{sm_region_header}16Q24r*32^@40
+  -_read:size:  q32@0:8^v16Q24
+  -_relayPacket  v16@0:8
+  -_tearDownSharedMemory  v16@0:8
+  -_updateReaderOffset:  v24@0:8Q16
+  -_waitEAGAIN  v16@0:8
+  -_write:size:  q32@0:8r^v16Q24
+  -initWithMode:initialMessageSerial:  @24@0:8i16I20
+  -send:inReplyTo:error:replyQueue:timeout:handler:  B64@0:8@16@24^@32@40Q48@?56
+  -setRelayTransport:  v24@0:8@16
+
+=== GTSimulatorDeviceBrowserXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -deviceProperties:error:  @32@0:8@16^@24
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -isSimulatorDevice:  B24@0:8@16
+
+=== GTStashEvent (instanceSize 24) ===
+  -item  @16@0:8
+  -setItem:  v24@0:8@16
+  -setEventType:  v24@0:8q16
+  -initWithCoder:  @24@0:8@16
+  -eventType  q16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTStashItem (instanceSize 24) ===
+  -sessionId  Q16@0:8
+  -setSessionId:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+  -setItemId:  v24@0:8Q16
+  -itemId  Q16@0:8
+
+=== GTStashReplyStream (instanceSize 24) ===
+  -initWithObserver:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -notifyItem_:replyConnection:  v32@0:8@16@24
+
+=== GTStashServiceObserver (instanceSize 32) ===
+  -notifyItem:  v24@0:8@16
+
+=== GTStashServiceXPCDispatcher (instanceSize 32) ===
+  -.cxx_destruct  v16@0:8
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -initWithService:properties:  @32@0:8@16@24
+  -addItem_path_error_:replyConnection:  v32@0:8@16@24
+  -broadcastDisconnect:replyConnection:  v32@0:8@16@24
+  -clearStash_:replyConnection:  v32@0:8@16@24
+  -deregisterObserver_:replyConnection:  v32@0:8@16@24
+  -initWithService:properties:queue:  @40@0:8@16@24@32
+  -listItemsWithError_:replyConnection:  v32@0:8@16@24
+  -listItemsWithSessionId_error_:replyConnection:  v32@0:8@16@24
+  -registerObserver_:replyConnection:  v32@0:8@16@24
+  -registerObserver_forSessionId_:replyConnection:  v32@0:8@16@24
+  -releaseItem_error_:replyConnection:  v32@0:8@16@24
+  -retainItem_error_:replyConnection:  v32@0:8@16@24
+  -startSessionWithDescriptor_error_:replyConnection:  v32@0:8@16@24
+  -stopSessionWithSessionId_error_:replyConnection:  v32@0:8@16@24
+  -urlForItem_error_:replyConnection:  v32@0:8@16@24
+
+=== GTStashServiceXPCProxy (instanceSize 40) ===
+  -respondsToSelector:  B24@0:8:16
+  -registerObserver:  Q24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -urlForItem:error:  @32@0:8@16^@24
+  -stopSessionWithSessionId:error:  B32@0:8Q16^@24
+  -initWithConnection:serviceInfo:  @32@0:8@16@24
+  -addItem:path:error:  B40@0:8@16@24^@32
+  -deregisterObserver:  v24@0:8Q16
+  -listItemsWithError:  @24@0:8^@16
+  -listItemsWithSessionId:error:  @32@0:8Q16^@24
+  -registerObserver:forSessionId:  Q32@0:8@16Q24
+  -releaseItem:error:  B32@0:8@16^@24
+  -retainItem:error:  B32@0:8@16^@24
+  -startSessionWithDescriptor:error:  @32@0:8@16^@24
+  -clearStash:  B24@0:8^@16
+
+=== GTStashSession (instanceSize 24) ===
+  -sessionId  Q16@0:8
+  -setSessionId:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -sessionDirectory  @16@0:8
+  -setSessionDirectory:  v24@0:8@16
+
+=== GTStashSessionDescriptor (instanceSize 16) ===
+  -windowSize  Q16@0:8
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setWindowSize:  v24@0:8Q16
+
+=== GTTelemetryConfiguration (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -reportFrequencyInSeconds  f16@0:8
+  -setReportFrequencyInSeconds:  v20@0:8f16
+
+=== GTTelemetryDeviceObject (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -commits  Q16@0:8
+  -gpuTime  @16@0:8
+  -setCommits:  v24@0:8Q16
+  -setGpuTime:  v24@0:8@16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTTelemetryLayerObject (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setFrames:  v24@0:8Q16
+  -frames  Q16@0:8
+  -fps  @16@0:8
+  -setFps:  v24@0:8@16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTTelemetryQueryConfiguration (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTTelemetryQueryStatistics (instanceSize 16) ===
+  -initWithCoder:  @24@0:8@16
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTTelemetryQueueObject (instanceSize 32) ===
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -commits  Q16@0:8
+  -gpuTime  @16@0:8
+  -setCommits:  v24@0:8Q16
+  -setGpuTime:  v24@0:8@16
+  -setStreamRef:  v24@0:8Q16
+  -streamRef  Q16@0:8
+
+=== GTTelemetryRecordObject (instanceSize 24) ===
+  -max  f16@0:8
+  -setMax:  v20@0:8f16
+  -initWithCoder:  @24@0:8@16
+  -min  f16@0:8
+  -description  @16@0:8
+  -average  f16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setMin:  v20@0:8f16
+  -setAverage:  v20@0:8f16
+
+=== GTTelemetryRequest (instanceSize 16) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -initNoRequestID  @16@0:8
+
+=== GTTelemetryRequestBatch (instanceSize 32) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setCompletionHandler:  v24@0:8@?16
+  -requests  @16@0:8
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -completionHandler  @?16@0:8
+  -setRequests:  v24@0:8@16
+  -initNoRequestID  @16@0:8
+
+=== GTTelemetryRequestToken (instanceSize 40) ===
+  -completed  v16@0:8
+  -waitUntilCompleted  v16@0:8
+  -.cxx_destruct  v16@0:8
+  -tokenId  Q16@0:8
+  -initWithService:andTokenId:  @32@0:8@16Q24
+
+=== GTTelemetryRequestUnknown (instanceSize 16) ===
+  -initNoRequestID  @16@0:8
+
+=== GTTelemetryResponse (instanceSize 40) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -setVersion:  v24@0:8(GTDataVersion={?=II}Q)16
+  -setData:  v24@0:8@16
+  -setError:  v24@0:8@16
+  -initWithCoder:  @24@0:8@16
+  -init  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -version  (GTDataVersion={?=II}Q)16@0:8
+  -error  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -data  @16@0:8
+
+=== GTTelemetryStatistics (instanceSize 40) ===
+  -layers  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -description  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -setLayers:  v24@0:8@16
+  -devices  @16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setDevices:  v24@0:8@16
+  -queues  @16@0:8
+  -setQueues:  v24@0:8@16
+  -temporalScalers  Q16@0:8
+  -setTemporalScalers:  v24@0:8Q16
+
+=== GTTelemetryUpdateConfiguration (instanceSize 24) ===
+  -configuration  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setConfiguration:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+
+=== GTTpacketRequest (instanceSize 40) ===
+  -requestID  Q16@0:8
+  -setRequestID:  v24@0:8Q16
+  -label  @16@0:8
+  -selector  @16@0:8
+  -requests  @16@0:8
+  -initWithCoder:  @24@0:8@16
+  -setLabel:  v24@0:8@16
+  -setSelector:  v24@0:8@16
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -setRequests:  v24@0:8@16
+
+=== GTTransportClient (instanceSize 16) ===
+  -allServices  @16@0:8
+  -initWithConnection:  @24@0:8@16
+  -capture  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -serviceProvider  @16@0:8
+  -replayer  @16@0:8
+  -loopback  @16@0:8
+  -launcher  @16@0:8
+
+=== GTTransportMessageReplyContinuation_replayer (instanceSize 48) ===
+  -dispatchError:  v24@0:8@16
+
+=== GTTransportMessage_replayer (instanceSize 72) ===
+  -transport  @16@0:8
+  -payload  @16@0:8
+  -doubleForKey:  d24@0:8@16
+  -boolForKey:  B24@0:8@16
+  -kind  i16@0:8
+  -attributes  @16@0:8
+  -attributeForKey:  @24@0:8@16
+  -init  @16@0:8
+  -description  @16@0:8
+  -dealloc  v16@0:8
+  -serial  I16@0:8
+  -copyWithZone:  @24@0:8^{_NSZone=}16
+  -uint64ForKey:  Q24@0:8@16
+  -stringPayload  @16@0:8
+  -_setSerial:replySerial:transport:  v32@0:8I16I20@24
+  -_setTransportSize:  v20@0:8I16
+  -boolPayload  B16@0:8
+  -encodedAttributes  @16@0:8
+  -hasBeenSent  B16@0:8
+  -initWithKind:attributes:boolPayload:  @32@0:8i16@20B28
+  -initWithKind:attributes:objectPayload:  @36@0:8i16@20@28
+  -initWithKind:attributes:payload:  @36@0:8i16@20@28
+  -initWithKind:attributes:plistPayload:  @36@0:8i16@20@28
+  -initWithKind:attributes:stringPayload:  @36@0:8i16@20@28
+  -objectPayload  @16@0:8
+  -plistPayload  @16@0:8
+  -replySerial  I16@0:8
+  -setEncodedAttributes:  v24@0:8@16
+  -transportSize  I16@0:8
+  -uint32ForKey:  I24@0:8@16
+
+=== GTTransportSource_replayer (instanceSize 64) ===
+  -cancelled  B16@0:8
+  -_cancel  v16@0:8
+  -messageHandler  @?16@0:8
+  -setMessageHandler:  v24@0:8@?16
+  -.cxx_construct  @16@0:8
+  -cancellationHandler  @?16@0:8
+  -init  @16@0:8
+  -registrationHandler  @?16@0:8
+  -dealloc  v16@0:8
+  -cancel  v16@0:8
+  -setCancellationHandler:  v24@0:8@?16
+  -resume  v16@0:8
+  -suspend  v16@0:8
+  -_register  v16@0:8
+  -_callCancellationHandler  v16@0:8
+  -_callRegistrationHandler  v16@0:8
+  -_dispatch:  v24@0:8@16
+  -_initWithQueue:transport:  @32@0:8@16@24
+  -setRegistrationHandler:  v24@0:8@?16
+
+=== GTTransport_replayer (instanceSize 104) ===
+  -setTargetQueue:  v24@0:8@16
+  -invalid  B16@0:8
+  -synchronous  B16@0:8
+  -invalidate  v16@0:8
+  -setIdentifier:  v24@0:8@16
+  -setSynchronous:  v20@0:8B16
+  -connected  B16@0:8
+  -.cxx_construct  @16@0:8
+  -url  @16@0:8
+  -init  @16@0:8
+  -description  @16@0:8
+  -dealloc  v16@0:8
+  -_invalidate  v16@0:8
+  -error  @16@0:8
+  -connect  @16@0:8
+  -_dispatchMessage:  v24@0:8@16
+  -identifier  @16@0:8
+  -debugDescription  @16@0:8
+  -_sendMessage:error:  q32@0:8@16^@24
+  -_activateSource:  B24@0:8@16
+  -_cancelSource:  v24@0:8@16
+  -_handleReplyTimeout:count:  v24@0:8I16I20
+  -_nextMessageSerial  I16@0:8
+  -_packMessage:error:  B32@0:8@16^@24
+  -_scheduleInvalidation:  v24@0:8@16
+  -drainQueue  v16@0:8
+  -interposerVersion  I16@0:8
+  -newSourceWithQueue:  @24@0:8@16
+  -prioritizeOutgoingMessages  B16@0:8
+  -relayMessage:error:  B32@0:8@16^@24
+  -send:error:  B32@0:8@16^@24
+  -send:error:replyQueue:timeout:handler:  B56@0:8@16^@24@32Q40@?48
+  -send:inReplyTo:error:  B40@0:8@16@24^@32
+  -send:inReplyTo:error:replyQueue:timeout:handler:  B64@0:8@16@24^@32@40Q48@?56
+  -sendNewMessage:error:  B28@0:8i16^@20
+  -sendNewMessage:error:replyQueue:timeout:handler:  B52@0:8i16^@20@28Q36@?44
+  -setInterposerVersion:  v20@0:8I16
+  -setPrioritizeOutgoingMessages:  v20@0:8B16
+
+=== GTUNIXDomainSocketTransport_replayer (instanceSize 272) ===
+  -initWithMode:  @20@0:8i16
+  -_invalidate  v16@0:8
+  -connect  @16@0:8
+  -setUrl:  v24@0:8@16
+  -_connectClient:future:  v32@0:8@16@24
+  -_connectServer:future:  v32@0:8@16@24
+
+=== GTURLAccessProvider (instanceSize 48) ===
+  -.cxx_destruct  v16@0:8
+  -_sharesFileSystemWith:remoteConnection:  B32@0:8@16@24
+  -copyIdentifier:toDevice:allowLocalURL:directory:completionHandler:  v52@0:8@16@24B32@36@?44
+  -copyIdentifier:toDevice:completionHandler:  v40@0:8@16@24@?32
+  -copyIdentifier:toDevice:directory:completionHandler:  v48@0:8@16@24@32@?40
+  -initWithServiceProvider:connectionProvider:serviceVendor:  @40@0:8@16@24@32
+  -makeURL:  @24@0:8@16
+  -securityScopedURLFromSandboxID:completionHandler:  v32@0:8@16@?24
+  -transferIdentifier:toDevice:completionHandler:  v40@0:8@16@24@?32
+  -urlForPath:  @24@0:8@16
+
+=== GTURLAccessProviderXPCDispatcher (instanceSize 24) ===
+  -.cxx_destruct  v16@0:8
+  -initWithService:properties:  @32@0:8@16@24
+  -transferIdentifier_toDevice_completionHandler_:replyConnection:  v32@0:8@16@24
+  -copyIdentifier_toDevice_completionHandler_:replyConnection:  v32@0:8@16@24
+  -copyIdentifier_toDevice_directory_completionHandler_:replyConnection:  v32@0:8@16@24
+  -makeURL_:replyConnection:  v32@0:8@16@24
+  -securityScopedURLFromSandboxID_completionHandler_:replyConnection:  v32@0:8@16@24
+  -urlForPath_:replyConnection:  v32@0:8@16@24
+
+=== GTURLAccessProviderXPCProxy (instanceSize 24) ===
+  -respondsToSelector:  B24@0:8:16
+  -.cxx_destruct  v16@0:8
+  -copyIdentifier:toDevice:completionHandler:  v40@0:8@16@24@?32
+  -copyIdentifier:toDevice:directory:completionHandler:  v48@0:8@16@24@32@?40
+  -initWithConnection:remoteProperties:  @32@0:8@16@24
+  -makeURL:  @24@0:8@16
+  -securityScopedURLFromSandboxID:completionHandler:  v32@0:8@16@?24
+  -transferIdentifier:toDevice:completionHandler:  v40@0:8@16@24@?32
+  -urlForPath:  @24@0:8@16
+
+=== GTUnarchiver (instanceSize 8) ===
+
+=== GTUnsupportedFenumInfo (instanceSize 40) ===
+  -initWithCoder:  @24@0:8@16
+  -category  @16@0:8
+  -.cxx_destruct  v16@0:8
+  -encodeWithCoder:  v24@0:8@16
+  -customMessage  @16@0:8
+  -asError  @16@0:8
+  -customRecoverySuggestion  @16@0:8
+  -fenum  @16@0:8
+  -initWithFenum:category:customMessage:customRecoverySuggestion:  @48@0:8@16@24@32@40
+
+=== GTVMBufferSubRegion_replayer (instanceSize 32) ===
+  -dealloc  v16@0:8
+  -subdataWithRange:  @32@0:8{_NSRange=QQ}16
+  -bytes  r^v16@0:8
+  -length  Q16@0:8
+  -GTGPUToolsData  @16@0:8
+  -initWithGTVMBuffer:range:  @40@0:8@16{_NSRange=QQ}24
+
+=== GTVMBuffer_replayer (instanceSize 16) ===
+  -mutableBytes  ^v16@0:8
+  -setLength:  v24@0:8Q16
+  -initWithCapacity:  @24@0:8Q16
+  -dealloc  v16@0:8
+  -subdataWithRange:  @32@0:8{_NSRange=QQ}16
+  -bytes  r^v16@0:8
+  -initWithLength:  @24@0:8Q16
+  -length  Q16@0:8
+  -initWithVMBuffer:  @24@0:8^{VMBuffer=QQQQQQ}16
+  -vmBuffer  ^{VMBuffer=QQQQQQ}16@0:8
+
+=== GTXPCDispatcher (instanceSize 16) ===
+  -.cxx_destruct  v16@0:8
+  -dispatchMessage:replyConnection:  v32@0:8@16@24
+  -initWithProtocolMethods:  @24@0:8@16
+
+335 GT* classes dumped

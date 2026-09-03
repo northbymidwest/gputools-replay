@@ -1,0 +1,23 @@
+[package]
+name = "gputools-replay-sys"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Raw bindings to Apple's private GPUToolsReplay framework (macOS 27+)"
+readme = "../../README.md"
+keywords = ["macos", "metal", "gpu", "ffi", "gputrace"]
+categories = ["external-ffi-bindings", "os::macos-apis"]
+links = "GPUToolsReplay"
+# Not published yet: flip by removing this line when cutting the first release.
+publish = false
+
+[dependencies]
+objc2 = { workspace = true }
+
+# docs.rs cannot host the private framework and builds on Linux; target the
+# Apple platform and let build.rs's DOCS_RS branch skip linking (see build.rs).
+[package.metadata.docs.rs]
+default-target = "aarch64-apple-darwin"
+targets = ["aarch64-apple-darwin"]

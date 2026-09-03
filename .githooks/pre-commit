@@ -1,0 +1,52 @@
+#!/bin/sh
+# Pre-commit hook: reject staged changes that introduce non-ASCII bytes, and
+# (as a convenience) reject a commit that leaves the workspace failing
+# `cargo fmt`.
+#
+# Enable the hook in a fresh clone with:
+#
+#     git config core.hooksPath .githooks
+#
+# It is a convenience only: hooks are per-clone and `git commit --no-verify`
+# skips them. CI is the real enforcement (the lint job runs the same
+# scripts/check-ascii.sh and `cargo fmt --all --check`).
+
+set -u
+
+root=$(git rev-parse --show-toplevel 2>/dev/null || true)
+status=0
+
+# --- ASCII check (staged files) -------------------------------------------
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+if [ -n "$staged" ] && [ -n "$root" ]; then
+  # Split the newline-separated file list into arguments in a subshell, so the
+  # IFS change stays local.
+  ( IFS='
+'
+    # shellcheck disable=SC2086
+    exec "$root/scripts/check-ascii.sh" $staged
+  ) || status=1
+fi
+
+# --- rustfmt check --------------------------------------------------------
+# Checks the WHOLE workspace, not just staged files: the rule is "the repo is
+# rustfmt-clean". Portable no-op outside a Rust repo or when the toolchain is
+# unavailable, so this hook can be copied around without becoming a tripwire.
+if [ -n "$root" ] && [ -f "$root/Cargo.toml" ] && command -v cargo >/dev/null 2>&1; then
+  if ! cargo fmt --version >/dev/null 2>&1; then
+    echo "pre-commit: rustfmt is not installed; skipping the format check." >&2
+  elif ! out=$(cd "$root" && cargo fmt --all --check 2>&1); then
+    echo >&2
+    echo "COMMIT REJECTED: the workspace is not rustfmt-clean." >&2
+    echo >&2
+    printf '%s\n' "$out" | grep -E '^Diff in' | sed -e 's/^/  /' -e 's/:$//' | sort -u >&2
+    echo >&2
+    echo "  Fix:    cargo fmt --all" >&2
+    echo "  Review: cargo fmt --all --check" >&2
+    echo "  Bypass: git commit --no-verify" >&2
+    echo >&2
+    status=1
+  fi
+fi
+
+exit "$status"

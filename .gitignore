@@ -1,0 +1,14 @@
+/target
+**/*.rs.bk
+.superpowers/
+# Claude Code creates git worktrees here; a local tool artifact, not the project.
+/.claude/worktrees/
+
+# Capture bundles: ~75 MB each, and reproducible by re-capturing in Xcode.
+# Present in captures/ for local work, deliberately not committed - but the
+# README describing them is, so a fresh clone knows what it is missing.
+/captures/*
+!/captures/README.md
+
+# macOS Finder junk
+.DS_Store

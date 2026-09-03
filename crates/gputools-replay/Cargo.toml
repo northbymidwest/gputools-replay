@@ -1,0 +1,27 @@
+[package]
+name = "gputools-replay"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Safe in-process wrapper around Apple's private GPUToolsReplay framework: fetch, playback, and harvester decoding."
+readme = "../../README.md"
+keywords = ["macos", "metal", "gpu", "gputrace", "replay"]
+categories = ["os::macos-apis", "development-tools::debugging"]
+# Not published yet: flip by removing this line when cutting the first release.
+publish = false
+
+[dependencies]
+gputools-replay-sys = { workspace = true }
+objc2 = { workspace = true }
+objc2-foundation = { workspace = true }
+block2 = { workspace = true }
+plist = { workspace = true }
+thiserror = { workspace = true }
+
+# docs.rs builds on Linux; the framework stack targets Apple only (build.rs's
+# DOCS_RS branch skips linking the private framework).
+[package.metadata.docs.rs]
+default-target = "aarch64-apple-darwin"
+targets = ["aarch64-apple-darwin"]
