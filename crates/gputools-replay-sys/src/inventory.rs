@@ -294,7 +294,7 @@ mod tests {
 
     /// Every class the inventory lists must be registered with the live
     /// runtime; the framework is linked, so they load before main. Classes that
-    /// only exist on macOS 27 are exempt under the `macos-26` feature.
+    /// only exist on macOS 27 are exempt when the `macos27` feature is off.
     #[test]
     fn every_inventoried_class_is_registered_with_the_runtime() {
         for symbol in EXPORTS.iter().filter(|s| s.kind == SymbolKind::ObjcClass) {
