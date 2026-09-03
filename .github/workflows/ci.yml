@@ -1,12 +1,11 @@
 name: CI
 
-# This crate links Apple's private GPUToolsReplay framework and refuses to build
-# below macOS 27 (gputools-replay-sys/build.rs), and no GitHub-hosted macOS
-# runner is that new yet. Jobs that COMPILE the framework crates therefore run
-# on a hosted macos-latest runner but are gated off (MACOS27_RUNNER) and
-# allow-fail until that image reaches macOS 27; everything that does not compile
-# them (lint, supply-chain, workflow lint, and - via `cargo metadata`, which
-# does not run build scripts - deny/machete) runs on cheap, fast Ubuntu.
+# This crate links Apple's private GPUToolsReplay framework (macOS 26+; see
+# gputools-replay-sys/build.rs). Jobs that COMPILE the framework crates run on
+# macos-latest, which GitHub currently provisions as macOS 26, allow-fail while
+# the macOS-26 ABI is validated. Everything that does not compile them (lint,
+# supply-chain, workflow lint, and - via `cargo metadata`, which does not run
+# build scripts - deny/machete) runs on cheap, fast Ubuntu.
 on:
   push:
   pull_request:
@@ -122,17 +121,16 @@ jobs:
           zizmor --no-progress .github
 
   macos:
-    # Everything that COMPILES the framework crates. This needs a macOS 27
-    # runner: gputools-replay-sys/build.rs refuses to build below it, and no
-    # GitHub-hosted macOS runner is that new yet. The job is SKIPPED until one
-    # exists - set the MACOS27_RUNNER repo variable to 'true' once macos-latest
-    # is macOS 27 (or pin runs-on to a macos-27 label when GitHub ships it).
-    # continue-on-error keeps it non-blocking even after that. Checks out
-    # gputrace-bundle as a sibling so hl's ../gputrace-bundle path dep resolves.
-    if: ${{ vars.MACOS27_RUNNER == 'true' }}
+    # Everything that COMPILES the framework crates. Runs on macos-latest, which
+    # GitHub currently provisions as macOS 26 - new enough (the crate supports
+    # macOS 26+; see gputools-replay-sys/build.rs). continue-on-error while the
+    # macOS-26 ABI is validated; flip to blocking once it is reliably green.
+    # Checks out gputrace-bundle as a sibling so hl's ../gputrace-bundle path
+    # dependency resolves. The live (--ignored) tests need capture fixtures that
+    # are not committed, so they run locally, not here.
     runs-on: macos-latest
     continue-on-error: true
-    timeout-minutes: 45
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: gputools-replay
@@ -153,12 +151,6 @@ jobs:
       - run: cargo build --workspace
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - run: cargo test --workspace
-      # Live fetch/playback tests against local capture fixtures (~75 MB each,
-      # not committed - see captures/README.md). Pass when the runner has them.
-      - name: live tests
-        env:
-          MTLREPLAYER_LOCK_PARAM_BUFFER_SIZE_TO_MAX: '0'
-        run: cargo test --workspace -- --ignored
       - name: docs
         env:
           RUSTDOCFLAGS: -D warnings
@@ -166,8 +158,7 @@ jobs:
 
   msrv:
     # Verifies the declared MSRV floor still builds. Compiles the framework
-    # crates, so macOS-27-gated (MACOS27_RUNNER) and allow-fail like macos.
-    if: ${{ vars.MACOS27_RUNNER == 'true' }}
+    # crates on macos-latest (macOS 26+), allow-fail like the macos job.
     runs-on: macos-latest
     continue-on-error: true
     timeout-minutes: 30

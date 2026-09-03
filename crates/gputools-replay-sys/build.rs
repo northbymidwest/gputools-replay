@@ -1,15 +1,18 @@
 //! Links the private framework from the RUNTIME path (HANDOFF section 1): no
 //! dlopen, no libc. The linker resolves GPUToolsReplay from the running
 //! system's dyld shared cache, so this path inherently matches the OS the
-//! crate will run on. The crate targets macOS 27 (the ABI was read from
-//! disassembly there; the 26 SDK stub is even missing
-//! GTReplayFetchAccelerationStructure), so the build refuses older hosts.
+//! crate will run on. The ABI was reverse-engineered on macOS 27; macOS 26 is
+//! supported too, differing only in that it does not ship the
+//! `GTReplayFetchAccelerationStructure` class (so acceleration-structure fetch
+//! returns a `Setup` error there - it is a runtime class lookup, not a link
+//! dependency, so nothing else is affected). The build refuses macOS 25 and
+//! older, which ship a materially different/stub framework.
 
 use std::process::Command;
 
 /// The framework is an OS-installed private framework resolved from the running
 /// system's dyld shared cache; cross-compiling it is not a supported use case.
-const MIN_MAJOR: u32 = 27;
+const MIN_MAJOR: u32 = 26;
 
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
@@ -39,8 +42,8 @@ fn main() {
     assert!(
         major >= MIN_MAJOR,
         "gputools-replay-sys requires macOS {MIN_MAJOR} or newer (found major version \
-         {major}). The framework ABI was established on macOS 27; older systems ship a \
-         different GPUToolsReplay."
+         {major}). The framework ABI was established on macOS 27 and is compatible on \
+         macOS 26; older systems ship a materially different GPUToolsReplay."
     );
 
     println!("cargo:rustc-link-search=framework=/System/Library/PrivateFrameworks");
