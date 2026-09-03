@@ -3,7 +3,7 @@ name: codeql
 # CodeQL for `actions` (the unattended workflows here carry `issues: write` and
 # a crates.io publish path, so they are worth scanning for injection) and for
 # `rust`. Both use build-mode `none`: no compilation, so this needs neither the
-# private framework nor the sibling gputrace-bundle checkout, and runs hosted.
+# private framework nor the sibling gputrace-bundle checkout, and runs on Ubuntu.
 on:
   push:
     branches: [main]
@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   analyze:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       security-events: write

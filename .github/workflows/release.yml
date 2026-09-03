@@ -35,7 +35,7 @@ concurrency:
 jobs:
   preflight:
     # Validation only; no write scope, no compilation (hosted).
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read

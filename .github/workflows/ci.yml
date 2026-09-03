@@ -1,10 +1,12 @@
 name: CI
 
-# This crate links Apple's private GPUToolsReplay framework and refuses to
-# build below macOS 27 (gputools-replay-sys/build.rs). GitHub-hosted macOS
-# runners are older than that, so anything that COMPILES the framework crates
-# runs only on a self-hosted macOS 27 runner and is allowed to fail until one
-# is registered. The hosted jobs cover everything that does not compile them.
+# This crate links Apple's private GPUToolsReplay framework and refuses to build
+# below macOS 27 (gputools-replay-sys/build.rs), and no hosted macOS runner is
+# that new. Jobs that COMPILE the framework crates therefore run on a
+# self-hosted macOS 27 runner (allow-fail until one is registered); everything
+# that does not compile them (lint, supply-chain, workflow lint, and - via
+# `cargo metadata`, which does not run build scripts - deny/machete) runs on
+# cheap, fast Ubuntu.
 on:
   push:
   pull_request:
@@ -25,8 +27,8 @@ concurrency:
 
 jobs:
   lint:
-    # Pure-text checks (no compilation), so a hosted runner is enough.
-    runs-on: macos-latest
+    # Pure-text checks (no compilation).
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -41,10 +43,11 @@ jobs:
       - uses: crate-ci/typos@a8168dc2984a9e2352f183ffe788f0f23a300389 # v1.49.1
 
   supply-chain:
-    # cargo-deny and cargo-machete read resolved metadata but do not compile,
-    # so they run hosted. Metadata resolution needs the sibling gputrace-bundle
-    # path dependency (../gputrace-bundle) checked out next to this repo.
-    runs-on: macos-latest
+    # cargo-deny and cargo-machete resolve metadata but do not compile the
+    # framework crates (cargo metadata does not run build scripts), so they run
+    # on Ubuntu. Metadata resolution needs the sibling gputrace-bundle path
+    # dependency (../gputrace-bundle) checked out next to this repo.
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
       run:
@@ -64,17 +67,18 @@ jobs:
           toolchain: stable
       - uses: taiki-e/install-action@37f7c5781271959fb65b6b35224e28652ff2b63d # v2.87.0
         with:
-          tool: cargo-machete@0.9.2,cargo-deny@0.20.2
-      # Advisories are audit.yml's job; here it is licenses/bans/sources. The
-      # cargo-deny-action is a Linux-only container, so run the CLI (in the
-      # working-directory gputools-replay, where the manifest is).
-      - run: cargo deny check licenses bans sources
+          tool: cargo-machete@0.9.2
+      # Advisories are audit.yml's job; here it is licenses/bans/sources.
+      - uses: EmbarkStudios/cargo-deny-action@3c6349835b2b7b196a839186cb8b78e02f7b5f25 # v2.1.1
+        with:
+          manifest-path: gputools-replay/Cargo.toml
+          command: check licenses bans sources
       - run: cargo machete
 
   workflows:
     # Lints the workflow files themselves (actionlint) and audits them for
     # security anti-patterns (zizmor). No compilation.
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: read
@@ -85,11 +89,11 @@ jobs:
           persist-credentials: false
       - name: actionlint
         env:
+          # go is preinstalled on the Ubuntu runner; pin actionlint by tag.
           SHELLCHECK_OPTS: -e SC2016
-        # go is not on the macOS runner; install actionlint via Homebrew.
         run: |
-          brew install actionlint
-          actionlint
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+          "$(go env GOPATH)/bin/actionlint"
       # Uploads findings to code scanning (non-blocking).
       - uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
         with:
