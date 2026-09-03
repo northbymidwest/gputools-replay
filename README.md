@@ -15,44 +15,40 @@ claim in this repository the way its own findings are written, as something
 measured, with the method stated, not as something to be trusted on
 authority.
 
-## What is here, and what is not
+## What is here
 
-This is a reverse-engineering campaign with a Cargo workspace attached, not
-a finished library. Concretely:
+A reverse-engineered, pre-release (`0.x`) stack of crates over the framework,
+plus the campaign's evidence trail:
 
-- **`crates/gputools-replay-sys`** is the FFI layer: link configuration,
-  the bootstrap function signatures, the replay client's memory layout, and
-  a regression test that re-derives that layout from the live runtime on
-  every `cargo test`. This is the crate intended for eventual publication.
-  See [its README](crates/gputools-replay-sys/README.md) for the details.
-- **`crates/gputools-replay`** is a stub. The name is reserved and the
-  crate builds, but it has no API. The safe, high-level interface (a
-  session model, query and result types, error handling) is deliberately
-  **not implemented yet**, it is designed in a second pass, after the
-  reverse-engineering campaign has established how the framework's unknown
-  surfaces behave. Do not expect a working high-level API from this crate
-  today.
-- **`probes/`** is an unpublished workspace member holding one Rust binary
-  per live or static probe against the framework. These are campaign
-  tooling, not examples, and are not meant to be depended on.
-- **`docs/findings/`** is the campaign's evidence log: one dossier per
-  surface of the framework's exported API, each recording an expectation
-  written before a probe ran and the result recorded after, including
-  nulls and surprises. Start there if you want to know what is actually
-  established versus still guessed.
+- **`crates/gputools-replay-sys`** is the FFI layer: link configuration, the
+  bootstrap function signatures, the replay client's memory layout, and a
+  regression test that re-derives that layout from the live runtime on every
+  `cargo test`. See [its README](crates/gputools-replay-sys/README.md).
+- **`crates/gputools-replay`** is the safe, in-process wrapper: a
+  one-session-per-process model, texture / buffer / heap / pipeline-binaries /
+  acceleration-structure fetch, playback, and harvester decoding, with typed
+  results that preserve every field. Only `Session::configure_env` is `unsafe`
+  (an opt-in for non-default replayer config); every other public fn is safe.
+- **`crates/gputools-replay-hl`** is the ergonomic domain layer over it:
+  format-aware textures, typed buffers, and the descriptor join that reconciles
+  fetched resources against the capture's on-disk manifest.
+- **`probes/`** is an unpublished workspace member, one Rust binary per live or
+  static probe. Campaign tooling, not examples, and not meant to be depended on.
+- **`docs/findings/`** and **`docs/HANDOFF.md`** are the campaign's evidence
+  log: the measured facts, each with the method that established it. Start there
+  to see what is established versus still guessed.
 
-## Why the safe crate is not implemented
+The portable, framework-free `.gputrace` bundle reader lives in its own
+repository,
+[`gputrace-bundle`](https://github.com/northbymidwest/gputrace-bundle).
 
-The framework exports 31 symbols (18 C functions, 13 Objective-C classes).
-Only a handful are established well enough to build a safe API around; the
-rest are unverified: their signatures are unknown, and calling a guessed
-signature against a private framework is undefined behavior waiting to
-happen. `crates/gputools-replay-sys/src/inventory.rs` tracks this
-distinction as data (`coverage()` currently returns established/total over
-the exported surface), so the crate can state its own coverage rather than
-imply completeness it does not have. Designing a safe, general API before
-that surface is understood would bake in assumptions the campaign has not
-yet earned.
+## macOS version
+
+The ABI was reverse-engineered on macOS 27, so the default `macos27` feature
+floors the build there. Building `--no-default-features` lowers the floor to
+macOS 26, which ships the same framework minus the
+`GTReplayFetchAccelerationStructure` class: acceleration-structure fetch returns
+an error there, and nothing else changes.
 
 ## Operational constraints
 
