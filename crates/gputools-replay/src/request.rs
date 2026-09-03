@@ -68,7 +68,7 @@ impl Region {
 
 /// A texture fetch request. `depth` is fixed to 1 (a 2D texture has one
 /// slice; depth 0 returns nothing from the replayer) and is not settable
-/// here: it is forced by [`crate::fetch::build_texture_batch`], never taken
+/// here: it is forced by `fetch::build_texture_batch`, never taken
 /// from the caller, mirroring `probes::session::build_batch`.
 #[derive(Debug, Clone)]
 pub struct TextureRequest {

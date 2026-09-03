@@ -307,9 +307,9 @@ impl Capture {
     /// Join already-fetched `texs` against the cached manifest, by the
     /// creation-order ordinal zip (dossier 00). Pure: no fetch, and no error
     /// on a gap - a manifest descriptor nothing claims lands in
-    /// [`Descriptions::unplaced`] instead, and a combined depth+stencil
-    /// descriptor (never served directly by the fetch) lands in
-    /// [`Descriptions::transparent`] (see [`crate::describe`] for the join's
+    /// [`crate::describe::Descriptions::unplaced`] instead, and a combined
+    /// depth+stencil descriptor (never served directly by the fetch) lands in
+    /// [`crate::describe::Descriptions::transparent`] (see [`crate::describe`] for the join's
     /// own known limitation). If the manifest is absent, unparseable, or
     /// empty, `per_texture` is all-`None` and `unplaced`/`transparent` are
     /// both empty.

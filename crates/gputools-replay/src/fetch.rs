@@ -421,7 +421,7 @@ pub(crate) fn pump_until(outcome: &Outcome, timeout: Duration) -> Result<RawRepl
 
 /// The typed, blocking fetch methods. Each is a thin composition of this
 /// module's non-blocking primitives - build the typed batch, dispatch it
-/// with a handler that stores into a fresh [`Outcome`], pump the run loop
+/// with a handler that stores into a fresh `Outcome`, pump the run loop
 /// until it is filled or the timeout elapses, then check the observer
 /// before decoding.
 ///

@@ -155,7 +155,9 @@ jobs:
       - name: docs
         env:
           RUSTDOCFLAGS: -D warnings
-        run: cargo doc --workspace --no-deps --features macos-26
+        # Exclude the internal probes harness: its CLI-usage docs use <...>
+        # placeholders that rustdoc reads as HTML, and it is never published.
+        run: cargo doc --workspace --exclude replay-probes --no-deps --features macos-26
 
   msrv:
     # Verifies the declared MSRV floor still builds. Compiles the framework

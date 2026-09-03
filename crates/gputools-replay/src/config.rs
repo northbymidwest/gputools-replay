@@ -2,7 +2,7 @@
 
 /// The load-relevant replayer knobs.
 ///
-/// Applied by [`ReplayerConfig::apply_env`], which [`crate::Session::configure_env`]
+/// Applied by `ReplayerConfig::apply_env`, which [`crate::Session::configure_env`]
 /// calls before the framework is bootstrapped.
 ///
 /// Applying a config is authoritative over the exactly three `MTLREPLAYER_*`

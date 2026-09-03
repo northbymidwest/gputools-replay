@@ -486,7 +486,7 @@ impl Session {
     }
 
     /// The controller's current command index, at byte offset
-    /// [`COMMAND_INDEX_OFFSET`].
+    /// `COMMAND_INDEX_OFFSET`.
     ///
     /// Reading it before and after a playback call is what distinguishes real
     /// forward progress from the documented no-op (`currentIndex >= target`
