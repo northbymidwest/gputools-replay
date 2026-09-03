@@ -16,3 +16,7 @@ objc2-foundation = { workspace = true }
 block2 = { workspace = true }
 plist = { workspace = true }
 thiserror = { workspace = true }
+
+[features]
+# Forward macOS 26 support to gputools-replay-sys (default floor is macOS 27).
+macos-26 = ["gputools-replay-sys/macos-26"]

@@ -1,20 +1,16 @@
 //! Links the private framework from the RUNTIME path (HANDOFF section 1): no
 //! dlopen, no libc. The linker resolves GPUToolsReplay from the running
 //! system's dyld shared cache, so this path inherently matches the OS the
-//! crate will run on. The ABI was reverse-engineered on macOS 27; macOS 26 is
-//! supported too, differing (in the SDK stub) only in that it does not ship the
-//! `GTReplayFetchAccelerationStructure` class (so acceleration-structure fetch
-//! returns a `Setup` error there - it is a runtime class lookup, not a link
-//! dependency, so nothing else is affected). macOS 26 is the floor only because
-//! it is the oldest version we have data for; older systems are untested (they
-//! may or may not be compatible) and are refused conservatively, not because
-//! they are known to differ.
+//! crate will run on. The ABI was reverse-engineered on macOS 27, which is the
+//! default floor. The opt-in `macos-26` feature lowers it to macOS 26, which
+//! ships the same framework minus the `GTReplayFetchAccelerationStructure`
+//! class (so acceleration-structure fetch returns a `Setup` error there - it is
+//! a runtime class lookup, not a link dependency, so nothing else is affected).
+//! Systems older than the floor are untested (we have no data; they may or may
+//! not be compatible) and are refused conservatively, not because they are
+//! known to differ.
 
 use std::process::Command;
-
-/// The framework is an OS-installed private framework resolved from the running
-/// system's dyld shared cache; cross-compiling it is not a supported use case.
-const MIN_MAJOR: u32 = 26;
 
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
@@ -40,13 +36,21 @@ fn main() {
         );
     }
 
+    // Default floor is macOS 27 (where the ABI was established); the `macos-26`
+    // feature lowers it to 26. Build scripts see enabled features as
+    // CARGO_FEATURE_<NAME> env vars.
+    let min_major = if std::env::var_os("CARGO_FEATURE_MACOS_26").is_some() {
+        26
+    } else {
+        27
+    };
     let major = host_macos_major();
     assert!(
-        major >= MIN_MAJOR,
-        "gputools-replay-sys requires macOS {MIN_MAJOR} or newer (found major version \
-         {major}). The framework ABI was established on macOS 27 and works on macOS 26; \
-         older systems are untested (we have no data), so they are refused conservatively \
-         rather than assumed compatible."
+        major >= min_major,
+        "gputools-replay-sys requires macOS {min_major} or newer (found major version \
+         {major}). The ABI was established on macOS 27; enable the `macos-26` feature to \
+         also build on macOS 26. Older systems are untested (we have no data), so they \
+         are refused conservatively rather than assumed compatible."
     );
 
     println!("cargo:rustc-link-search=framework=/System/Library/PrivateFrameworks");

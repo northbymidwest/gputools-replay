@@ -283,11 +283,24 @@ mod tests {
         assert_eq!(established, 30);
     }
 
+    /// Classes present on macOS 27 but not macOS 26. Under the `macos-26`
+    /// feature the live-runtime probe tests below tolerate their absence
+    /// (shape-checked when present, skipped when not); on the default macOS-27
+    /// floor the list is empty, so every class is required.
+    #[cfg(feature = "macos-26")]
+    const MACOS_27_ONLY_CLASSES: &[&str] = &["GTReplayFetchAccelerationStructure"];
+    #[cfg(not(feature = "macos-26"))]
+    const MACOS_27_ONLY_CLASSES: &[&str] = &[];
+
     /// Every class the inventory lists must be registered with the live
-    /// runtime; the framework is linked, so they load before main.
+    /// runtime; the framework is linked, so they load before main. Classes that
+    /// only exist on macOS 27 are exempt under the `macos-26` feature.
     #[test]
     fn every_inventoried_class_is_registered_with_the_runtime() {
         for symbol in EXPORTS.iter().filter(|s| s.kind == SymbolKind::ObjcClass) {
+            if MACOS_27_ONLY_CLASSES.contains(&symbol.name) {
+                continue;
+            }
             let name = CString::new(symbol.name).unwrap();
             assert!(
                 AnyClass::get(&name).is_some(),
@@ -296,6 +309,9 @@ mod tests {
             );
         }
         for name in RUNTIME_ONLY_CLASSES {
+            if MACOS_27_ONLY_CLASSES.contains(&name) {
+                continue;
+            }
             let cname = CString::new(name).unwrap();
             assert!(AnyClass::get(&cname).is_some(), "{name} is not registered");
         }
@@ -348,8 +364,12 @@ mod tests {
             "GTReplayFetchAccelerationStructure",
             "GTReplayDecodeGenericAccelerationStructure",
         ] {
-            let cls = AnyClass::get(&CString::new(name).unwrap())
-                .unwrap_or_else(|| panic!("{name} not registered"));
+            let cls = match AnyClass::get(&CString::new(name).unwrap()) {
+                Some(c) => c,
+                // Exempt on macOS 26 (see MACOS_27_ONLY_CLASSES).
+                None if MACOS_27_ONLY_CLASSES.contains(&name) => continue,
+                None => panic!("{name} not registered"),
+            };
             assert_eq!(cls.instance_size(), 32, "{name} instanceSize changed");
             assert_eq!(
                 encoding_of(cls, "setStreamRef:").as_deref(),
