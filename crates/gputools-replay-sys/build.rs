@@ -2,11 +2,13 @@
 //! dlopen, no libc. The linker resolves GPUToolsReplay from the running
 //! system's dyld shared cache, so this path inherently matches the OS the
 //! crate will run on. The ABI was reverse-engineered on macOS 27; macOS 26 is
-//! supported too, differing only in that it does not ship the
+//! supported too, differing (in the SDK stub) only in that it does not ship the
 //! `GTReplayFetchAccelerationStructure` class (so acceleration-structure fetch
 //! returns a `Setup` error there - it is a runtime class lookup, not a link
-//! dependency, so nothing else is affected). The build refuses macOS 25 and
-//! older, which ship a materially different/stub framework.
+//! dependency, so nothing else is affected). macOS 26 is the floor only because
+//! it is the oldest version we have data for; older systems are untested (they
+//! may or may not be compatible) and are refused conservatively, not because
+//! they are known to differ.
 
 use std::process::Command;
 
@@ -42,8 +44,9 @@ fn main() {
     assert!(
         major >= MIN_MAJOR,
         "gputools-replay-sys requires macOS {MIN_MAJOR} or newer (found major version \
-         {major}). The framework ABI was established on macOS 27 and is compatible on \
-         macOS 26; older systems ship a materially different GPUToolsReplay."
+         {major}). The framework ABI was established on macOS 27 and works on macOS 26; \
+         older systems are untested (we have no data), so they are refused conservatively \
+         rather than assumed compatible."
     );
 
     println!("cargo:rustc-link-search=framework=/System/Library/PrivateFrameworks");
