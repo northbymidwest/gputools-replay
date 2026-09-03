@@ -108,10 +108,13 @@ jobs:
           zizmor --no-progress .github
 
   macos:
-    # Everything that COMPILES the framework crates. Runs only on a self-hosted
-    # macOS 27 (arm64) runner; allowed to fail so the required checks above
-    # still gate PRs until such a runner exists. Checks out gputrace-bundle as
-    # a sibling so hl's ../gputrace-bundle path dependency resolves.
+    # Everything that COMPILES the framework crates: runs only on a self-hosted
+    # macOS 27 (arm64) runner. Gated on the SELF_HOSTED_MACOS repo variable so
+    # the job is SKIPPED (not left queued for a runner that does not exist)
+    # until one is registered - set the variable to 'true' then.
+    # continue-on-error keeps it non-blocking even after that. Checks out
+    # gputrace-bundle as a sibling so hl's ../gputrace-bundle path dep resolves.
+    if: ${{ vars.SELF_HOSTED_MACOS == 'true' }}
     runs-on: [self-hosted, macOS, ARM64]
     continue-on-error: true
     timeout-minutes: 45
@@ -147,8 +150,9 @@ jobs:
         run: cargo doc --workspace --no-deps
 
   msrv:
-    # Verifies the declared MSRV floor still builds. Compiles, so self-hosted
-    # and allow-fail like the macos job.
+    # Verifies the declared MSRV floor still builds. Compiles, so self-hosted,
+    # var-gated (SELF_HOSTED_MACOS), and allow-fail like the macos job.
+    if: ${{ vars.SELF_HOSTED_MACOS == 'true' }}
     runs-on: [self-hosted, macOS, ARM64]
     continue-on-error: true
     timeout-minutes: 30
