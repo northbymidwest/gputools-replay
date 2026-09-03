@@ -6,11 +6,9 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "Safe in-process wrapper around Apple's private GPUToolsReplay framework: fetch, playback, and harvester decoding."
-readme = "../../README.md"
+readme = "README.md"
 keywords = ["macos", "metal", "gpu", "gputrace", "replay"]
 categories = ["os::macos-apis", "development-tools::debugging"]
-# Not published yet: flip by removing this line when cutting the first release.
-publish = false
 
 [dependencies]
 gputools-replay-sys = { workspace = true }

@@ -2,9 +2,10 @@
 
 Notable changes per release. Dates are the publish date.
 
-## Unreleased
+## 0.1.0 - 2026-09-03
 
 ### Added
 
-- Initial 0.1.0 development. The crates (`gputools-replay-sys`,
-  `gputools-replay`, `gputools-replay-hl`) are not yet published.
+- Initial release: raw FFI bindings (`gputools-replay-sys`), the safe
+  in-process wrapper (`gputools-replay`), and the ergonomic domain layer
+  (`gputools-replay-hl`) over Apple's private GPUToolsReplay framework.

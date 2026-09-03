@@ -6,12 +6,10 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "Raw bindings to Apple's private GPUToolsReplay framework (macOS 27, or 26 with --no-default-features)"
-readme = "../../README.md"
+readme = "README.md"
 keywords = ["macos", "metal", "gpu", "ffi", "gputrace"]
 categories = ["external-ffi-bindings", "os::macos-apis"]
 links = "GPUToolsReplay"
-# Not published yet: flip by removing this line when cutting the first release.
-publish = false
 
 [dependencies]
 objc2 = { workspace = true }
