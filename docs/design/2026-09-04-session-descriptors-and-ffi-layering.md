@@ -132,12 +132,23 @@ hl" line the crate already draws); hl interprets.
 
 ## Open questions to settle during implementation
 
-- **`Session` -> `GTMTLReplayObjectMap` accessor.** The one RE unknown; it
-  gates the `-sys` binding shape. Trace it before step 2.
-- **Unused resources.** Does `textureForKey:` return an object for an unloaded
-  ("unused") resource, or only under `FORCE_LOAD`? `addUnusedResourceKey:`
-  implies the map tracks them. This also informs consumer finding #1 (a finer
-  force-load knob).
+- **`Session` -> `GTMTLReplayObjectMap` accessor.** Narrowed (2026-09-04, not
+  fully pinned). The map is a `GTIntKeyedDictionary` keyed by streamRef,
+  populated during load by the `_DYTraceDecode_*` call decoders, with the full
+  family (`textureForKey:`, `tryGetTextureForKey:`, `setTexture:forKey:` and
+  siblings, `resources`). It is not exposed by a named ObjC accessor, and it is
+  not a discoverable typed ObjC ivar (otool's class dump finds no
+  `GTMTLReplayObjectMap`-typed ivar) - it is reached through the replay context
+  the C decoders receive. Pinning the exact reach (a context/controller field
+  offset) needs one targeted disassembly pass of a decoder or the shared decode
+  helper before step 2; a bounded task, not a blocker.
+- **Unused resources: resolved (2026-09-04).** `textureForKey:` and
+  `tryGetTextureForKey:` are pure dictionary lookups; neither triggers a load
+  (`textureForKey:` calls `GTMTLReplay_dispatchFailedToGet` on a miss,
+  `tryGetTextureForKey:` returns nil). So a resource is in the map only if the
+  load path inserted it: unused resources are absent by default and present
+  under `FORCE_LOAD`, matching the fetch used/unused rule. Use
+  `tryGetTextureForKey:` (nil-safe). This is the lead for consumer finding #1.
 - **Descriptor type identity.** mid defines its own `TextureDescriptor`; does hl
   unify it with `gputrace-bundle`'s (one canonical type both feed) or convert?
   Decides whether hl keeps a `gputrace-bundle` dependency at all.
