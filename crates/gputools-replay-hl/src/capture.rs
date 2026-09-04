@@ -304,6 +304,21 @@ impl Capture {
         }
     }
 
+    /// The manifest's index record count: an upper bound on the highest
+    /// streamRef a fetch sweep needs to try. The replayer assigns streamRefs in
+    /// resource-creation order, at most one per record and across every
+    /// resource type (textures, buffers, heaps, pipelines, acceleration
+    /// structures), so no ref can exceed this. `None` if the manifest is absent
+    /// or unparseable.
+    ///
+    /// Bound a sweep with this rather than the texture count from
+    /// [`Capture::manifest_status`]: streamRefs are shared with the non-texture
+    /// resources, so the texture count sits well below the highest ref that can
+    /// answer.
+    pub fn record_count(&self) -> Option<usize> {
+        self.manifest().map(|b| b.record_count())
+    }
+
     /// Join already-fetched `texs` against the cached manifest, by the
     /// creation-order ordinal zip (dossier 00). Pure: no fetch, and no error
     /// on a gap - a manifest descriptor nothing claims lands in

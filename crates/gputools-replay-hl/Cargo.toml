@@ -1,6 +1,6 @@
 [package]
 name = "gputools-replay-hl"
-version = "0.1.0"
+version = "0.1.1"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
@@ -11,7 +11,7 @@ keywords = ["macos", "metal", "gpu", "texture", "gputrace"]
 categories = ["os::macos-apis", "rendering::data-formats"]
 
 [dependencies]
-gputools-replay = { path = "../gputools-replay", version = "0.1.0", default-features = false }
+gputools-replay = { path = "../gputools-replay", version = "0.1.1", default-features = false }
 gputrace-bundle = { workspace = true }
 objc2-metal = { workspace = true }
 bytemuck = { workspace = true }

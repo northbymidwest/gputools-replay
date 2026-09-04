@@ -24,8 +24,8 @@ thiserror = "2"
 # default-features = false so the workspace's --no-default-features actually
 # reaches -sys through the inter-crate deps (each crate re-enables `macos27` via
 # its own default feature). See gputools-replay-sys's [features].
-gputools-replay-sys = { path = "crates/gputools-replay-sys", version = "0.1.0", default-features = false }
+gputools-replay-sys = { path = "crates/gputools-replay-sys", version = "0.1.1", default-features = false }
 # gputrace-bundle lives in its own repo (../gputrace-bundle). Consumed by
 # gputools-replay-hl via a path+version dep; becomes a plain version dep once
 # gputrace-bundle is published to crates.io.
-gputrace-bundle = { path = "../gputrace-bundle", version = "0.1" }
+gputrace-bundle = { path = "../gputrace-bundle", version = "0.1.1" }

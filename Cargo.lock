@@ -99,7 +99,7 @@ dependencies = [
 
 [[package]]
 name = "gputools-replay"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "block2",
  "gputools-replay-sys",
@@ -111,7 +111,7 @@ dependencies = [
 
 [[package]]
 name = "gputools-replay-hl"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "bytemuck",
  "gputools-replay",
@@ -123,14 +123,14 @@ dependencies = [
 
 [[package]]
 name = "gputools-replay-sys"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "objc2",
 ]
 
 [[package]]
 name = "gputrace-bundle"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "flate2",
  "thiserror",
