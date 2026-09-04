@@ -1,10 +1,11 @@
-//! Typed ObjC interfaces for the RE'd `GTReplay*` request/batch classes
-//! `fetch.rs` constructs. `extern_class!` + `extern_methods!` give the
-//! setters a single typed source of truth instead of ad hoc `msg_send!`
-//! calls sprinkled through the fetch builders; the classdump encodings that
-//! justify each declaration (read off the live classes - probes,
-//! session.rs, and dossier 00 "Texture format & shape coverage") live here
-//! now instead of at each call site.
+//! Typed ObjC bindings for the RE'd `GTReplay*` request/batch/service/response
+//! classes, plus the wire-format argument structs their setters take. Raw
+//! bindings only: `extern_class!` + `extern_methods!` give each RE'd class and
+//! method a single typed source of truth instead of ad hoc `msg_send!`, with
+//! the classdump encodings that justify each declaration (read off the live
+//! classes - probes, and dossier 00 "Texture format & shape coverage") on the
+//! item. Policy (constructing objects, mapping nil to errors, session
+//! lifecycle) lives in higher layers.
 //!
 //! The six fetch-request classes share a real, RE'd common superclass:
 //! MEASURED via `class_getSuperclass`, every one is
@@ -13,24 +14,90 @@
 //! and a batch's element type can be the precise `GTReplayRequest` rather
 //! than a bare `AnyObject`. `GTReplayRequestBatch` and the service/response
 //! classes are direct `NSObject` subclasses (also measured).
-//!
-//! Also here: `GTReplayRequestBatch`'s `-setCompletionHandler:` and
-//! `GTMTLReplayService`'s `-fetch:`, the two dispatch sends `fetch.rs` uses
-//! to kick off an async fetch, plus `GTReplayResponse`'s two response
-//! getters `fetch::read_response` reads (`-data`, `-error`), both plain +0
-//! autoreleased getters objc2 hands back as `Option<Retained<...>>`. The
-//! rest of what `read_response` sends stays out of scope: the
-//! `-respondsToSelector:` guard is NSObject protocol and stays raw.
 
-use crate::FetchError;
-use crate::request::{DispatchUid, GTRegion, GTSize};
+use crate::client::GTMTLReplayClient;
 use block2::Block;
-use gputools_replay_sys::client::GTMTLReplayClient;
+use objc2::encode::{Encode, Encoding};
 use objc2::rc::{Allocated, Retained};
-use objc2::runtime::{AnyClass, NSObject, NSObjectProtocol};
-use objc2::{AnyThread, ClassType, extern_class, extern_methods, msg_send};
+use objc2::runtime::{NSObject, NSObjectProtocol};
+use objc2::{AnyThread, ClassType, extern_class, extern_methods};
 use objc2_foundation::{NSArray, NSData, NSError, NSURL};
-use std::ffi::CStr;
+
+/// The geometry a texture fetch request carries on the wire. Laid out to
+/// match the type encodings the runtime reports for the setters, read off
+/// the live class rather than guessed:
+///
+/// ```text
+/// -setSize:    v40@0:8{GTSize=QQQ}16
+/// -setRegion:  v64@0:8{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}16
+/// ```
+///
+/// A mismatch here is not a type error but a misaligned argument register, so
+/// the `Encode` impls below spell the same encodings out exactly and objc2
+/// checks them against the runtime in debug builds.
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct GTSize {
+    pub width: u64,
+    pub height: u64,
+    pub depth: u64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct GTPoint3D {
+    pub x: u64,
+    pub y: u64,
+    pub z: u64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct GTRegion {
+    pub origin: GTPoint3D,
+    pub size: GTSize,
+}
+
+// SAFETY: three `u64`s in declaration order, `#[repr(C)]`, no padding, which
+// is exactly `{GTSize=QQQ}`.
+unsafe impl Encode for GTSize {
+    const ENCODING: Encoding =
+        Encoding::Struct("GTSize", &[u64::ENCODING, u64::ENCODING, u64::ENCODING]);
+}
+
+// SAFETY: as above, `{GTPoint3D=QQQ}`.
+unsafe impl Encode for GTPoint3D {
+    const ENCODING: Encoding =
+        Encoding::Struct("GTPoint3D", &[u64::ENCODING, u64::ENCODING, u64::ENCODING]);
+}
+
+// SAFETY: two `#[repr(C)]` structs of `u64`, so no padding is introduced
+// between them either: `{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}`.
+unsafe impl Encode for GTRegion {
+    const ENCODING: Encoding =
+        Encoding::Struct("GTRegion", &[GTPoint3D::ENCODING, GTSize::ENCODING]);
+}
+
+/// The `dispatchUID` a dispatch-keyed fetch request carries: the ObjC
+/// encoding `(?={?=ii}Q)` is an 8-byte UNION, read either as two `int32`s or
+/// one `uint64`. It identifies the draw/dispatch whose debug data is being
+/// fetched (dossier 00 "The fetch family", item 11).
+#[repr(transparent)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct DispatchUid(pub u64);
+
+// SAFETY: `DispatchUid` is `#[repr(transparent)]` over a `u64` (8 bytes,
+// 8-aligned), and this encoding is the exact `(?={?=ii}Q)` union the setter
+// declares, so objc2's runtime encoding check accepts it.
+unsafe impl Encode for DispatchUid {
+    const ENCODING: Encoding = Encoding::Union(
+        "?",
+        &[
+            Encoding::Struct("?", &[Encoding::Int, Encoding::Int]),
+            Encoding::ULongLong,
+        ],
+    );
+}
 
 extern_class!(
     /// The common superclass of every fetch-request class (MEASURED: each
@@ -38,50 +105,50 @@ extern_class!(
     /// constructs or messages it directly; it exists so a batch's requests
     /// have a precise shared element type (`NSArray<GTReplayRequest>`).
     #[unsafe(super(NSObject))]
-    pub(crate) struct GTReplayRequest;
+    pub struct GTReplayRequest;
 );
 
 extern_class!(
     /// A texture fetch request.
     #[unsafe(super(GTReplayRequest))]
-    pub(crate) struct GTReplayFetchTexture;
+    pub struct GTReplayFetchTexture;
 );
 
 extern_class!(
     /// A buffer fetch request (streamRef-keyed).
     #[unsafe(super(GTReplayRequest))]
-    pub(crate) struct GTReplayFetchBuffer;
+    pub struct GTReplayFetchBuffer;
 );
 
 extern_class!(
     /// A heap fetch request (streamRef-keyed).
     #[unsafe(super(GTReplayRequest))]
-    pub(crate) struct GTReplayFetchHeap;
+    pub struct GTReplayFetchHeap;
 );
 
 extern_class!(
     /// An acceleration-structure fetch request (streamRef-keyed).
     #[unsafe(super(GTReplayRequest))]
-    pub(crate) struct GTReplayFetchAccelerationStructure;
+    pub struct GTReplayFetchAccelerationStructure;
 );
 
 extern_class!(
     /// A pipeline-binaries fetch request (streamRef-keyed).
     #[unsafe(super(GTReplayRequest))]
-    pub(crate) struct GTReplayFetchPipelineBinaries;
+    pub struct GTReplayFetchPipelineBinaries;
 );
 
 extern_class!(
     /// A wireframe render request (dispatch-keyed).
     #[unsafe(super(GTReplayRequest))]
-    pub(crate) struct GTReplayFetchWireframe;
+    pub struct GTReplayFetchWireframe;
 );
 
 extern_class!(
     /// The batch a fetch is dispatched through: `-setRequests:` and
     /// `-setCompletionHandler:`.
     #[unsafe(super(NSObject))]
-    pub(crate) struct GTReplayRequestBatch;
+    pub struct GTReplayRequestBatch;
 );
 
 extern_class!(
@@ -91,7 +158,7 @@ extern_class!(
     /// life of the session - `fetch.rs` casts that pointer back to this type
     /// at each call site.
     #[unsafe(super(NSObject))]
-    pub(crate) struct GTMTLReplayService;
+    pub struct GTMTLReplayService;
 );
 
 extern_class!(
@@ -100,7 +167,7 @@ extern_class!(
     /// two getters off it - `-error` then `-data` - after a
     /// `-respondsToSelector:` guard confirms it answers both.
     #[unsafe(super(NSObject))]
-    pub(crate) struct GTReplayResponse;
+    pub struct GTReplayResponse;
 );
 
 // SAFETY: `GTReplayResponse` is an NSObject subclass (super declared above,
@@ -116,7 +183,7 @@ extern_class!(
     /// the life of the fetch and never messages it, so no methods are
     /// declared. See [`fetch::Token`] for why it is leaked rather than freed.
     #[unsafe(super(NSObject))]
-    pub(crate) struct GTReplayRequestToken;
+    pub struct GTReplayRequestToken;
 );
 
 impl GTReplayFetchTexture {
@@ -124,36 +191,36 @@ impl GTReplayFetchTexture {
         // SAFETY: read off the live class (probes, session.rs ~835-849):
         // `-setStreamRef:` is `v24@0:8Q16`.
         #[unsafe(method(setStreamRef:))]
-        pub(crate) fn set_stream_ref(&self, stream_ref: u64);
+        pub fn set_stream_ref(&self, stream_ref: u64);
 
         // SAFETY: `-setSize:` is `v40@0:8{GTSize=QQQ}16`.
         #[unsafe(method(setSize:))]
-        pub(crate) fn set_size(&self, size: GTSize);
+        pub fn set_size(&self, size: GTSize);
 
         // SAFETY: `-setRegion:` is
         // `v64@0:8{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}16`.
         #[unsafe(method(setRegion:))]
-        pub(crate) fn set_region(&self, region: GTRegion);
+        pub fn set_region(&self, region: GTRegion);
 
         // SAFETY: `-setPlane:` is `v20@0:8I16` (`u32`).
         #[unsafe(method(setPlane:))]
-        pub(crate) fn set_plane(&self, plane: u32);
+        pub fn set_plane(&self, plane: u32);
 
         // SAFETY: `-setDepth:` is `v20@0:8I16` (`u32`). Always called with
         // `1`, never a caller-controlled value - see
         // `fetch::build_texture_batch`.
         #[unsafe(method(setDepth:))]
-        pub(crate) fn set_depth(&self, depth: u32);
+        pub fn set_depth(&self, depth: u32);
 
         // SAFETY: `-setSlice:` is `v20@0:8I16` (`u32`), read off the live
         // class (dossier 00 "Texture format & shape coverage").
         #[unsafe(method(setSlice:))]
-        pub(crate) fn set_slice(&self, slice: u32);
+        pub fn set_slice(&self, slice: u32);
 
         // SAFETY: `-setLevel:` is `v20@0:8I16` (`u32`), same source as
         // `-setSlice:`.
         #[unsafe(method(setLevel:))]
-        pub(crate) fn set_level(&self, level: u32);
+        pub fn set_level(&self, level: u32);
     );
 }
 
@@ -162,7 +229,7 @@ impl GTReplayFetchBuffer {
         // SAFETY: `-setStreamRef:` is `v24@0:8Q16` (u64), verified live for
         // every graduated fetch/decode class (probes, `fetch_raw`).
         #[unsafe(method(setStreamRef:))]
-        pub(crate) fn set_stream_ref(&self, stream_ref: u64);
+        pub fn set_stream_ref(&self, stream_ref: u64);
     );
 }
 
@@ -170,7 +237,7 @@ impl GTReplayFetchHeap {
     extern_methods!(
         // SAFETY: as `GTReplayFetchBuffer::set_stream_ref`.
         #[unsafe(method(setStreamRef:))]
-        pub(crate) fn set_stream_ref(&self, stream_ref: u64);
+        pub fn set_stream_ref(&self, stream_ref: u64);
     );
 }
 
@@ -178,7 +245,7 @@ impl GTReplayFetchAccelerationStructure {
     extern_methods!(
         // SAFETY: as `GTReplayFetchBuffer::set_stream_ref`.
         #[unsafe(method(setStreamRef:))]
-        pub(crate) fn set_stream_ref(&self, stream_ref: u64);
+        pub fn set_stream_ref(&self, stream_ref: u64);
     );
 }
 
@@ -186,7 +253,7 @@ impl GTReplayFetchPipelineBinaries {
     extern_methods!(
         // SAFETY: as `GTReplayFetchBuffer::set_stream_ref`.
         #[unsafe(method(setStreamRef:))]
-        pub(crate) fn set_stream_ref(&self, stream_ref: u64);
+        pub fn set_stream_ref(&self, stream_ref: u64);
     );
 }
 
@@ -196,7 +263,7 @@ impl GTReplayFetchPipelineBinaries {
 /// forwards to the class's own inherent `set_stream_ref` (declared above via
 /// `extern_methods!`) by explicit UFCS, not `self.set_stream_ref(..)`, so it
 /// is unambiguous which method runs.
-pub(crate) trait StreamRefFetch: ClassType + AnyThread {
+pub trait StreamRefFetch: ClassType + AnyThread {
     /// `-setStreamRef:`.
     fn set_stream_ref(&self, stream_ref: u64);
 }
@@ -230,11 +297,11 @@ impl GTReplayFetchWireframe {
         // SAFETY: `-setDispatchUID:` is `v24@0:8(?={?=ii}Q)16` (the
         // `DispatchUid` union).
         #[unsafe(method(setDispatchUID:))]
-        pub(crate) fn set_dispatch_uid(&self, dispatch_uid: DispatchUid);
+        pub fn set_dispatch_uid(&self, dispatch_uid: DispatchUid);
 
         // SAFETY: `-setSolid:` is `v20@0:8B16` (BOOL).
         #[unsafe(method(setSolid:))]
-        pub(crate) fn set_solid(&self, solid: bool);
+        pub fn set_solid(&self, solid: bool);
     );
 }
 
@@ -244,7 +311,7 @@ impl GTReplayRequestBatch {
         // declared `@"NSArray"` (element type erased in the ObjC encoding;
         // every element is in fact a `GTReplayRequest`, MEASURED).
         #[unsafe(method(setRequests:))]
-        pub(crate) fn set_requests(&self, requests: &NSArray<GTReplayRequest>);
+        pub fn set_requests(&self, requests: &NSArray<GTReplayRequest>);
 
         // SAFETY: `-setCompletionHandler:` is `v24@0:8@?16`, a `copy`
         // property (probes, `fetch.rs`'s call-site disassembly): the batch
@@ -255,7 +322,7 @@ impl GTReplayRequestBatch {
         // load-bearing (a block declared with more arguments would read
         // uninitialised registers as objects).
         #[unsafe(method(setCompletionHandler:))]
-        pub(crate) fn set_completion_handler(&self, handler: &Block<dyn Fn(*mut GTReplayResponse)>);
+        pub fn set_completion_handler(&self, handler: &Block<dyn Fn(*mut GTReplayResponse)>);
     );
 }
 
@@ -270,7 +337,7 @@ impl GTMTLReplayService {
         // returned object is +1 (init family consumes the allocation), and nil
         // is possible (`open` maps it to `SessionError::Replayer`).
         #[unsafe(method(initWithContext:))]
-        pub(crate) fn init_with_context(
+        pub fn init_with_context(
             this: Allocated<Self>,
             client: *mut GTMTLReplayClient,
         ) -> Option<Retained<Self>>;
@@ -282,10 +349,8 @@ impl GTMTLReplayService {
         // in `fetch.rs`). We only hold the token alive, never message it.
         // Asynchronous: the token is live until the completion handler fires.
         #[unsafe(method(fetch:))]
-        pub(crate) fn fetch(
-            &self,
-            batch: &GTReplayRequestBatch,
-        ) -> Option<Retained<GTReplayRequestToken>>;
+        pub fn fetch(&self, batch: &GTReplayRequestBatch)
+        -> Option<Retained<GTReplayRequestToken>>;
 
         // SAFETY: `-load:error:` is `B32@0:8@16^@24` - BOOL return, an
         // `NSURL` (NOT a `GTReplayLoadRequest`: passing one raises
@@ -293,11 +358,7 @@ impl GTMTLReplayService {
         // session.rs), and a standard `NSError**` out-pointer. objc2 maps
         // that out-pointer to `Option<&mut Option<Retained<NSError>>>`.
         #[unsafe(method(load:error:))]
-        pub(crate) fn load(
-            &self,
-            url: &NSURL,
-            error: Option<&mut Option<Retained<NSError>>>,
-        ) -> bool;
+        pub fn load(&self, url: &NSURL, error: Option<&mut Option<Retained<NSError>>>) -> bool;
     );
 }
 
@@ -309,43 +370,36 @@ impl GTReplayResponse {
         // object - `Option<Retained<NSData>>` (nil is possible: see
         // `read_response`'s `FetchError::NoData`).
         #[unsafe(method(data))]
-        pub(crate) fn data(&self) -> Option<Retained<NSData>>;
+        pub fn data(&self) -> Option<Retained<NSData>>;
 
         // SAFETY: `-error` is `@16@0:8` (no args, returns an object),
         // declared `@"NSError"` on the live class. Same +0 autoreleased
         // getter shape as `-data`; nil means no replayer error on this
         // response.
         #[unsafe(method(error))]
-        pub(crate) fn error(&self) -> Option<Retained<NSError>>;
+        pub fn error(&self) -> Option<Retained<NSError>>;
     );
 }
 
-/// `+alloc` then `-init` on `T`, guarding against `GPUToolsReplay` not
-/// having loaded.
-///
-/// `T::alloc()` calls `T::class()`, which - under this crate's default,
-/// non-`unstable-static-class` feature set - **panics** if the class isn't
-/// registered (`ClassType::class`'s documented contract). Every class this
-/// crate constructs is exported by the framework, which is linked, so it is
-/// registered before `main`; a miss here means the framework itself did not
-/// load, and that must surface as [`FetchError::Setup`], not a panic. So
-/// `name` is checked with [`AnyClass::get`] first, unconditionally, before
-/// `T::alloc()` is ever reached.
-pub(crate) fn new_request<T: ClassType + AnyThread>(
-    name: &CStr,
-) -> Result<Retained<T>, FetchError> {
-    if AnyClass::get(name).is_none() {
-        return Err(FetchError::Setup(format!(
-            "the {} class is not registered; GPUToolsReplay did not load",
-            name.to_string_lossy()
-        )));
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn dispatch_uid_encoding_matches_the_setter() {
+        assert_eq!(DispatchUid::ENCODING.to_string(), "(?={?=ii}Q)");
     }
-    // SAFETY: NSObject's designated initialiser, on a fresh allocation.
-    let object: Option<Retained<T>> = unsafe { msg_send![T::alloc(), init] };
-    object.ok_or_else(|| {
-        FetchError::Setup(format!(
-            "{} could not be constructed",
-            name.to_string_lossy()
-        ))
-    })
+
+    #[test]
+    fn gtsize_encoding_matches_the_setter() {
+        assert_eq!(GTSize::ENCODING.to_string(), "{GTSize=QQQ}");
+    }
+
+    #[test]
+    fn gtregion_encoding_matches_the_setter() {
+        assert_eq!(
+            GTRegion::ENCODING.to_string(),
+            "{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}"
+        );
+    }
 }

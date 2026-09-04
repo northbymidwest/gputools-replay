@@ -30,23 +30,51 @@
 //! ```
 
 use crate::FetchError;
-use crate::objc::{
-    GTMTLReplayService, GTReplayFetchAccelerationStructure, GTReplayFetchBuffer, GTReplayFetchHeap,
-    GTReplayFetchPipelineBinaries, GTReplayFetchTexture, GTReplayFetchWireframe, GTReplayRequest,
-    GTReplayRequestBatch, GTReplayRequestToken, GTReplayResponse, StreamRefFetch, new_request,
-};
 use crate::reply::RawReply;
-use crate::request::{GTRegion, TextureRequest, WireframeRequest};
+use crate::request::{TextureRequest, WireframeRequest};
 use crate::session::Session;
 use crate::util::truncate;
 use block2::RcBlock;
+use gputools_replay_sys::replay::{
+    GTMTLReplayService, GTReplayFetchAccelerationStructure, GTReplayFetchBuffer, GTReplayFetchHeap,
+    GTReplayFetchPipelineBinaries, GTReplayFetchTexture, GTReplayFetchWireframe, GTReplayRequest,
+    GTReplayRequestBatch, GTReplayRequestToken, GTReplayResponse, StreamRefFetch,
+};
 use objc2::rc::{Retained, autoreleasepool};
-use objc2::runtime::NSObjectProtocol;
-use objc2::{ClassType, sel};
+use objc2::runtime::{AnyClass, NSObjectProtocol};
+use objc2::{AnyThread, ClassType, msg_send, sel};
 use objc2_foundation::{NSArray, NSData, NSDate, NSDefaultRunLoopMode, NSError, NSRunLoop};
 use std::ffi::CStr;
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
+
+/// `+alloc` then `-init` on `T`, guarding against `GPUToolsReplay` not
+/// having loaded.
+///
+/// `T::alloc()` calls `T::class()`, which - under the `-sys` crate's default,
+/// non-`unstable-static-class` feature set - **panics** if the class isn't
+/// registered (`ClassType::class`'s documented contract). Every class this
+/// crate constructs is exported by the framework, which is linked, so it is
+/// registered before `main`; a miss here means the framework itself did not
+/// load, and that must surface as [`FetchError::Setup`], not a panic. So
+/// `name` is checked with [`AnyClass::get`] first, unconditionally, before
+/// `T::alloc()` is ever reached.
+fn new_request<T: ClassType + AnyThread>(name: &CStr) -> Result<Retained<T>, FetchError> {
+    if AnyClass::get(name).is_none() {
+        return Err(FetchError::Setup(format!(
+            "the {} class is not registered; GPUToolsReplay did not load",
+            name.to_string_lossy()
+        )));
+    }
+    // SAFETY: NSObject's designated initialiser, on a fresh allocation.
+    let object: Option<Retained<T>> = unsafe { msg_send![T::alloc(), init] };
+    object.ok_or_else(|| {
+        FetchError::Setup(format!(
+            "{} could not be constructed",
+            name.to_string_lossy()
+        ))
+    })
+}
 
 /// A built `GTReplayRequestBatch`, ready to `-fetch:`. Opaque and
 /// deliberately leaked (see [`build_batch_from`]): nothing establishes that
@@ -97,7 +125,7 @@ pub(crate) fn build_texture_batch(requests: &[TextureRequest]) -> Result<Request
     let mut objects = Vec::with_capacity(requests.len());
     for request in requests {
         let object: Retained<GTReplayFetchTexture> = new_request(c"GTReplayFetchTexture")?;
-        let wire_region: GTRegion = request.region.into();
+        let wire_region = request.region.to_gt();
         object.set_stream_ref(request.stream_ref);
         object.set_size(wire_region.size);
         object.set_region(wire_region);

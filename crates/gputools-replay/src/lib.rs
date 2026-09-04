@@ -17,7 +17,6 @@ pub mod config;
 pub mod error;
 mod fetch;
 pub mod harvester;
-mod objc;
 pub mod reply;
 pub mod request;
 mod session;

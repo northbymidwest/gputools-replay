@@ -1,16 +1,14 @@
 //! Fetch request types: the geometry (`Region`/`Size`), the dispatch key
-//! (`DispatchUid`), and the per-class request shapes (`TextureRequest`,
-//! `WireframeRequest`).
+//! (`DispatchUid`, re-exported from `-sys`), and the per-class request shapes
+//! (`TextureRequest`, `WireframeRequest`).
 //!
-//! The wire-format structs (`GTSize`/`GTPoint3D`/`GTRegion`) and their
-//! `Encode` impls are ported verbatim from `probes/src/session.rs:448-490`;
-//! `DispatchUid`'s `Encode` impl is ported from `probes/src/session.rs:208-220`.
-//! Every `Encode` impl spells out the exact type encoding the runtime reports
-//! for the setter it is sent to, so objc2 can re-check it against the runtime
-//! in debug builds; a mismatch there is not a type error but a misaligned
-//! argument register.
+//! The wire-format structs (`GTSize`/`GTPoint3D`/`GTRegion`) and `DispatchUid`,
+//! with the `Encode` impls that spell out the exact type encodings the runtime
+//! reports, are raw FFI and live in `gputools_replay_sys::replay`. This module
+//! maps the public geometry onto them ([`Region::to_gt`]).
 
-use objc2::encode::{Encode, Encoding};
+pub use gputools_replay_sys::replay::DispatchUid;
+use gputools_replay_sys::replay::{GTPoint3D, GTRegion, GTSize};
 
 /// A 3D origin point. Mirrors the sys `GTPoint3D` (`{GTPoint3D=QQQ}`).
 #[repr(C)]
@@ -64,6 +62,25 @@ impl Region {
             height: 0,
         },
     };
+
+    /// Converts the public `Region` into the sys wire struct. `depth` is
+    /// always 1, per the hard invariant on [`TextureRequest`]: never taken
+    /// from the caller, mirroring `probes::session::build_batch`, which
+    /// hardcodes `depth: 1` in the `GTSize` it sends regardless of the request.
+    pub(crate) fn to_gt(self) -> GTRegion {
+        GTRegion {
+            origin: GTPoint3D {
+                x: self.origin.x,
+                y: self.origin.y,
+                z: self.origin.z,
+            },
+            size: GTSize {
+                width: self.size.width,
+                height: self.size.height,
+                depth: 1,
+            },
+        }
+    }
 }
 
 /// A texture fetch request. `depth` is fixed to 1 (a 2D texture has one
@@ -119,27 +136,6 @@ impl TextureRequest {
     }
 }
 
-/// The `dispatchUID` a dispatch-keyed fetch request carries: the ObjC
-/// encoding `(?={?=ii}Q)` is an 8-byte UNION, read either as two `int32`s or
-/// one `uint64`. It identifies the draw/dispatch whose debug data is being
-/// fetched (dossier 00 "The fetch family", item 11).
-#[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct DispatchUid(pub u64);
-
-// SAFETY: `DispatchUid` is `#[repr(transparent)]` over a `u64` (8 bytes,
-// 8-aligned), and this encoding is the exact `(?={?=ii}Q)` union the setter
-// declares, so objc2's runtime encoding check accepts it.
-unsafe impl Encode for DispatchUid {
-    const ENCODING: Encoding = Encoding::Union(
-        "?",
-        &[
-            Encoding::Struct("?", &[Encoding::Int, Encoding::Int]),
-            Encoding::ULongLong,
-        ],
-    );
-}
-
 /// A wireframe (dispatch-keyed) fetch request.
 #[derive(Debug, Clone, Copy)]
 pub struct WireframeRequest {
@@ -149,103 +145,9 @@ pub struct WireframeRequest {
     pub solid: bool,
 }
 
-/// The geometry a texture fetch request carries on the wire. Laid out to
-/// match the type encodings the runtime reports for the setters, read off
-/// the live class rather than guessed:
-///
-/// ```text
-/// -setSize:    v40@0:8{GTSize=QQQ}16
-/// -setRegion:  v64@0:8{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}16
-/// ```
-///
-/// A mismatch here is not a type error but a misaligned argument register, so
-/// the `Encode` impls below spell the same encodings out exactly and objc2
-/// checks them against the runtime in debug builds.
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub(crate) struct GTSize {
-    pub width: u64,
-    pub height: u64,
-    pub depth: u64,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub(crate) struct GTPoint3D {
-    pub x: u64,
-    pub y: u64,
-    pub z: u64,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub(crate) struct GTRegion {
-    pub origin: GTPoint3D,
-    pub size: GTSize,
-}
-
-// SAFETY: three `u64`s in declaration order, `#[repr(C)]`, no padding, which
-// is exactly `{GTSize=QQQ}`.
-unsafe impl Encode for GTSize {
-    const ENCODING: Encoding =
-        Encoding::Struct("GTSize", &[u64::ENCODING, u64::ENCODING, u64::ENCODING]);
-}
-
-// SAFETY: as above, `{GTPoint3D=QQQ}`.
-unsafe impl Encode for GTPoint3D {
-    const ENCODING: Encoding =
-        Encoding::Struct("GTPoint3D", &[u64::ENCODING, u64::ENCODING, u64::ENCODING]);
-}
-
-// SAFETY: two `#[repr(C)]` structs of `u64`, so no padding is introduced
-// between them either: `{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}`.
-unsafe impl Encode for GTRegion {
-    const ENCODING: Encoding =
-        Encoding::Struct("GTRegion", &[GTPoint3D::ENCODING, GTSize::ENCODING]);
-}
-
-impl From<Region> for GTRegion {
-    /// Converts the public `Region` into the wire struct. `depth` is always
-    /// 1, per the hard invariant on [`TextureRequest`]: never taken from the
-    /// caller, mirroring `probes::session::build_batch`, which hardcodes
-    /// `depth: 1` in the `GTSize` it sends regardless of the request.
-    fn from(region: Region) -> Self {
-        GTRegion {
-            origin: GTPoint3D {
-                x: region.origin.x,
-                y: region.origin.y,
-                z: region.origin.z,
-            },
-            size: GTSize {
-                width: region.size.width,
-                height: region.size.height,
-                depth: 1,
-            },
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn dispatch_uid_encoding_matches_the_setter() {
-        assert_eq!(DispatchUid::ENCODING.to_string(), "(?={?=ii}Q)");
-    }
-
-    #[test]
-    fn gtsize_encoding_matches_the_setter() {
-        assert_eq!(GTSize::ENCODING.to_string(), "{GTSize=QQQ}");
-    }
-
-    #[test]
-    fn gtregion_encoding_matches_the_setter() {
-        assert_eq!(
-            GTRegion::ENCODING.to_string(),
-            "{GTRegion={GTPoint3D=QQQ}{GTSize=QQQ}}"
-        );
-    }
 
     #[test]
     fn natural_is_zero_region_plane_zero() {
@@ -273,7 +175,7 @@ mod tests {
                 height: 64,
             },
         };
-        let wire: GTRegion = region.into();
+        let wire = region.to_gt();
         assert_eq!(wire.origin.x, 1);
         assert_eq!(wire.origin.y, 2);
         assert_eq!(wire.origin.z, 3);

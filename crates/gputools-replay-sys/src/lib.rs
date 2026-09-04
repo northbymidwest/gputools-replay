@@ -15,3 +15,4 @@ pub mod client;
 pub mod env;
 pub mod ffi;
 pub mod inventory;
+pub mod replay;
