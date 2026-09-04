@@ -7,12 +7,12 @@ run-name: release ${{ inputs.version }}${{ inputs.dry_run && ' (dry run)' || '' 
 # release would burn a version on any downstream failure. A failed preflight
 # costs nothing.
 #
-# Publishing REQUIRES a macOS 27 runner: `cargo publish`'s verify build links
-# the private framework, which no macOS runner below 27 can do, and no
-# GitHub-hosted runner is that new yet. hl also depends on gputrace-bundle, so
-# that crate must be published from its own repo FIRST (see RELEASING.md). This
-# workflow is dormant until a macOS 27 hosted runner and the crates.io
-# trusted-publisher entries exist.
+# Publishing runs on the hosted macOS runner: `cargo publish`'s verify build
+# links the private framework, so it needs macOS, not Ubuntu. It runs with
+# --no-default-features so that verify build targets the floor the runner can
+# satisfy (the hosted image is macOS 26; the macos27 default would raise the
+# floor past it - see the publish steps). hl also depends on gputrace-bundle,
+# so that crate must be published from its own repo FIRST (see RELEASING.md).
 on:
   workflow_dispatch:
     inputs:
