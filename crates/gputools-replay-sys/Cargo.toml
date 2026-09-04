@@ -14,6 +14,7 @@ links = "GPUToolsReplay"
 [dependencies]
 objc2 = { workspace = true }
 objc2-foundation = { workspace = true }
+objc2-metal = { workspace = true }
 block2 = { workspace = true }
 
 [features]
