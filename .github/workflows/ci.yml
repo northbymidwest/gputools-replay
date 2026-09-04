@@ -9,6 +9,7 @@ name: CI
 # build scripts - deny/machete) runs on cheap, fast Ubuntu.
 on:
   push:
+    branches: [main]
   pull_request:
   # Toolchains move between commits; a weekly unprompted run catches breakage
   # that would otherwise sit unseen until the next push. Off the hour so it
