@@ -1,5 +1,10 @@
 # gputools-replay
 
+[![github](https://img.shields.io/badge/github-northbymidwest%2Fgputools--replay-blue?logo=github)](https://github.com/northbymidwest/gputools-replay)
+[![crates.io](https://img.shields.io/crates/v/gputools-replay.svg)](https://crates.io/crates/gputools-replay)
+[![docs.rs](https://docs.rs/gputools-replay/badge.svg)](https://docs.rs/gputools-replay)
+[![CI](https://github.com/northbymidwest/gputools-replay/actions/workflows/ci.yml/badge.svg)](https://github.com/northbymidwest/gputools-replay/actions/workflows/ci.yml)
+
 A Rust interface to `GPUToolsReplay`, a **private** Apple framework new in
 macOS 27. It is the engine behind Xcode's GPU debugger and the `gpudebug`
 CLI, and it lets a `.gputrace` capture be driven programmatically: loaded,
