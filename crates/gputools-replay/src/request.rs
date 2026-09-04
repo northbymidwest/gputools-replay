@@ -67,7 +67,7 @@ impl Region {
     /// always 1, per the hard invariant on [`TextureRequest`]: never taken
     /// from the caller, mirroring `probes::session::build_batch`, which
     /// hardcodes `depth: 1` in the `GTSize` it sends regardless of the request.
-    pub(crate) fn to_gt(self) -> GTRegion {
+    pub fn to_gt(self) -> GTRegion {
         GTRegion {
             origin: GTPoint3D {
                 x: self.origin.x,
