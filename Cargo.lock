@@ -103,8 +103,10 @@ version = "0.1.1"
 dependencies = [
  "block2",
  "gputools-replay-sys",
+ "libc",
  "objc2",
  "objc2-foundation",
+ "objc2-metal",
  "plist",
  "thiserror",
 ]

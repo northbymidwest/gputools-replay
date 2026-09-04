@@ -19,7 +19,7 @@ use crate::client::{GTMTLReplayClient, GTMTLReplayController};
 use block2::Block;
 use objc2::encode::{Encode, Encoding};
 use objc2::rc::{Allocated, Retained};
-use objc2::runtime::{NSObject, NSObjectProtocol, ProtocolObject};
+use objc2::runtime::{AnyObject, NSObject, NSObjectProtocol, ProtocolObject};
 use objc2::{AnyThread, ClassType, extern_class, extern_methods};
 use objc2_foundation::{NSArray, NSData, NSError, NSURL};
 use objc2_metal::MTLTexture;
@@ -419,24 +419,21 @@ impl GTMTLReplayObjectMap {
 /// across two captures. That probe is its living regression check.
 pub const OBJECT_MAP_OFFSET: usize = 0x8;
 
-/// The [`GTMTLReplayObjectMap`] hanging off a loaded controller, at
-/// [`OBJECT_MAP_OFFSET`]. The returned pointer is borrowed (not retained) and
-/// valid only while the controller (and its session) lives.
+/// The object hanging off a loaded controller at [`OBJECT_MAP_OFFSET`], returned
+/// as an unverified `*mut AnyObject`: the offset is MEASURED, so the type is not
+/// yet proven. Confirm it with a class-checked `downcast_ref::<GTMTLReplayObjectMap>`
+/// before use - the honest result of reading a raw offset, not an asserted type.
+/// The pointer is borrowed (not retained) and valid only while the controller
+/// (and its session) lives.
 ///
 /// # Safety
 /// `controller` must be a live, loaded `GTMTLReplayController` (post-`load:`, as
-/// `ClientBuffer::controller` returns after `open`). The offset is MEASURED, so
-/// a caller should confirm the returned object's class is `GTMTLReplayObjectMap`
-/// before trusting it - a cheap guard against a framework layout change.
-pub unsafe fn controller_object_map(
-    controller: *mut GTMTLReplayController,
-) -> *mut GTMTLReplayObjectMap {
+/// `ClientBuffer::controller` returns after `open`).
+pub unsafe fn controller_object_map(controller: *mut GTMTLReplayController) -> *mut AnyObject {
     // SAFETY: the caller guarantees `controller` is a live controller, which is
     // far larger than OBJECT_MAP_OFFSET + a pointer (its command index alone is
     // at 0x5820), so the pointer-sized read at 0x8 is in bounds.
-    unsafe {
-        ((controller as usize + OBJECT_MAP_OFFSET) as *const *mut GTMTLReplayObjectMap).read()
-    }
+    unsafe { ((controller as usize + OBJECT_MAP_OFFSET) as *const *mut AnyObject).read() }
 }
 
 #[cfg(test)]

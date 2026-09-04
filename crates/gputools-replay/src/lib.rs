@@ -14,6 +14,7 @@
 #![warn(missing_docs)]
 
 pub mod config;
+pub mod descriptor;
 pub mod error;
 mod fetch;
 pub mod harvester;
@@ -23,5 +24,6 @@ mod session;
 mod util;
 
 pub use config::ReplayerConfig;
+pub use descriptor::TextureDescriptor;
 pub use error::{FetchError, HarvesterError, SessionError};
 pub use session::Session;
