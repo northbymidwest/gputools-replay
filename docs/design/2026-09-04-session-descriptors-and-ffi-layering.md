@@ -143,7 +143,13 @@ hl" line the crate already draws); hl interprets.
 ## Plan (phased, each independently reviewable)
 
 1. **Migrate the ObjC FFI mid -> `-sys`** (pure refactor, no behavior change).
-   The classdump/inventory tests move next to the bindings.
+   DONE 2026-09-04 (commits 179245c + d4a177c, CI green). `objc.rs` became
+   `-sys/src/replay.rs` (all `extern_class!`/`extern_methods!`/`StreamRefFetch`,
+   now `pub`); the wire-format param structs (`GTSize`/`GTPoint3D`/`GTRegion`/
+   `DispatchUid`) moved to `-sys` too; the domain types and `Region::to_gt`
+   (replacing the orphan-violating `From<Region> for GTRegion`) stayed in mid;
+   `new_request` (policy) moved into `fetch.rs`. `-sys` gained `objc2-foundation`
+   + `block2`.
 2. **Bind `GTMTLReplayObjectMap`** and the `Session` -> map accessor in `-sys`.
 3. **mid**: `Session::texture_descriptor(stream_ref) -> Option<TextureDescriptor>`
    (raw numeric, read from the live object) and a loaded-resource enumerator.
