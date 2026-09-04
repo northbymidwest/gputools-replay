@@ -1,6 +1,29 @@
 # Session-based texture descriptors, and consolidating the FFI into `-sys`
 
-Status: proposed (2026-09-04). Scoping note, no code yet.
+Status: proposed (2026-09-04); core mechanism VALIDATED LIVE (2026-09-04) by
+the `objectmap` probe. No production code yet.
+
+## Live validation (probe `objectmap`, 2026-09-04)
+
+Confirmed in-process on both repro captures, and it resolves both open
+questions below:
+
+- The object map is a **direct field of the controller at `controller + 0x8`**
+  (the controller is the C struct at client field 1; the map is
+  `*(controller + 0x8)`), stable across both captures. It is NOT in the ObjC
+  service graph (`GTMTLReplayService` has only `_observers`); the probe found
+  it by a `malloc_size`-guarded scan of the controller's heap.
+- `tryGetTextureForKey:(streamRef)` returns live `AGXG13XFamilyTexture`s with
+  correct public Metal properties. **SDL3** `vibeboy.gputrace` (which
+  gputrace-bundle reads as 0 descriptors): streamRefs 24-27, all
+  `2880x2592 fmt=80 (BGRA8Unorm) type=2 mips=1 array=1` - 4 textures, matching
+  the consumer's "4 fetch fine." **winit**: streamRefs 21-23
+  (`1440x1296 fmt=70`, two `2880x2756 fmt=80`) - 3 textures, which is exactly
+  finding #1's "3 of 5 answer without FORCE_LOAD."
+- So the map holds the **loaded** resources (unused ones absent without
+  FORCE_LOAD), the accessor is a fixed struct offset, and descriptors come
+  authoritatively off live Metal objects - size-agnostic, streamRef-keyed, no
+  join. The design is proven end to end.
 
 ## Problem
 
@@ -132,16 +155,17 @@ hl" line the crate already draws); hl interprets.
 
 ## Open questions to settle during implementation
 
-- **`Session` -> `GTMTLReplayObjectMap` accessor.** Narrowed (2026-09-04, not
-  fully pinned). The map is a `GTIntKeyedDictionary` keyed by streamRef,
-  populated during load by the `_DYTraceDecode_*` call decoders, with the full
-  family (`textureForKey:`, `tryGetTextureForKey:`, `setTexture:forKey:` and
-  siblings, `resources`). It is not exposed by a named ObjC accessor, and it is
-  not a discoverable typed ObjC ivar (otool's class dump finds no
-  `GTMTLReplayObjectMap`-typed ivar) - it is reached through the replay context
-  the C decoders receive. Pinning the exact reach (a context/controller field
-  offset) needs one targeted disassembly pass of a decoder or the shared decode
-  helper before step 2; a bounded task, not a blocker.
+- **`Session` -> `GTMTLReplayObjectMap` accessor: RESOLVED (2026-09-04).** The
+  map sits at `controller + 0x8` (the controller being the C struct at client
+  field 1), confirmed live on both captures. It is a `GTIntKeyedDictionary`
+  keyed by streamRef, populated during load by the `_DYTraceDecode_*` call
+  decoders, with the full family (`textureForKey:`, `tryGetTextureForKey:`,
+  `setTexture:forKey:` and siblings, `resources`). Not an ObjC ivar of the
+  service (otool finds no such typed ivar; it is a controller struct field). So
+  `-sys` reads `*(controller + 0x8)` for the map. NOTE: 0x8 is a struct offset
+  in a private type; treat it like `CONTROLLER_OFFSET` in client.rs (measured,
+  regression-guarded), and consider also probing `-[GTMTLReplayObjectMap ...]`
+  via runtime once the map is in hand rather than trusting the offset forever.
 - **Unused resources: resolved (2026-09-04).** `textureForKey:` and
   `tryGetTextureForKey:` are pure dictionary lookups; neither triggers a load
   (`textureForKey:` calls `GTMTLReplay_dispatchFailedToGet` on a miss,

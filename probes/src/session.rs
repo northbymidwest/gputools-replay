@@ -991,6 +991,12 @@ impl Session {
         self._client as usize
     }
 
+    /// The live `GTMTLReplayService` object, for runtime introspection of the
+    /// loaded object graph (finding the resource object map). Probe-only.
+    pub fn service(&self) -> *mut AnyObject {
+        self.service
+    }
+
     /// The controller's current command index, at byte offset `0x5820`.
     ///
     /// Established in `docs/findings/01-playback.md`: `playTo`'s exit test at
