@@ -2,6 +2,21 @@
 
 Notable changes per release. Dates are the publish date.
 
+## Unreleased
+
+### Added
+
+- Object-map enumeration (`gputools-replay`, `gputools-replay-hl`):
+  `Capture::loaded_textures()` returns every currently-loaded texture with its
+  descriptor in one pass; `Capture::loaded_texture_refs()` and the `Session`
+  equivalents return just the streamRefs; `unused_resource_refs()` lists
+  resources present but not loaded. These read the replayer's object map, so a
+  consumer enumerates loaded resources instead of sweeping a ref range (which
+  cannot see a ref past its bound). `-sys` binds `GTMTLReplayObjectMap::resources`
+  (`NSDictionary<streamRef, id<MTLResource>>`) and `unusedResourceKeys`
+  (`NSSet`). Same playback timing as `texture_descriptor` (the map empties after
+  a bare `play_all`/`play_to` until a fetch reloads).
+
 ## 0.2.0 - 2026-09-09
 
 Session-based texture descriptors: descriptors are now read off the live

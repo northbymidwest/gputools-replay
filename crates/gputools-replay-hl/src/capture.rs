@@ -354,6 +354,38 @@ impl Capture {
         self.session.texture_descriptor(stream_ref)
     }
 
+    /// Every currently-loaded texture with its descriptor, read from the
+    /// replayer's object map - no ref sweep and no manifest. This is the
+    /// enumeration that retires walking the ref space (a walk cannot see a ref
+    /// past its bound). Sorted by streamRef.
+    ///
+    /// Same timing as [`Capture::texture_descriptor`]: the map reflects the
+    /// current load, so this is empty after a bare `play_all`/`play_to` until a
+    /// fetch reloads the resources. Enumerate right after [`Capture::open`], or
+    /// after a fetch.
+    pub fn loaded_textures(&self) -> Result<Vec<(u64, TextureDescriptor)>, ObjectMapError> {
+        let mut out = Vec::new();
+        for stream_ref in self.session.loaded_texture_refs()? {
+            if let Some(d) = self.session.texture_descriptor(stream_ref)? {
+                out.push((stream_ref, d));
+            }
+        }
+        Ok(out)
+    }
+
+    /// The streamRefs of every currently-loaded texture (see
+    /// [`Capture::loaded_textures`] to get the descriptors in one pass).
+    /// Enumerated from the object map, not swept.
+    pub fn loaded_texture_refs(&self) -> Result<Vec<u64>, ObjectMapError> {
+        self.session.loaded_texture_refs()
+    }
+
+    /// The streamRefs of resources present in the capture but not loaded (any
+    /// kind; absent from the object map without force-load).
+    pub fn unused_resource_refs(&self) -> Result<Vec<u64>, ObjectMapError> {
+        self.session.unused_resource_refs()
+    }
+
     /// Join already-fetched `texs` against the cached manifest, by the
     /// creation-order ordinal zip (dossier 00). Pure: no fetch, and no error
     /// on a gap - a manifest descriptor nothing claims lands in

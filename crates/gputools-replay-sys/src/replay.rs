@@ -21,8 +21,8 @@ use objc2::encode::{Encode, Encoding};
 use objc2::rc::{Allocated, Retained};
 use objc2::runtime::{NSObject, NSObjectProtocol, ProtocolObject};
 use objc2::{AnyThread, ClassType, extern_class, extern_methods};
-use objc2_foundation::{NSArray, NSData, NSError, NSURL};
-use objc2_metal::MTLTexture;
+use objc2_foundation::{NSArray, NSData, NSDictionary, NSError, NSNumber, NSSet, NSURL};
+use objc2_metal::{MTLResource, MTLTexture};
 
 /// The geometry a texture fetch request carries on the wire. Laid out to
 /// match the type encodings the runtime reports for the setters, read off
@@ -408,6 +408,25 @@ impl GTMTLReplayObjectMap {
             &self,
             stream_ref: u64,
         ) -> Option<Retained<ProtocolObject<dyn MTLTexture>>>;
+
+        /// Every currently-loaded resource, keyed by streamRef (`NSNumber`) ->
+        /// the live `id<MTLResource>` (textures, buffers, acceleration
+        /// structures - the value's concrete class names the kind). MEASURED
+        /// (probes/src/bin/mapenum.rs, 2026-09-09): a plain `NSDictionary`, and
+        /// the framework types the values `@"<MTLResource>"`. Its keys are the
+        /// loaded streamRefs; it empties across playback like the map itself
+        /// (see [`crate::layout::controller_object_map`]). Non-resource loaded
+        /// objects (heaps, queues, ...) are held elsewhere, not here.
+        #[unsafe(method(resources))]
+        pub fn resources(
+            &self,
+        ) -> Retained<NSDictionary<NSNumber, ProtocolObject<dyn MTLResource>>>;
+
+        /// The streamRefs of resources present in the capture but not loaded
+        /// (the complement of [`GTMTLReplayObjectMap::resources`]'s keys, absent
+        /// without force-load). MEASURED: a plain `NSSet` of `NSNumber`.
+        #[unsafe(method(unusedResourceKeys))]
+        pub fn unused_resource_keys(&self) -> Retained<NSSet<NSNumber>>;
     );
 }
 

@@ -522,6 +522,37 @@ impl Session {
             .map(|tex| TextureDescriptor::from_texture(stream_ref, &tex)))
     }
 
+    /// The streamRefs of every currently-loaded texture, read from the
+    /// replayer's object map - enumerate these instead of sweeping a ref range
+    /// (a sweep cannot see a ref past its bound). Sorted ascending.
+    ///
+    /// Same timing as [`Session::texture_descriptor`]: the map reflects the
+    /// current load, so playback (`play_all`/`play_to`) empties it until a fetch
+    /// reloads the resources. `Err(ObjectMapError)` only if the object map is
+    /// unreachable (a framework layout change), never a routine empty.
+    pub fn loaded_texture_refs(&self) -> Result<Vec<u64>, ObjectMapError> {
+        let map = self.object_map()?;
+        let keys = map.resources().allKeys();
+        let mut refs: Vec<u64> = (0..keys.count())
+            .map(|i| keys.objectAtIndex(i).unsignedLongLongValue())
+            // The map spans all resource kinds; keep the textures.
+            .filter(|&r| map.try_get_texture(r).is_some())
+            .collect();
+        refs.sort_unstable();
+        Ok(refs)
+    }
+
+    /// The streamRefs of resources present in the capture but not loaded (any
+    /// kind; absent from the object map without force-load). Sorted ascending.
+    pub fn unused_resource_refs(&self) -> Result<Vec<u64>, ObjectMapError> {
+        let objs = self.object_map()?.unused_resource_keys().allObjects();
+        let mut refs: Vec<u64> = (0..objs.count())
+            .map(|i| objs.objectAtIndex(i).unsignedLongLongValue())
+            .collect();
+        refs.sort_unstable();
+        Ok(refs)
+    }
+
     /// The controller's current command index, at byte offset
     /// `COMMAND_INDEX_OFFSET`.
     ///
