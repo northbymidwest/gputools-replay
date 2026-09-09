@@ -30,7 +30,18 @@ pub use gputools_replay::config::ReplayerConfig;
 pub use gputools_replay::request::{
     DispatchUid, Point3D, Region, Size, TextureRequest, WireframeRequest,
 };
-pub use gputrace_bundle::TextureDescriptor;
+/// The authoritative, session-based texture descriptor and the error
+/// [`Capture::texture_descriptor`] raises when the replayer's object map cannot
+/// be reached. This `TextureDescriptor` is read off the live `MTLTexture` and
+/// is keyed by streamRef; the offline manifest's descriptor (used by the
+/// ordinal-join [`Capture::describe`] path) is re-exported separately as
+/// [`OfflineTextureDescriptor`].
+pub use gputools_replay::{ObjectMapError, TextureDescriptor};
+/// The offline manifest's texture descriptor, parsed from `store0` by
+/// `gputrace-bundle` and joined by the heuristic ordinal zip in
+/// [`Capture::describe`]. Distinct from the authoritative, session-based
+/// [`TextureDescriptor`]; kept for offline (no-session) use.
+pub use gputrace_bundle::TextureDescriptor as OfflineTextureDescriptor;
 pub use image::{Blocks, Texture, Wireframe};
 pub use objc2_metal::{MTLPixelFormat, MTLTextureType, MTLTextureUsage};
 pub use pipeline::{Pipeline, Stage, StageKind, Stats};

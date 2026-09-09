@@ -12,6 +12,7 @@ use gputools_replay::Session;
 use gputools_replay::config::ReplayerConfig;
 use gputools_replay::reply::Record;
 use gputools_replay::request::{DispatchUid, Region, TextureRequest, WireframeRequest};
+use gputools_replay::{ObjectMapError, TextureDescriptor};
 use std::path::Path;
 use std::sync::Arc;
 use std::time::Duration;
@@ -317,6 +318,31 @@ impl Capture {
     /// answer.
     pub fn record_count(&self) -> Option<usize> {
         self.manifest().map(|b| b.record_count())
+    }
+
+    /// The authoritative descriptor for the loaded texture at `stream_ref`,
+    /// read off the live `MTLTexture` the replayer created (via
+    /// [`gputools_replay::Session::texture_descriptor`]). Keyed by streamRef,
+    /// exactly like fetch - no manifest parse and no ordinal join, so it is
+    /// correct across capture serialization schemas where the offline
+    /// [`Capture::describe`] path's size/ordinal heuristics are not.
+    ///
+    /// Three outcomes, kept distinct (see
+    /// [`gputools_replay::Session::texture_descriptor`]):
+    /// - `Ok(Some(descriptor))` - `stream_ref` is a loaded texture.
+    /// - `Ok(None)` - `stream_ref` is not a loaded texture (an unused resource,
+    ///   absent without force-load). Routine and per-streamRef: skip it.
+    /// - `Err(ObjectMapError)` - the replayer's object map is not where its
+    ///   MEASURED offset says (a framework layout change). Not per-streamRef: it
+    ///   takes out every descriptor, so it is surfaced rather than hidden.
+    ///
+    /// This is the session-based descriptor source that supersedes the ordinal
+    /// join for in-session consumers.
+    pub fn texture_descriptor(
+        &self,
+        stream_ref: u64,
+    ) -> Result<Option<TextureDescriptor>, ObjectMapError> {
+        self.session.texture_descriptor(stream_ref)
     }
 
     /// Join already-fetched `texs` against the cached manifest, by the
