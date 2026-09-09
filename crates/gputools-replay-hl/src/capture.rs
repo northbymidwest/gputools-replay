@@ -130,6 +130,13 @@ impl Capture {
     /// (MEASURED: corpus commands 1121/1122); the descriptor join dedupes
     /// internally, but a caller keying its own results on stream_ref should
     /// dedupe too.
+    ///
+    /// Fetching after playback re-creates resources it released (playback clears
+    /// the object map in place). A single batch that includes a force-loaded
+    /// *unused* resource can then fail with the replayer's "Metal object
+    /// creation failed" (`Code=150`, `GTErrorKeyResourceUnused=true`) - MEASURED
+    /// 2026-09-09. Fetch before playback, or fetch such refs one at a time
+    /// (per-ref re-creation succeeds); used resources are unaffected.
     pub fn textures(&self, refs: impl IntoIterator<Item = u64>) -> Result<Vec<Texture>, Error> {
         let reqs: Vec<TextureRequest> = refs.into_iter().map(TextureRequest::natural).collect();
         self.textures_with(&reqs)
