@@ -2,7 +2,7 @@
 
 Notable changes per release. Dates are the publish date.
 
-## Unreleased
+## 0.2.0 - 2026-09-09
 
 Session-based texture descriptors: descriptors are now read off the live
 `MTLTexture` the replayer created, keyed by streamRef, instead of parsing the

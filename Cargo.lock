@@ -99,7 +99,7 @@ dependencies = [
 
 [[package]]
 name = "gputools-replay"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "block2",
  "gputools-replay-sys",
@@ -112,7 +112,7 @@ dependencies = [
 
 [[package]]
 name = "gputools-replay-hl"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "bytemuck",
  "gputools-replay",
@@ -124,7 +124,7 @@ dependencies = [
 
 [[package]]
 name = "gputools-replay-sys"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "block2",
  "libc",
