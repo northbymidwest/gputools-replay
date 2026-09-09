@@ -358,8 +358,9 @@ impl Capture {
     /// join for in-session consumers.
     ///
     /// TIMING (MEASURED 2026-09-09): [`Capture::play_all`]/[`Capture::play_to`]
-    /// release the loaded resources, so after a playback call this returns
-    /// `Ok(None)` for every streamRef until a fetch reloads them (the first
+    /// clear the object map in place (the same map object, its entries
+    /// released), so after a playback call this returns `Ok(None)` for every
+    /// streamRef until a fetch reloads them (the first
     /// `textures(..)` that returns a real texture repopulates the map). Read
     /// descriptors right after [`Capture::open`], or after a fetch - not after
     /// bare playback. A texture *view* is its own entry (own streamRef +
