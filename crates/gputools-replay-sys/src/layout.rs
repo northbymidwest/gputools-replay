@@ -6,6 +6,7 @@
 
 use crate::client::{GTMTLReplayClient, GTMTLReplayController};
 use crate::replay::GTMTLReplayObjectMap;
+use objc2::ClassType;
 use objc2::rc::Retained;
 use objc2::runtime::AnyObject;
 use std::fmt;
@@ -181,11 +182,13 @@ impl std::error::Error for ObjectMapError {}
 /// The [`GTMTLReplayObjectMap`] hanging off a loaded controller at
 /// [`OBJECT_MAP_OFFSET`]. The offset is MEASURED, so the object is validated
 /// before it is handed back typed: `malloc_size` confirms a live heap object
-/// (and never faults on a stray value), then objc2's class-checked downcast
-/// confirms it really is a `GTMTLReplayObjectMap`. A stale offset (a framework
-/// layout change) therefore yields an [`ObjectMapError`] naming which check
-/// failed, rather than a mistyped pointer. The map is retained for the caller
-/// and stays valid until the returned handle is dropped.
+/// (and never faults on a stray value), then `object_getClass` confirms its
+/// class is exactly `GTMTLReplayObjectMap` - a data read of the isa, never a
+/// message send, so an offset pointing at a non-object is rejected without
+/// dereferencing it. A stale offset (a framework layout change) therefore
+/// yields an [`ObjectMapError`] naming which check failed, rather than a
+/// mistyped pointer. The map is retained for the caller and stays valid until
+/// the returned handle is dropped.
 ///
 /// # Safety
 /// `controller` must be a live, loaded `GTMTLReplayController` (post-`load:`, as
@@ -203,17 +206,30 @@ pub unsafe fn controller_object_map(
             .cast::<*mut AnyObject>()
             .read()
     };
-    // Guard the MEASURED offset before messaging what it points at: `malloc_size`
-    // is 0 for a non-heap pointer (and never faults), so a stale offset is
-    // rejected here rather than dereferenced.
+    // Guard the MEASURED offset. `malloc_size` is 0 for a non-heap pointer (and
+    // never faults), so a stale offset is rejected before anything reads through
+    // the pointer.
     if ptr.is_null() || unsafe { libc::malloc_size(ptr.cast()) } == 0 {
         return Err(ObjectMapError::NotHeapObject);
     }
-    // SAFETY: `ptr` is a live heap Objective-C object, so retaining it is sound;
-    // objc2's class-checked downcast then confirms it is a GTMTLReplayObjectMap.
-    let obj = unsafe { Retained::retain(ptr) }.ok_or(ObjectMapError::NotHeapObject)?;
-    obj.downcast::<GTMTLReplayObjectMap>()
-        .map_err(|_| ObjectMapError::WrongClass)
+    // Class-check WITHOUT messaging the object. `object_getClass` reads the isa
+    // word (in bounds of the live block) and returns it, so this stays a data
+    // read even if the offset points at a live but non-Objective-C allocation.
+    // A message send instead - `objc_retain`, `isKindOfClass:`, objc2's
+    // `downcast` - would dereference a garbage isa in exactly the layout-change
+    // case this guard exists to report, so the class must be confirmed first.
+    // SAFETY: `ptr` is a live heap block of at least one word (malloc_size > 0).
+    let cls = unsafe { objc2::ffi::object_getClass(ptr) };
+    if !std::ptr::eq(cls, GTMTLReplayObjectMap::class()) {
+        return Err(ObjectMapError::WrongClass);
+    }
+    // SAFETY: `ptr` is a live object whose class is exactly GTMTLReplayObjectMap,
+    // so sending it `objc_retain` is sound. It is non-null (guarded above), so
+    // `retain` cannot return `None`.
+    Ok(
+        unsafe { Retained::retain(ptr.cast::<GTMTLReplayObjectMap>()) }
+            .expect("retain of a non-null, class-verified object returned None"),
+    )
 }
 
 #[cfg(test)]

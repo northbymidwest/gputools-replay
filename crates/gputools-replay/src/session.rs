@@ -488,7 +488,7 @@ impl Session {
     /// The replayer's loaded-resource object map, guarded against the MEASURED
     /// `OBJECT_MAP_OFFSET` no longer pointing at one (a framework layout
     /// change): the pointer must be a live heap object whose class is
-    /// `GTMTLReplayObjectMap`, or this returns `None`.
+    /// `GTMTLReplayObjectMap`, or this is an [`ObjectMapError`].
     fn object_map(&self) -> Result<Retained<GTMTLReplayObjectMap>, ObjectMapError> {
         // The `-sys` accessor validates the MEASURED offset (live heap object of
         // the right class) and hands back a retained, typed map, or an
