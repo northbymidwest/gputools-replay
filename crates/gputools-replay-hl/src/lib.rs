@@ -8,6 +8,7 @@ pub mod accel;
 pub mod buffer;
 mod bytes;
 pub mod capture;
+#[cfg(feature = "offline-manifest")]
 pub mod describe;
 pub mod error;
 pub mod format;
@@ -16,7 +17,10 @@ pub mod pipeline;
 
 pub use accel::{Aabb, AccelStructure};
 pub use buffer::{Buffer, Heap};
-pub use capture::{Aspect, Capture, ManifestStatus};
+#[cfg(feature = "offline-manifest")]
+pub use capture::ManifestStatus;
+pub use capture::{Aspect, Capture};
+#[cfg(feature = "offline-manifest")]
 pub use describe::{DescribedTexture, Descriptions};
 pub use error::Error;
 pub use gputools_replay::config::ReplayerConfig;
@@ -33,14 +37,16 @@ pub use gputools_replay::request::{
 /// The authoritative, session-based texture descriptor and the error
 /// [`Capture::texture_descriptor`] raises when the replayer's object map cannot
 /// be reached. This `TextureDescriptor` is read off the live `MTLTexture` and
-/// is keyed by streamRef; the offline manifest's descriptor (used by the
-/// ordinal-join [`Capture::describe`] path) is re-exported separately as
-/// [`OfflineTextureDescriptor`].
+/// is keyed by streamRef. The offline manifest's descriptor (used by the
+/// heuristic `Capture::describe` path under the `offline-manifest` feature) is a
+/// distinct type, re-exported as `OfflineTextureDescriptor`.
 pub use gputools_replay::{ObjectMapError, TextureDescriptor};
 /// The offline manifest's texture descriptor, parsed from `store0` by
 /// `gputrace-bundle` and joined by the heuristic ordinal zip in
 /// [`Capture::describe`]. Distinct from the authoritative, session-based
-/// [`TextureDescriptor`]; kept for offline (no-session) use.
+/// [`TextureDescriptor`]; kept for offline (no-session) use behind the
+/// `offline-manifest` feature.
+#[cfg(feature = "offline-manifest")]
 pub use gputrace_bundle::TextureDescriptor as OfflineTextureDescriptor;
 pub use image::{Blocks, Texture, Wireframe};
 pub use objc2_metal::{MTLPixelFormat, MTLTextureType, MTLTextureUsage};

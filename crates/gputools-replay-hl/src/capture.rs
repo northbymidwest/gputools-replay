@@ -23,14 +23,17 @@ use std::time::Duration;
 pub struct Capture {
     session: Session,
     timeout: Duration,
+    #[cfg(feature = "offline-manifest")]
     path: std::path::PathBuf,
     // `Err(())` distinguishes "the bundle failed to parse" from "it parsed
     // but describes no textures" (the two `ManifestStatus` failure modes);
     // the parse error itself carries no information callers need.
+    #[cfg(feature = "offline-manifest")]
     bundle: std::cell::OnceCell<Result<gputrace_bundle::Bundle, ()>>,
 }
 
 /// The manifest's condition for a [`Capture`], from [`Capture::manifest_status`].
+#[cfg(feature = "offline-manifest")]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ManifestStatus {
     /// The manifest parsed and describes this many textures.
@@ -79,12 +82,15 @@ impl Capture {
         Ok(Self {
             session: Session::open(path)?,
             timeout: Duration::from_secs(60),
+            #[cfg(feature = "offline-manifest")]
             path: path.to_path_buf(),
+            #[cfg(feature = "offline-manifest")]
             bundle: std::cell::OnceCell::new(),
         })
     }
 
     /// Open (and cache) the bundle, remembering only whether it parsed.
+    #[cfg(feature = "offline-manifest")]
     fn open_bundle(&self) -> &Result<gputrace_bundle::Bundle, ()> {
         self.bundle
             .get_or_init(|| gputrace_bundle::Bundle::open(&self.path).map_err(|_| ()))
@@ -291,12 +297,14 @@ impl Capture {
     /// The bundle manifest for this capture, parsed and cached on first use.
     /// `None` when the bundle cannot be read/parsed (metadata degrades, bytes
     /// do not).
+    #[cfg(feature = "offline-manifest")]
     fn manifest(&self) -> Option<&gputrace_bundle::Bundle> {
         self.open_bundle().as_ref().ok()
     }
 
     /// The manifest's condition: how many textures it describes, that it
     /// parsed but describes none, or that it failed to parse at all.
+    #[cfg(feature = "offline-manifest")]
     pub fn manifest_status(&self) -> ManifestStatus {
         match self.open_bundle() {
             Err(()) => ManifestStatus::Unparseable,
@@ -316,6 +324,7 @@ impl Capture {
     /// [`Capture::manifest_status`]: streamRefs are shared with the non-texture
     /// resources, so the texture count sits well below the highest ref that can
     /// answer.
+    #[cfg(feature = "offline-manifest")]
     pub fn record_count(&self) -> Option<usize> {
         self.manifest().map(|b| b.record_count())
     }
@@ -325,7 +334,7 @@ impl Capture {
     /// [`gputools_replay::Session::texture_descriptor`]). Keyed by streamRef,
     /// exactly like fetch - no manifest parse and no ordinal join, so it is
     /// correct across capture serialization schemas where the offline
-    /// [`Capture::describe`] path's size/ordinal heuristics are not.
+    /// `Capture::describe` path's size/ordinal heuristics are not.
     ///
     /// Three outcomes, kept distinct (see
     /// [`gputools_replay::Session::texture_descriptor`]):
@@ -354,6 +363,10 @@ impl Capture {
     /// own known limitation). If the manifest is absent, unparseable, or
     /// empty, `per_texture` is all-`None` and `unplaced`/`transparent` are
     /// both empty.
+    ///
+    /// Offline heuristic. In-session consumers should prefer
+    /// [`Capture::texture_descriptor`], which is authoritative and streamRef-keyed.
+    #[cfg(feature = "offline-manifest")]
     pub fn describe(&self, texs: &[Texture]) -> crate::describe::Descriptions {
         let descs: Vec<gputrace_bundle::TextureDescriptor> = self
             .manifest()
@@ -365,6 +378,7 @@ impl Capture {
     /// Fetch textures for `refs`, then join each to its manifest descriptor
     /// via [`Capture::describe`]. Descriptors are `None` for textures the
     /// manifest does not attribute; never errors on a gap.
+    #[cfg(feature = "offline-manifest")]
     pub fn textures_described(
         &self,
         refs: impl IntoIterator<Item = u64>,

@@ -3,6 +3,7 @@
 //!   MTLREPLAYER_LOCK_PARAM_BUFFER_SIZE_TO_MAX=0 \
 //!     cargo test -p gputools-replay-hl --test live_hl_described -- --ignored
 //! Its own test binary (separate process).
+#![cfg(feature = "offline-manifest")]
 use gputools_replay_hl::{Capture, ReplayerConfig};
 use std::path::PathBuf;
 

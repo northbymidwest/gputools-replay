@@ -12,7 +12,10 @@ categories = ["os::macos-apis", "rendering::data-formats"]
 
 [dependencies]
 gputools-replay = { path = "../gputools-replay", version = "0.1.1", default-features = false }
-gputrace-bundle = { workspace = true }
+# Optional: the offline manifest reader, behind `offline-manifest`. The primary
+# descriptor path is session-based (Capture::texture_descriptor) and needs none
+# of this; the bundle is the heuristic offline fallback only.
+gputrace-bundle = { workspace = true, optional = true }
 objc2-metal = { workspace = true }
 bytemuck = { workspace = true }
 plist = { workspace = true }
@@ -23,9 +26,16 @@ default = ["macos27"]
 # Require macOS 27 (forwarded down the stack). Disable with --no-default-features
 # to also build on macOS 26.
 macos27 = ["gputools-replay/macos27"]
+# The offline manifest path: `gputrace-bundle`, `Capture::describe`/
+# `textures_described`/`manifest_status`/`record_count`, `Descriptions`, and
+# `OfflineTextureDescriptor`. Session consumers do not need it (see
+# `Capture::texture_descriptor`); it is the no-session heuristic fallback.
+offline-manifest = ["dep:gputrace-bundle"]
 
 # docs.rs builds on Linux; the framework stack targets Apple only (build.rs's
 # DOCS_RS branch skips linking the private framework).
 [package.metadata.docs.rs]
 default-target = "aarch64-apple-darwin"
 targets = ["aarch64-apple-darwin"]
+# Document the optional offline-manifest surface too.
+all-features = true

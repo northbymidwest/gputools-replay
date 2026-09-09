@@ -2,6 +2,7 @@
 //! Run with:
 //!   MTLREPLAYER_LOCK_PARAM_BUFFER_SIZE_TO_MAX=0 \
 //!     cargo test -p gputools-replay-hl --test live_hl_described_stencil -- --ignored
+#![cfg(feature = "offline-manifest")]
 use gputools_replay_hl::{Capture, ManifestStatus, ReplayerConfig};
 use std::path::PathBuf;
 
