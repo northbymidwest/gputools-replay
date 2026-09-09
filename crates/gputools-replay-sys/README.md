@@ -57,7 +57,7 @@ silently if that was not done.
 
 The framework's bootstrap sequence hands `GTMTLReplayClient_init` a
 caller-allocated buffer for an opaque struct it does not describe in any
-header. This crate supplies `client::ClientBuffer`, a `#[repr(C,
+header. This crate supplies `layout::ClientBuffer`, a `#[repr(C,
 align(16))]` wrapper over `[u8; 312]`.
 
 That size was not measured by trial and error; it was derived and then

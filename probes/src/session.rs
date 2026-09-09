@@ -14,14 +14,13 @@
 #![allow(unsafe_code)]
 
 use block2::RcBlock;
-use gputools_replay_sys::client::{
-    AprPool, ClientBuffer, GTMTLReplayClient, GTMTLReplayController,
-};
+use gputools_replay_sys::client::{AprPool, GTMTLReplayClient, GTMTLReplayController};
 use gputools_replay_sys::ffi::{
     GTMTLReplayClient_init, GTMTLReplayController_init, GTMTLReplayController_playAll,
     GTMTLReplayController_playTo, GTMTLReplayController_rewind,
     GTMTLReplayErrorHandling_initWithObserver, apr_initialize, apr_pool_create_ex,
 };
+use gputools_replay_sys::layout::ClientBuffer;
 use objc2::encode::{Encode, Encoding};
 use objc2::rc::{Allocated, Retained, autoreleasepool};
 use objc2::runtime::{AnyClass, AnyObject, NSObject, NSObjectProtocol};

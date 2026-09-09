@@ -9,7 +9,7 @@
 //!
 //! Usage (ALWAYS via probes/run.sh): probes/run.sh transport
 
-use gputools_replay_sys::{client::ClientBuffer, ffi};
+use gputools_replay_sys::{ffi, layout::ClientBuffer};
 use objc2_foundation::NSRunLoop;
 use probes::guard;
 use std::process::ExitCode;

@@ -10,7 +10,8 @@
 //! Usage (ALWAYS via probes/run.sh):
 //!   probes/run.sh objectmap [path-to.gputrace]
 
-use gputools_replay_sys::replay::{GTMTLReplayObjectMap, controller_object_map};
+use gputools_replay_sys::layout::controller_object_map;
+use gputools_replay_sys::replay::GTMTLReplayObjectMap;
 use objc2::ClassType;
 use objc2::runtime::AnyClass;
 use objc2_metal::MTLTexture;

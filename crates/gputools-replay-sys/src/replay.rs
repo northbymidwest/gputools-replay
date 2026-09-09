@@ -15,11 +15,11 @@
 //! than a bare `AnyObject`. `GTReplayRequestBatch` and the service/response
 //! classes are direct `NSObject` subclasses (also measured).
 
-use crate::client::{GTMTLReplayClient, GTMTLReplayController};
+use crate::client::GTMTLReplayClient;
 use block2::Block;
 use objc2::encode::{Encode, Encoding};
 use objc2::rc::{Allocated, Retained};
-use objc2::runtime::{AnyObject, NSObject, NSObjectProtocol, ProtocolObject};
+use objc2::runtime::{NSObject, NSObjectProtocol, ProtocolObject};
 use objc2::{AnyThread, ClassType, extern_class, extern_methods};
 use objc2_foundation::{NSArray, NSData, NSError, NSURL};
 use objc2_metal::MTLTexture;
@@ -386,7 +386,8 @@ extern_class!(
     /// The replayer's streamRef-keyed registry of the live Metal objects a load
     /// created (textures, buffers, heaps, ...), backed by a
     /// `GTIntKeyedDictionary`. It is not in the ObjC service graph; it hangs off
-    /// the controller at [`OBJECT_MAP_OFFSET`] (see [`controller_object_map`]).
+    /// the controller at [`crate::layout::OBJECT_MAP_OFFSET`] (see
+    /// [`crate::layout::controller_object_map`]).
     /// MEASURED live by `probes/src/bin/objectmap.rs` (2026-09-04).
     #[unsafe(super(NSObject))]
     pub struct GTMTLReplayObjectMap;
@@ -408,32 +409,6 @@ impl GTMTLReplayObjectMap {
             stream_ref: u64,
         ) -> Option<Retained<ProtocolObject<dyn MTLTexture>>>;
     );
-}
-
-/// Byte offset of the [`GTMTLReplayObjectMap`] pointer within the controller
-/// struct. MEASURED, not derived: `GTMTLReplayController` is an opaque struct
-/// with no field encoding to re-derive from (unlike
-/// [`crate::client::CONTROLLER_OFFSET`], which comes from the client encoding),
-/// so this was found live by `probes/src/bin/objectmap.rs` (2026-09-04) - a
-/// `malloc_size`-guarded heap scan located the map at `controller + 0x8`, stable
-/// across two captures. That probe is its living regression check.
-pub const OBJECT_MAP_OFFSET: usize = 0x8;
-
-/// The object hanging off a loaded controller at [`OBJECT_MAP_OFFSET`], returned
-/// as an unverified `*mut AnyObject`: the offset is MEASURED, so the type is not
-/// yet proven. Confirm it with a class-checked `downcast_ref::<GTMTLReplayObjectMap>`
-/// before use - the honest result of reading a raw offset, not an asserted type.
-/// The pointer is borrowed (not retained) and valid only while the controller
-/// (and its session) lives.
-///
-/// # Safety
-/// `controller` must be a live, loaded `GTMTLReplayController` (post-`load:`, as
-/// `ClientBuffer::controller` returns after `open`).
-pub unsafe fn controller_object_map(controller: *mut GTMTLReplayController) -> *mut AnyObject {
-    // SAFETY: the caller guarantees `controller` is a live controller, which is
-    // far larger than OBJECT_MAP_OFFSET + a pointer (its command index alone is
-    // at 0x5820), so the pointer-sized read at 0x8 is in bounds.
-    unsafe { ((controller as usize + OBJECT_MAP_OFFSET) as *const *mut AnyObject).read() }
 }
 
 #[cfg(test)]

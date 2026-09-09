@@ -37,10 +37,10 @@ unsafe extern "C" {
     /// it as the controller is what produced the "playback never completes"
     /// dead end: the leftover value points into the framework's read-only
     /// `__AUTH_CONST` segment, and `playTo` faults on the first dereference.
-    /// Get the controller from [`crate::client::ClientBuffer::controller`]
+    /// Get the controller from [`crate::layout::ClientBuffer::controller`]
     /// instead. See `docs/findings/01-playback.md`.
     pub fn GTMTLReplayController_init(pool: *mut AprPool) -> *mut c_void;
-    /// x0 is a caller-allocated out-buffer of `client::CLIENT_BUF_LEN` bytes
+    /// x0 is a caller-allocated out-buffer of `layout::CLIENT_BUF_LEN` bytes
     /// (see that constant's derivation); x1 lands in struct field 0, typed
     /// `^{apr_pool_t}`. Exactly two arguments: the prologue never reads x2/x3/x4.
     pub fn GTMTLReplayClient_init(out: *mut GTMTLReplayClient, pool: *mut AprPool);

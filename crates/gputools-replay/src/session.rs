@@ -11,17 +11,14 @@ use crate::SessionError;
 use crate::config::ReplayerConfig;
 use crate::descriptor::TextureDescriptor;
 use crate::util::truncate;
-use gputools_replay_sys::client::{
-    AprPool, ClientBuffer, GTMTLReplayClient, GTMTLReplayController,
-};
+use gputools_replay_sys::client::{AprPool, GTMTLReplayClient, GTMTLReplayController};
 use gputools_replay_sys::ffi::{
     GTMTLReplayClient_init, GTMTLReplayController_init, GTMTLReplayController_playAll,
     GTMTLReplayController_playTo, GTMTLReplayController_rewind,
     GTMTLReplayErrorHandling_initWithObserver, apr_initialize, apr_pool_create_ex,
 };
-use gputools_replay_sys::replay::{
-    GTMTLReplayObjectMap, GTMTLReplayService, controller_object_map,
-};
+use gputools_replay_sys::layout::{ClientBuffer, controller_object_map};
+use gputools_replay_sys::replay::{GTMTLReplayObjectMap, GTMTLReplayService};
 use objc2::rc::Retained;
 use objc2::runtime::{AnyClass, AnyObject, NSObject, NSObjectProtocol};
 use objc2::{AnyThread, DefinedClass, define_class, msg_send};
