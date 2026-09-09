@@ -17,6 +17,18 @@ Notable changes per release. Dates are the publish date.
   (`NSSet`). Same playback timing as `texture_descriptor` (the map empties after
   a bare `play_all`/`play_to` until a fetch reloads).
 
+### Documentation
+
+- `texture_descriptor` / `command_index` (`gputools-replay`, `gputools-replay-hl`):
+  document behaviors a consumer measured migrating to 0.2.0 - playback
+  (`play_all`/`play_to`) clears the object map in place, so `texture_descriptor`
+  returns `Ok(None)` for every streamRef until a fetch reloads them (read
+  descriptors after `open` or after a fetch, not after bare playback); a fetch
+  resets `command_index` to 0 while served content stays at the end-state; a
+  batch fetch that includes a force-loaded unused resource after playback can
+  fail (`Code=150`, fetch before playback or per-ref); and a texture view is its
+  own map entry, so the map can exceed the offline manifest's texture count.
+
 ## 0.2.0 - 2026-09-09
 
 Session-based texture descriptors: descriptors are now read off the live

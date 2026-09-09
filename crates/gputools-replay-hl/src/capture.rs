@@ -119,7 +119,9 @@ impl Capture {
         self.session.rewind();
     }
 
-    /// The current command index.
+    /// The current command index. A fetch resets it to 0 (MEASURED 2026-09-09)
+    /// while the served content stays at the end-state, so read it before
+    /// fetching, not after, to record where playback reached.
     pub fn command_index(&self) -> u32 {
         self.session.command_index()
     }
@@ -354,6 +356,15 @@ impl Capture {
     ///
     /// This is the session-based descriptor source that supersedes the ordinal
     /// join for in-session consumers.
+    ///
+    /// TIMING (MEASURED 2026-09-09): [`Capture::play_all`]/[`Capture::play_to`]
+    /// release the loaded resources, so after a playback call this returns
+    /// `Ok(None)` for every streamRef until a fetch reloads them (the first
+    /// `textures(..)` that returns a real texture repopulates the map). Read
+    /// descriptors right after [`Capture::open`], or after a fetch - not after
+    /// bare playback. A texture *view* is its own entry (own streamRef +
+    /// descriptor), so the map can hold more textures than the offline
+    /// manifest's count.
     pub fn texture_descriptor(
         &self,
         stream_ref: u64,
