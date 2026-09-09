@@ -90,6 +90,15 @@ fn main() -> ExitCode {
         );
     }
 
+    // Does a cheap (no-fetch) op repopulate the cleared map?
+    sess.rewind();
+    println!("after rewind:    {:?}", snapshot(&sess));
+    sess.play_to(1);
+    println!("after play_to(1):{:?}", snapshot(&sess));
+    sess.rewind();
+    println!("after rewind #2: {:?}", snapshot(&sess));
+    println!("command_index now: {}", sess.command_index());
+
     // Batch fetch of the pre-playback refs (finding #7), then per-ref retry.
     if !refs.is_empty() {
         match sess.fetch_textures(&natural(&refs), to) {

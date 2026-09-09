@@ -23,6 +23,13 @@ use std::time::Duration;
 pub struct Capture {
     session: Session,
     timeout: Duration,
+    /// The loaded textures (streamRef -> descriptor) snapshotted at `open`,
+    /// when the object map is guaranteed populated. Serving this rather than
+    /// re-reading the live map makes the descriptor API stable across playback
+    /// (which clears the map). `Err` if the map was unreachable at open.
+    loaded: Result<Vec<(u64, TextureDescriptor)>, ObjectMapError>,
+    /// The unused-resource streamRefs, snapshotted at `open` (same rationale).
+    unused: Result<Vec<u64>, ObjectMapError>,
     #[cfg(feature = "offline-manifest")]
     path: std::path::PathBuf,
     // `Err(())` distinguishes "the bundle failed to parse" from "it parsed
@@ -78,10 +85,19 @@ impl Capture {
     }
 
     /// Open a capture bundle. Safe: no env write here.
+    ///
+    /// The loaded-texture set is snapshotted here, while the object map is
+    /// still populated (playback later clears it), so the descriptor and
+    /// enumeration accessors stay stable regardless of playback state.
     pub fn open(path: &Path) -> Result<Self, Error> {
+        let session = Session::open(path)?;
+        let loaded = session.loaded_textures();
+        let unused = session.unused_resource_refs();
         Ok(Self {
-            session: Session::open(path)?,
+            session,
             timeout: Duration::from_secs(60),
+            loaded,
+            unused,
             #[cfg(feature = "offline-manifest")]
             path: path.to_path_buf(),
             #[cfg(feature = "offline-manifest")]
@@ -338,65 +354,61 @@ impl Capture {
         self.manifest().map(|b| b.record_count())
     }
 
-    /// The authoritative descriptor for the loaded texture at `stream_ref`,
-    /// read off the live `MTLTexture` the replayer created (via
-    /// [`gputools_replay::Session::texture_descriptor`]). Keyed by streamRef,
-    /// exactly like fetch - no manifest parse and no ordinal join, so it is
-    /// correct across capture serialization schemas where the offline
-    /// `Capture::describe` path's size/ordinal heuristics are not.
+    /// The authoritative descriptor for the texture at `stream_ref`, from the
+    /// loaded-texture snapshot taken at [`Capture::open`]. Keyed by streamRef -
+    /// no manifest parse and no ordinal join, so it is correct across capture
+    /// serialization schemas where the offline `Capture::describe` path's
+    /// size/ordinal heuristics are not.
     ///
-    /// Three outcomes, kept distinct (see
-    /// [`gputools_replay::Session::texture_descriptor`]):
+    /// Three outcomes, kept distinct:
     /// - `Ok(Some(descriptor))` - `stream_ref` is a loaded texture.
     /// - `Ok(None)` - `stream_ref` is not a loaded texture (an unused resource,
     ///   absent without force-load). Routine and per-streamRef: skip it.
-    /// - `Err(ObjectMapError)` - the replayer's object map is not where its
-    ///   MEASURED offset says (a framework layout change). Not per-streamRef: it
-    ///   takes out every descriptor, so it is surfaced rather than hidden.
+    /// - `Err(ObjectMapError)` - the object map was unreachable at open (a
+    ///   framework layout change). Not per-streamRef: it takes out every
+    ///   descriptor, so it is surfaced rather than hidden.
     ///
-    /// This is the session-based descriptor source that supersedes the ordinal
-    /// join for in-session consumers.
-    ///
-    /// TIMING (MEASURED 2026-09-09): [`Capture::play_all`]/[`Capture::play_to`]
-    /// clear the object map in place (the same map object, its entries
-    /// released), so after a playback call this returns `Ok(None)` for every
-    /// streamRef until a fetch reloads them (the first
-    /// `textures(..)` that returns a real texture repopulates the map). Read
-    /// descriptors right after [`Capture::open`], or after a fetch - not after
-    /// bare playback. A texture *view* is its own entry (own streamRef +
-    /// descriptor), so the map can hold more textures than the offline
-    /// manifest's count.
+    /// Served from the open-time snapshot, so it is stable regardless of
+    /// playback (which clears the live map). For the live map instead, use
+    /// [`gputools_replay::Session::texture_descriptor`].
     pub fn texture_descriptor(
         &self,
         stream_ref: u64,
     ) -> Result<Option<TextureDescriptor>, ObjectMapError> {
-        self.session.texture_descriptor(stream_ref)
+        Ok(self
+            .loaded
+            .as_deref()
+            .map_err(|e| *e)?
+            .iter()
+            .find(|(r, _)| *r == stream_ref)
+            .map(|(_, d)| *d))
     }
 
-    /// Every currently-loaded texture with its descriptor, read from the
-    /// replayer's object map - no ref sweep and no manifest. This is the
-    /// enumeration that retires walking the ref space (a walk cannot see a ref
-    /// past its bound). Sorted by streamRef.
-    ///
-    /// Same timing as [`Capture::texture_descriptor`]: the map reflects the
-    /// current load, so this is empty after a bare `play_all`/`play_to` until a
-    /// fetch reloads the resources. Enumerate right after [`Capture::open`], or
-    /// after a fetch.
-    pub fn loaded_textures(&self) -> Result<Vec<(u64, TextureDescriptor)>, ObjectMapError> {
-        self.session.loaded_textures()
+    /// Every loaded texture with its descriptor, from the [`Capture::open`]
+    /// snapshot - no ref sweep, no manifest, and stable across playback (a walk
+    /// of the live map cannot see a ref past its bound and empties after
+    /// playback). Sorted by streamRef. A texture *view* is its own entry, so
+    /// this can exceed the offline manifest's texture count.
+    pub fn loaded_textures(&self) -> Result<&[(u64, TextureDescriptor)], ObjectMapError> {
+        self.loaded.as_deref().map_err(|e| *e)
     }
 
-    /// The streamRefs of every currently-loaded texture (see
-    /// [`Capture::loaded_textures`] to get the descriptors in one pass).
-    /// Enumerated from the object map, not swept.
+    /// The streamRefs of every loaded texture (see [`Capture::loaded_textures`]
+    /// for the descriptors too). From the open-time snapshot.
     pub fn loaded_texture_refs(&self) -> Result<Vec<u64>, ObjectMapError> {
-        self.session.loaded_texture_refs()
+        Ok(self
+            .loaded
+            .as_deref()
+            .map_err(|e| *e)?
+            .iter()
+            .map(|(r, _)| *r)
+            .collect())
     }
 
     /// The streamRefs of resources present in the capture but not loaded (any
-    /// kind; absent from the object map without force-load).
+    /// kind; absent without force-load). From the open-time snapshot.
     pub fn unused_resource_refs(&self) -> Result<Vec<u64>, ObjectMapError> {
-        self.session.unused_resource_refs()
+        self.unused.as_deref().map_err(|e| *e).map(<[u64]>::to_vec)
     }
 
     /// Join already-fetched `texs` against the cached manifest, by the

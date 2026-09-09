@@ -39,7 +39,7 @@ fn enumerate_loaded_textures() {
         "loaded_textures refs match loaded_texture_refs"
     );
 
-    for (r, d) in &textures {
+    for (r, d) in textures {
         assert_eq!(d.stream_ref, *r);
         assert_eq!(d.pixel_format, 80, "ref {r}: BGRA8Unorm");
         assert_eq!(d.texture_type, 2, "ref {r}: 2D");

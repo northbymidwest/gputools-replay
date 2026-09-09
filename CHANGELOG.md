@@ -6,28 +6,29 @@ Notable changes per release. Dates are the publish date.
 
 ### Added
 
-- Object-map enumeration (`gputools-replay`, `gputools-replay-hl`):
-  `Capture::loaded_textures()` returns every currently-loaded texture with its
-  descriptor in one pass; `Capture::loaded_texture_refs()` and the `Session`
-  equivalents return just the streamRefs; `unused_resource_refs()` lists
-  resources present but not loaded. These read the replayer's object map, so a
-  consumer enumerates loaded resources instead of sweeping a ref range (which
-  cannot see a ref past its bound). `-sys` binds `GTMTLReplayObjectMap::resources`
-  (`NSDictionary<streamRef, id<MTLResource>>`) and `unusedResourceKeys`
-  (`NSSet`). Same playback timing as `texture_descriptor` (the map empties after
-  a bare `play_all`/`play_to` until a fetch reloads).
+- Object-map enumeration. `Capture::loaded_textures()` returns every loaded
+  texture with its descriptor, `Capture::loaded_texture_refs()` just the
+  streamRefs, and `unused_resource_refs()` the resources present but not loaded -
+  so a consumer enumerates loaded resources instead of sweeping a ref range
+  (which cannot see a ref past its bound). **`gputools-replay-hl` serves these,
+  and `texture_descriptor`, from a snapshot taken at `Capture::open`** (when the
+  object map is guaranteed populated), so they are stable regardless of playback
+  and side-effect-free. The underlying **`gputools-replay` `Session` methods are
+  live** (they read the current map). `-sys` binds
+  `GTMTLReplayObjectMap::resources` (`NSDictionary<streamRef, id<MTLResource>>`)
+  and `unusedResourceKeys` (`NSSet`).
 
 ### Documentation
 
-- `texture_descriptor` / `command_index` (`gputools-replay`, `gputools-replay-hl`):
-  document behaviors a consumer measured migrating to 0.2.0 - playback
-  (`play_all`/`play_to`) clears the object map in place, so `texture_descriptor`
-  returns `Ok(None)` for every streamRef until a fetch reloads them (read
-  descriptors after `open` or after a fetch, not after bare playback); a fetch
-  resets `command_index` to 0 while served content stays at the end-state; a
-  batch fetch that includes a force-loaded unused resource after playback can
-  fail (`Code=150`, fetch before playback or per-ref); and a texture view is its
-  own map entry, so the map can exceed the offline manifest's texture count.
+- Session vs playback behaviors a consumer measured migrating to 0.2.0:
+  playback (`play_all`/`play_to`) clears the live object map in place, so the
+  live `Session::texture_descriptor` / enumeration return empty after a bare
+  playback until a fetch (or `rewind`, a near-noop) repopulates it - hence
+  `Capture`'s open-time snapshot above. A fetch resets `command_index` to 0
+  while served content stays at the end-state; a batch fetch that includes a
+  force-loaded unused resource after playback can fail (`Code=150`, so fetch
+  before playback or per-ref); and a texture view is its own map entry, so the
+  map can exceed the offline manifest's texture count.
 
 ## 0.2.0 - 2026-09-09
 
