@@ -489,21 +489,12 @@ impl Session {
     /// `OBJECT_MAP_OFFSET` no longer pointing at one (a framework layout
     /// change): the pointer must be a live heap object whose class is
     /// `GTMTLReplayObjectMap`, or this returns `None`.
-    fn object_map(&self) -> Option<&GTMTLReplayObjectMap> {
-        // SAFETY: `controller_in_client` is the live, loaded controller; reading
-        // the pointer-sized field at OBJECT_MAP_OFFSET (0x8, far inside the
-        // controller, whose command index alone lives at 0x5820) is in bounds.
-        let obj = unsafe { controller_object_map(self.controller_in_client()) };
-        // Guard the MEASURED offset before trusting it: `libc::malloc_size` is 0
-        // for a non-heap pointer (never faults), so a stale offset is rejected;
-        // then objc2's class-checked `downcast_ref` confirms it really is the map
-        // (a wrong class -> None). The map lives as long as the controller (and
-        // this `Session`), so the borrow is valid.
-        if obj.is_null() || unsafe { libc::malloc_size(obj.cast()) } == 0 {
-            return None;
-        }
-        // SAFETY: a live heap Objective-C object is a valid `AnyObject`.
-        unsafe { &*obj }.downcast_ref::<GTMTLReplayObjectMap>()
+    fn object_map(&self) -> Option<Retained<GTMTLReplayObjectMap>> {
+        // The `-sys` accessor validates the MEASURED offset (live heap object of
+        // the right class) and hands back a retained, typed map. A stale offset
+        // yields an error, which this best-effort accessor collapses to `None`.
+        // SAFETY: `controller_in_client` is the live, loaded controller.
+        unsafe { controller_object_map(self.controller_in_client()) }.ok()
     }
 
     /// The authoritative descriptor for the texture at `stream_ref`, read off

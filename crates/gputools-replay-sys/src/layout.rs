@@ -5,7 +5,10 @@
 //! [`crate::replay`]. The derivations are recorded in `docs/HANDOFF.md`.
 
 use crate::client::{GTMTLReplayClient, GTMTLReplayController};
+use crate::replay::GTMTLReplayObjectMap;
+use objc2::rc::Retained;
 use objc2::runtime::AnyObject;
+use std::fmt;
 
 /// `sizeof(struct GTMTLReplayClient)` = 312 bytes, 0x138. Derived, not chosen.
 ///
@@ -147,21 +150,70 @@ const _: () =
 /// across two captures. That probe is its living regression check.
 pub const OBJECT_MAP_OFFSET: usize = 0x8;
 
-/// The object hanging off a loaded controller at [`OBJECT_MAP_OFFSET`], returned
-/// as an unverified `*mut AnyObject`: the offset is MEASURED, so the type is not
-/// yet proven. Confirm it with a class-checked `downcast_ref::<GTMTLReplayObjectMap>`
-/// before use - the honest result of reading a raw offset, not an asserted type.
-/// The pointer is borrowed (not retained) and valid only while the controller
-/// (and its session) lives.
+/// Why [`controller_object_map`] could not return the map. Both variants mean
+/// the MEASURED [`OBJECT_MAP_OFFSET`] no longer points at a `GTMTLReplayObjectMap`,
+/// i.e. a framework layout change the offset must be re-derived against. It is
+/// never a routine absence: a loaded controller always has a map.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ObjectMapError {
+    /// `controller + OBJECT_MAP_OFFSET` is null or does not point at a live heap
+    /// allocation (`malloc_size == 0`).
+    NotHeapObject,
+    /// It points at a live heap object, but not a `GTMTLReplayObjectMap`.
+    WrongClass,
+}
+
+impl fmt::Display for ObjectMapError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let what = match self {
+            Self::NotHeapObject => "controller + OBJECT_MAP_OFFSET is not a live heap object",
+            Self::WrongClass => "controller + OBJECT_MAP_OFFSET is not a GTMTLReplayObjectMap",
+        };
+        write!(
+            f,
+            "{what}; the measured object-map offset may need re-deriving"
+        )
+    }
+}
+
+impl std::error::Error for ObjectMapError {}
+
+/// The [`GTMTLReplayObjectMap`] hanging off a loaded controller at
+/// [`OBJECT_MAP_OFFSET`]. The offset is MEASURED, so the object is validated
+/// before it is handed back typed: `malloc_size` confirms a live heap object
+/// (and never faults on a stray value), then objc2's class-checked downcast
+/// confirms it really is a `GTMTLReplayObjectMap`. A stale offset (a framework
+/// layout change) therefore yields an [`ObjectMapError`] naming which check
+/// failed, rather than a mistyped pointer. The map is retained for the caller
+/// and stays valid until the returned handle is dropped.
 ///
 /// # Safety
 /// `controller` must be a live, loaded `GTMTLReplayController` (post-`load:`, as
 /// [`ClientBuffer::controller`] returns after `open`).
-pub unsafe fn controller_object_map(controller: *mut GTMTLReplayController) -> *mut AnyObject {
+pub unsafe fn controller_object_map(
+    controller: *mut GTMTLReplayController,
+) -> Result<Retained<GTMTLReplayObjectMap>, ObjectMapError> {
     // SAFETY: the caller guarantees `controller` is a live controller, which is
     // far larger than OBJECT_MAP_OFFSET + a pointer (its command index alone is
     // at 0x5820), so the pointer-sized read at 0x8 is in bounds.
-    unsafe { ((controller as usize + OBJECT_MAP_OFFSET) as *const *mut AnyObject).read() }
+    let ptr = unsafe {
+        controller
+            .cast::<u8>()
+            .add(OBJECT_MAP_OFFSET)
+            .cast::<*mut AnyObject>()
+            .read()
+    };
+    // Guard the MEASURED offset before messaging what it points at: `malloc_size`
+    // is 0 for a non-heap pointer (and never faults), so a stale offset is
+    // rejected here rather than dereferenced.
+    if ptr.is_null() || unsafe { libc::malloc_size(ptr.cast()) } == 0 {
+        return Err(ObjectMapError::NotHeapObject);
+    }
+    // SAFETY: `ptr` is a live heap Objective-C object, so retaining it is sound;
+    // objc2's class-checked downcast then confirms it is a GTMTLReplayObjectMap.
+    let obj = unsafe { Retained::retain(ptr) }.ok_or(ObjectMapError::NotHeapObject)?;
+    obj.downcast::<GTMTLReplayObjectMap>()
+        .map_err(|_| ObjectMapError::WrongClass)
 }
 
 #[cfg(test)]
