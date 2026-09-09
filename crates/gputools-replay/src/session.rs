@@ -17,7 +17,7 @@ use gputools_replay_sys::ffi::{
     GTMTLReplayController_playTo, GTMTLReplayController_rewind,
     GTMTLReplayErrorHandling_initWithObserver, apr_initialize, apr_pool_create_ex,
 };
-use gputools_replay_sys::layout::{ClientBuffer, controller_object_map};
+use gputools_replay_sys::layout::{ClientBuffer, ObjectMapError, controller_object_map};
 use gputools_replay_sys::replay::{GTMTLReplayObjectMap, GTMTLReplayService};
 use objc2::rc::Retained;
 use objc2::runtime::{AnyClass, AnyObject, NSObject, NSObjectProtocol};
@@ -489,22 +489,37 @@ impl Session {
     /// `OBJECT_MAP_OFFSET` no longer pointing at one (a framework layout
     /// change): the pointer must be a live heap object whose class is
     /// `GTMTLReplayObjectMap`, or this returns `None`.
-    fn object_map(&self) -> Option<Retained<GTMTLReplayObjectMap>> {
+    fn object_map(&self) -> Result<Retained<GTMTLReplayObjectMap>, ObjectMapError> {
         // The `-sys` accessor validates the MEASURED offset (live heap object of
-        // the right class) and hands back a retained, typed map. A stale offset
-        // yields an error, which this best-effort accessor collapses to `None`.
+        // the right class) and hands back a retained, typed map, or an
+        // `ObjectMapError` if the offset has moved. That failure is not
+        // per-streamRef and not recoverable here (it takes out every
+        // descriptor), so it is propagated rather than flattened to `None`.
         // SAFETY: `controller_in_client` is the live, loaded controller.
-        unsafe { controller_object_map(self.controller_in_client()) }.ok()
+        unsafe { controller_object_map(self.controller_in_client()) }
     }
 
     /// The authoritative descriptor for the texture at `stream_ref`, read off
-    /// the live `MTLTexture` the replayer created for it, or `None` if that
-    /// streamRef is not a loaded texture (an unused resource is absent without
-    /// force-load, matching fetch). No static store parse, no ordinal join -
-    /// the map is keyed by streamRef, exactly like fetch.
-    pub fn texture_descriptor(&self, stream_ref: u64) -> Option<TextureDescriptor> {
-        let tex = self.object_map()?.try_get_texture(stream_ref)?;
-        Some(TextureDescriptor::from_texture(stream_ref, &tex))
+    /// the live `MTLTexture` the replayer created for it. No static store parse,
+    /// no ordinal join - the map is keyed by streamRef, exactly like fetch.
+    ///
+    /// Three outcomes, kept distinct:
+    /// - `Ok(Some(descriptor))` - the streamRef is a loaded texture.
+    /// - `Ok(None)` - the streamRef is not a loaded texture (an unused resource
+    ///   is absent without force-load, matching fetch). A routine, per-streamRef
+    ///   absence: skip it.
+    /// - `Err(ObjectMapError)` - the replayer's object map is not where the
+    ///   MEASURED offset says (a framework layout change). Not recoverable and
+    ///   not per-streamRef: it takes out every descriptor, so it is surfaced
+    ///   rather than folded into `Ok(None)`.
+    pub fn texture_descriptor(
+        &self,
+        stream_ref: u64,
+    ) -> Result<Option<TextureDescriptor>, ObjectMapError> {
+        Ok(self
+            .object_map()?
+            .try_get_texture(stream_ref)
+            .map(|tex| TextureDescriptor::from_texture(stream_ref, &tex)))
     }
 
     /// The controller's current command index, at byte offset

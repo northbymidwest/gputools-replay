@@ -26,4 +26,5 @@ mod util;
 pub use config::ReplayerConfig;
 pub use descriptor::TextureDescriptor;
 pub use error::{FetchError, HarvesterError, SessionError};
+pub use gputools_replay_sys::layout::ObjectMapError;
 pub use session::Session;
