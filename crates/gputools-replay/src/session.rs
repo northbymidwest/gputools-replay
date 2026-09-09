@@ -556,6 +556,29 @@ impl Session {
         Ok(refs)
     }
 
+    /// Every currently-loaded texture with its descriptor, read from the object
+    /// map in one pass - the map is resolved once and each texture is looked up
+    /// once (unlike calling [`Session::texture_descriptor`] per ref, which
+    /// re-resolves the map each time). Sorted by streamRef. Same playback timing
+    /// as [`Session::texture_descriptor`].
+    pub fn loaded_textures(&self) -> Result<Vec<(u64, TextureDescriptor)>, ObjectMapError> {
+        let map = self.object_map()?;
+        let keys = map.resources().allKeys();
+        let mut out: Vec<(u64, TextureDescriptor)> = (0..keys.count())
+            .filter_map(|i| {
+                let stream_ref = keys.objectAtIndex(i).unsignedLongLongValue();
+                map.try_get_texture(stream_ref).map(|tex| {
+                    (
+                        stream_ref,
+                        TextureDescriptor::from_texture(stream_ref, &tex),
+                    )
+                })
+            })
+            .collect();
+        out.sort_unstable_by_key(|(stream_ref, _)| *stream_ref);
+        Ok(out)
+    }
+
     /// The streamRefs of resources present in the capture but not loaded (any
     /// kind; absent from the object map without force-load). Sorted ascending.
     pub fn unused_resource_refs(&self) -> Result<Vec<u64>, ObjectMapError> {

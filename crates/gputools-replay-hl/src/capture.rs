@@ -383,13 +383,7 @@ impl Capture {
     /// fetch reloads the resources. Enumerate right after [`Capture::open`], or
     /// after a fetch.
     pub fn loaded_textures(&self) -> Result<Vec<(u64, TextureDescriptor)>, ObjectMapError> {
-        let mut out = Vec::new();
-        for stream_ref in self.session.loaded_texture_refs()? {
-            if let Some(d) = self.session.texture_descriptor(stream_ref)? {
-                out.push((stream_ref, d));
-            }
-        }
-        Ok(out)
+        self.session.loaded_textures()
     }
 
     /// The streamRefs of every currently-loaded texture (see

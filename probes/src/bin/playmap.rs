@@ -26,12 +26,13 @@ fn map_addr(m: &GTMTLReplayObjectMap) -> usize {
 /// (map object address, resources count, resource streamRefs sorted).
 fn snapshot(sess: &session::Session) -> Option<(usize, usize, Vec<u64>)> {
     let map = unsafe { controller_object_map(sess.controller_in_client()) }.ok()?;
-    let keys = map.resources().allKeys();
+    let resources = map.resources();
+    let keys = resources.allKeys();
     let mut refs: Vec<u64> = (0..keys.count())
         .map(|i| keys.objectAtIndex(i).unsignedLongLongValue())
         .collect();
     refs.sort_unstable();
-    Some((map_addr(&map), map.resources().count(), refs))
+    Some((map_addr(&map), resources.count(), refs))
 }
 
 fn natural(refs: &[u64]) -> Vec<FetchRequest> {
