@@ -515,12 +515,12 @@ impl Session {
     ///
     /// TIMING (MEASURED 2026-09-09): the map holds the resources the *current*
     /// load created, and [`Session::play_all`]/[`Session::play_to`] clear it in
-    /// place (the same map object at the measured offset, its entries released)
-    /// - so after a playback call this returns `Ok(None)` for every streamRef
-    /// until a fetch reloads the resources (the first
-    /// [`Session::fetch_textures`] that returns a real texture repopulates the
-    /// whole map; a fetch of only absent refs does not). Read descriptors right
-    /// after [`Session::open`], or after a fetch - not after bare playback.
+    /// place (the same map object at the measured offset, its entries released).
+    /// So after a playback call this returns `Ok(None)` for every streamRef
+    /// until a fetch reloads the resources (the first [`Session::fetch_textures`]
+    /// that returns a real texture repopulates the whole map; a fetch of only
+    /// absent refs does not). Read descriptors right after [`Session::open`], or
+    /// after a fetch, not after bare playback.
     ///
     /// A texture *view* is its own entry: it has its own streamRef and
     /// descriptor (e.g. a stencil view of a combined depth/stencil texture

@@ -1,6 +1,6 @@
 [package]
 name = "gputools-replay-hl"
-version = "0.2.0"
+version = "0.3.0"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
@@ -11,7 +11,7 @@ keywords = ["macos", "metal", "gpu", "texture", "gputrace"]
 categories = ["os::macos-apis", "rendering::data-formats"]
 
 [dependencies]
-gputools-replay = { path = "../gputools-replay", version = "0.2.0", default-features = false }
+gputools-replay = { path = "../gputools-replay", version = "0.3.0", default-features = false }
 # Optional: the offline manifest reader, behind `offline-manifest`. The primary
 # descriptor path is session-based (Capture::texture_descriptor) and needs none
 # of this; the bundle is the heuristic offline fallback only.
