@@ -1,0 +1,7 @@
+# actionlint's built-in runner-label list lags GitHub's changelog. Labels that
+# GitHub hosts but actionlint (pinned in ci.yml) does not know yet go here;
+# drop an entry once the pinned actionlint learns it.
+self-hosted-runner:
+  labels:
+    # macOS 27 image (arm64, public preview since 2026-09-10).
+    - xcode-27

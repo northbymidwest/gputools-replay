@@ -7,11 +7,11 @@ The three framework crates (`gputools-replay-sys`, `gputools-replay`,
 ## Prerequisites (one-time)
 
 - **A macOS 27 runner.** `cargo publish` runs a verify build that links the
-  private framework, which no macOS runner below 27 can do. No GitHub-hosted
-  runner is that new yet; the `publish` job runs on `macos-latest` and is
-  effective once that image reaches macOS 27 (pin it to a `macos-27` label if
-  GitHub ships one first). Set the `MACOS27_RUNNER` repo variable to `true` then
-  to also enable the CI build/test jobs.
+  private framework at the default `macos27` floor, which no macOS runner
+  below 27 can do. The `publish` job runs on GitHub's hosted macOS 27 image,
+  the `xcode-27` label (arm64, public preview since 2026-09-10). `macos-latest`
+  still resolves to macOS 26, so do not switch back to it until GitHub moves
+  that alias to 27.
 - **`gputrace-bundle` published first.** `gputools-replay-hl` depends on it;
   at publish time hl's dependency resolves from crates.io, so the matching
   `gputrace-bundle` version must already be live (release it from its own repo).
