@@ -32,6 +32,11 @@ concurrency:
   group: release
   cancel-in-progress: false
 
+# Plain rustup sets neither; dtolnay/rust-toolchain used to.
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_TERM_COLOR: always
+
 jobs:
   preflight:
     # Validation only: reads manifests, the changelog, and crates.io. No cargo
@@ -95,9 +100,7 @@ jobs:
           repository: northbymidwest/gputrace-bundle
           path: gputrace-bundle
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1
-        with:
-          toolchain: stable
+      - run: rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
       - uses: northbymidwest/gh-actions/release-publish-crate@010696da1a1dc686d7931c4aab81f8bb02721613 # v0.5.2
         with:
           packages: |

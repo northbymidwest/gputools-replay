@@ -27,6 +27,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
+# Plain rustup sets neither; dtolnay/rust-toolchain used to.
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_TERM_COLOR: always
+
 jobs:
   lint:
     # fmt / ascii / typos. `cargo fmt --all` runs `cargo metadata`, which
@@ -48,10 +53,7 @@ jobs:
           repository: northbymidwest/gputrace-bundle
           path: gputrace-bundle
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1
-        with:
-          toolchain: stable
-          components: rustfmt
+      - run: rustup toolchain install stable --profile minimal --no-self-update -c rustfmt && rustup default stable
       - run: cargo fmt --all -- --check
       - run: ./scripts/check-ascii.sh
       - uses: crate-ci/typos@512fc24f32f44ab01972217aaaf3dc86ec234d53 # v1.50.2
@@ -78,9 +80,7 @@ jobs:
           repository: northbymidwest/gputrace-bundle
           path: gputrace-bundle
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1
-        with:
-          toolchain: stable
+      - run: rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
       - uses: taiki-e/install-action@9983c65e42da123ff25d1f78505eb6de315aa172 # v2.87.20
         with:
           tool: cargo-machete@0.9.2
@@ -155,10 +155,7 @@ jobs:
           repository: northbymidwest/gputrace-bundle
           path: gputrace-bundle
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1
-        with:
-          toolchain: stable
-          components: clippy
+      - run: rustup toolchain install stable --profile minimal --no-self-update -c clippy && rustup default stable
       - run: cargo build --workspace ${{ matrix.features }}
       - run: cargo clippy --workspace --all-targets ${{ matrix.features }} -- -D warnings
       - run: cargo test --workspace ${{ matrix.features }}
@@ -193,7 +190,8 @@ jobs:
           v=$(sed -n 's/^rust-version = "\([0-9.]*\)"$/\1/p' Cargo.toml | head -1)
           test -n "$v" || { echo '::error::no rust-version in Cargo.toml'; exit 1; }
           echo "version=$v" >> "$GITHUB_OUTPUT"
-      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # v1
-        with:
-          toolchain: ${{ steps.msrv.outputs.version }}
+      - run: rustup toolchain install "$TOOLCHAIN" --profile minimal --no-self-update && rustup default "$TOOLCHAIN"
+        shell: bash
+        env:
+          TOOLCHAIN: ${{ steps.msrv.outputs.version }}
       - run: cargo build --workspace
